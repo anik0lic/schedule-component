@@ -1,0 +1,5 @@
+package raf.sk.projekat1.model;
+
+public enum AppointmentRepeat {
+    EVERY_DAY, EVERY_WEEK, EVERY_MONDAY, EVERY_TUESDAY, EVERY_WEDNESDAY, EVERY_THURSDAY, EVERY_FRIDAY, EVERY_SATURDAY, EVERY_SUNDAY
+}
