@@ -6,11 +6,12 @@ import raf.sk.projekat1.model.Schedule;
 import raf.sk.projekat1.specification.ScheduleService;
 
 import java.util.Map;
-
 public class ScheduleServiceImpl extends ScheduleService {
     public ScheduleServiceImpl(Schedule schedule) {
         super(schedule);
     }
+
+    public ScheduleServiceImpl(){}
 
     @Override
     public void exportCSV(String filepath) {
@@ -44,7 +45,7 @@ public class ScheduleServiceImpl extends ScheduleService {
 
     @Override
     public void search() {
-
+        System.out.println("impl2");
     }
 
     @Override

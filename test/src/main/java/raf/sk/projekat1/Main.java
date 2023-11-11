@@ -6,13 +6,14 @@ import raf.sk.projekat1.model.Schedule;
 import raf.sk.projekat1.specification.ScheduleService;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         List<String> dayFormat = new ArrayList<>();
         dayFormat.add("Pon");
         dayFormat.add("Uto");
@@ -24,9 +25,32 @@ public class Main {
 
         Info info = new Info(0,2,1,"dd/MM/yyyy", dayFormat);
         Schedule schedule = new Schedule(info);
-        ScheduleService ss = new ScheduleServiceImpl(schedule);
+        try {
+            Class<?> impl = Class.forName("raf.sk.projekat1.ScheduleServiceImpl");
+            ScheduleService ss = (ScheduleService) impl.getDeclaredConstructor().newInstance();
 
-        ss.loadJSON("E:\\IntellJ Projects\\projekat\\test\\src\\main\\resources\\terminiJSON1.json");
+            ss.setSchedule(schedule);
+            ss.loadJSON("E:\\IntellJ Projects\\projekat\\test\\src\\main\\resources\\terminiJSON1.json");
+            ss.search();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+//        ScheduleService ss = new ScheduleServiceImpl(schedule);
+
+
+
+//        ss.loadJSON("E:\\IntellJ Projects\\projekat\\test\\src\\main\\resources\\terminiJSON1.json");
 
 //        System.out.println(ss.getSchedule().getStartDate());
 //        System.out.println(ss.getSchedule().getEndDate());
@@ -37,7 +61,7 @@ public class Main {
 
 //        System.out.println(ss.getSchedule().getInfo().getDay());
 
-        ss.search();
+//        ss.search();
 
         Places place = new Places("RAF1");
         Map<String, String> a = new HashMap<>();
@@ -46,7 +70,7 @@ public class Main {
 //        ss.search("Ned", "02/10/2023", "23/10/2023", place, a);
 //        ss.check("10:00", "16:00","02/10/2023", "23/10/2023");
 //        System.out.println(ss.getSchedule().getPlaces());
-        ss.check("02/10/2023", "23/10/2023");
+//        ss.check("02/10/2023", "23/10/2023");
 
 //
 //        schedule1.loadPlacesCSV("src/main/resources/places.csv");

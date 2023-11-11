@@ -11,13 +11,13 @@ import java.util.Map;
 @Getter
 @Setter
 public class Appointment {
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private String day;
-    private Map<String,String> additional;
-    private Places place;
+    protected LocalTime startTime;
+    protected LocalTime endTime;
+    protected LocalDate startDate;
+    protected LocalDate endDate;
+    protected String day;
+    protected Map<String,String> additional;
+    protected Places place;
 
     public Appointment() {
         additional = new HashMap<>();

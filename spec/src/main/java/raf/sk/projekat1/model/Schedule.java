@@ -21,14 +21,14 @@ import java.util.Set;
 @Setter
 @JsonIgnoreProperties(value = { "info" })
 public class Schedule {
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private List<LocalDate> nonWorkingDates;
-    private Info info;
-    private List<Appointment> appointments;
-    private List<Places> places;
+    protected LocalDate startDate;
+    protected LocalDate endDate;
+    protected LocalTime startTime;
+    protected LocalTime endTime;
+    protected List<LocalDate> nonWorkingDates;
+    protected Info info;
+    protected List<Appointment> appointments;
+    protected List<Places> places;
     
     public Schedule(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, Info info) {
         this.startDate = startDate;

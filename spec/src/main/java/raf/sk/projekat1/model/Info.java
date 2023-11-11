@@ -10,12 +10,12 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Info {
-    private int place;
-    private int time;
-    private int day;
-    private int date;
-    private String dateFormat;
-    private List<String> dayFormat;
+    protected int place;
+    protected int time;
+    protected int day;
+    protected int date;
+    protected String dateFormat;
+    protected List<String> dayFormat;
 
     public Info(int place, int time, int day, String dateFormat, List<String> dayFormat) {
         this.place = place;

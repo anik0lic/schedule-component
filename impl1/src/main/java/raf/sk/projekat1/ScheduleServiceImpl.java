@@ -17,8 +17,11 @@ public class ScheduleServiceImpl extends ScheduleService {
         super(schedule);
     }
 
+    public ScheduleServiceImpl(){}
+
     @Override
     public void exportCSV(String filepath) {
+
     }
 
     @Override

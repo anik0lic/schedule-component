@@ -11,8 +11,8 @@ import java.util.Map;
 @Setter
 @NoArgsConstructor
 public class Places {
-    private String name;
-    private Map<String,String> additional;
+    protected String name;
+    protected Map<String,String> additional;
 
     public Places(String name) {
         this.name = name;

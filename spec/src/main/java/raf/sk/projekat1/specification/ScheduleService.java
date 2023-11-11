@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -17,8 +19,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Getter
+@Setter
+@NoArgsConstructor
 public abstract class ScheduleService {
-    Schedule schedule;
+    protected Schedule schedule;
     public ScheduleService(Schedule schedule) {
         this.schedule = schedule;
     }
