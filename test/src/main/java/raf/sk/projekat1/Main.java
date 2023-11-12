@@ -28,8 +28,8 @@ public class Main {
             ScheduleService ss = (ScheduleService) impl.getDeclaredConstructor().newInstance();
 
             ss.setSchedule(schedule);
-            ss.loadJSON("E:\\IntellJ Projects\\projekat\\test\\src\\main\\resources\\terminiJSON1.json");
-            Places place = new Places("RAF2");
+            ss.loadJSON("C:\\Users\\Lukam\\IdeaProjects\\projekat\\test\\src\\main\\resources\\terminiJSON2.json");
+            Places place = new Places("RAF1");
             Map<String, String> a = new HashMap<>();
             a.put("racunari", "DA");
 //            ss.check("02/10/2023", "23/10/2023", "Pon");
@@ -39,9 +39,16 @@ public class Main {
 //            ss.removeAppointment("10/10/2023",  "30/10/2023",  "11:00-13:00", "RAF1", AppointmentRepeat.EVERY_DAY);
 //            ss.removeAppointment("10/10/2023",  "30/12/2023",  "11:00-13:00", "RAF1", AppointmentRepeat.EVERY_WEDNESDAY);
 //            ss.addAppointment("10/10/2023", "RAF1", "11:00-13:00", a);
-            Appointment app = ss.find("02/10/2023", "RAF1", "09:00-11:00");
-            ss.updateAppointment(app, "14:00", "15:00");
+//            Appointment app = ss.find("02/10/2023", "RAF1", "09:00-11:00");
+//            ss.updateAppointment(app, "03/10/2023" , "13:00", "14:00",place);
             ss.search();
+            System.out.println(" ");
+//            System.out.println(ss.addAppointment("03/10/2023", "RAF1", "11:00-13:00",a));
+//            ss.addAppointment("01/10/2023","01/10/2023","14:00-15:00","RAF1",AppointmentRepeat.EVERY_WEEK,a);
+            ss.removeAppointment("03/10/2023","04/10/2023","09:00-11:00","RAF1",AppointmentRepeat.EVERY_WEEK);
+
+            ss.search();
+//            ss.search("Sre","05/10/2023","10/10/2023", place,a);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InvocationTargetException e) {
@@ -74,7 +81,8 @@ public class Main {
 //        ss.search();
 
 //
-//        ss.search("Ned", "02/10/2023", "23/10/2023", place, a);
+//        ss.search( "02/10/2023", "23/10/2023");
+
 //        ss.check("10:00", "16:00","02/10/2023", "23/10/2023");
 //        System.out.println(ss.getSchedule().getPlaces());
 //        ss.check("02/10/2023", "23/10/2023");

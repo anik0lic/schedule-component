@@ -1,11 +1,13 @@
 package raf.sk.projekat1;
 
-import raf.sk.projekat1.model.Appointment;
-import raf.sk.projekat1.model.AppointmentRepeat;
-import raf.sk.projekat1.model.Places;
-import raf.sk.projekat1.model.Schedule;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import raf.sk.projekat1.model.*;
 import raf.sk.projekat1.specification.ScheduleService;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -430,15 +432,44 @@ public class ScheduleServiceImpl extends ScheduleService {
     @Override
     public void updateAppointment(Appointment appointment, Map<String, String> additional) {
 
+        for (Map.Entry<String, String> entry : additional.entrySet()) {
+            appointment.getAdditional().put(entry.getKey(), entry.getValue());
+
+
+    }
+
+
+
+
     }
 
     @Override
     public void updateAppointment(Appointment appointment, String when, String startTime, String endTime) {
 
+        String time = startTime + "-" + endTime;
+
+        if(addAppointment(when, appointment.getPlace().getName(), time, appointment.getAdditional())){
+            getSchedule().getAppointments().remove(appointment);
+        }else{
+            System.out.println("greska");
+        }
+
+
+
+
     }
 
     @Override
     public void updateAppointment(Appointment appointment, String when, String startTime, String endTime, Places place) {
+
+        String time = startTime + "-" + endTime;
+
+        if(addAppointment(when, place.getName(), time, appointment.getAdditional())){
+            getSchedule().getAppointments().remove(appointment);
+        }else{
+            System.out.println("greska");
+        }
+
 
     }
 
@@ -463,12 +494,16 @@ public class ScheduleServiceImpl extends ScheduleService {
     @Override
     public void search(Map<String, String> additional) {
         for(Appointment a : getSchedule().getAppointments()){
+            int flag = additional.size();
             for(Map.Entry<String,String> entry : additional.entrySet()){
                 if(a.getAdditional().containsValue(entry.getValue())){
-                    System.out.print(getSchedule().getInfo().getDayFormat().get(a.getStartDate().getDayOfWeek().getValue()-1));
-                    System.out.print(", " + a.getStartDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat())));
-                    System.out.print(" " + a.getStartTime() + "-" + a.getEndTime() + ", " + a.getPlace().getName() + "\n");
+                    flag--;
                 }
+            }
+            if(flag == 0){
+                System.out.print(getSchedule().getInfo().getDayFormat().get(a.getStartDate().getDayOfWeek().getValue()-1));
+                System.out.print(", " + a.getStartDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat())));
+                System.out.print(" " + a.getStartTime() + "-" + a.getEndTime() + ", " + a.getPlace().getName() + "\n");
             }
         }
     }
@@ -497,6 +532,7 @@ public class ScheduleServiceImpl extends ScheduleService {
                         System.out.print(", " + a.getStartDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat())));
                         System.out.print(" " + a.getStartTime() + "-" + a.getEndTime() + ", " + a.getPlace().getName() + "\n");
                     }
+                    break;
                 }
             }
         }
@@ -671,6 +707,7 @@ public class ScheduleServiceImpl extends ScheduleService {
                 if (additional.containsValue(entry.getValue())) {
                     validPlaces.add(p);
                 }
+                i++;
             }
         }
 
@@ -998,6 +1035,86 @@ public class ScheduleServiceImpl extends ScheduleService {
     @Override
     public void check(String startTime, String endTime, String day, String startDate, String endDate, Places place) {
 
+    }
+
+    @Override
+    public void loadJSON(String filepath) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.configOverride(LocalDate.class).setFormat(JsonFormat.Value.forPattern(schedule.getInfo().getDateFormat()));
+        objectMapper.configOverride(LocalTime.class).setFormat(JsonFormat.Value.forPattern("HH:mm"));
+        Info info = schedule.getInfo();
+        schedule = objectMapper.readValue(new File(filepath), Schedule.class);
+        schedule.setInfo(info);
+
+
+        List<Appointment> appointments = new ArrayList<>();
+
+
+        for(Appointment a : schedule.getAppointments()){
+
+            if(a.getDay() == null){
+                a.setDay(getSchedule().getInfo().getDayFormat().get(a.getStartDate().getDayOfWeek().getValue()-1));
+            }
+
+            if(a.getEndDate() == null) {
+                a.setEndDate(a.getStartDate());
+            }else{
+
+                appointments.add(a);
+
+
+
+            }
+
+
+
+
+            if(!getSchedule().getPlaces().contains(a.getPlace())){
+                for(Places p : getSchedule().getPlaces()){
+                    if(a.getPlace().getName().equals(p.getName())){
+                        a.setPlace(p);
+                    }
+                }
+            }
+        }
+
+
+
+
+        for(Appointment a: appointments){
+            String time = a.getStartTime() + "-" + a.getEndTime();
+//            if(!a.getDay().equals(getSchedule().getInfo().getDayFormat().get(a.getStartDate().getDayOfWeek().getValue()-1))){
+//                Duration diff = Duration.between(a.getStartDate().atStartOfDay(), a.getEndDate().atStartOfDay());
+//                long diffDays = diff.toDays();
+//                LocalDate start = a.getStartDate();
+//
+//
+//
+//                for(int i = 0; i <= diffDays; i++) {
+//
+//                    if(getSchedule().getInfo().getDayFormat().get(start.plusDays(i).getDayOfWeek().getValue()-1).equals(a.getDay())){
+//                        a.setStartDate(start.plusDays(i));
+//                        break;
+//                    }
+//                }
+//            }
+
+            String startDate = a.getStartDate().plusDays(7).format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+            String endDate = a.getEndDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+
+            addAppointment(startDate,endDate,time,a.getPlace().getName(),AppointmentRepeat.EVERY_WEEK,a.getAdditional());
+
+
+
+
+        }
+
+
+
+
+
+        sortAppointmentList();
     }
 
 

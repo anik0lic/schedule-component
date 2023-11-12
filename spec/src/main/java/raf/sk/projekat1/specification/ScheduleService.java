@@ -140,34 +140,7 @@ public abstract class ScheduleService {
             schedule.getPlaces().add(place);
         }
     }
-    public void loadJSON(String filepath) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.configOverride(LocalDate.class).setFormat(JsonFormat.Value.forPattern(schedule.getInfo().getDateFormat()));
-        objectMapper.configOverride(LocalTime.class).setFormat(JsonFormat.Value.forPattern("HH:mm"));
-        Info info = schedule.getInfo();
-        schedule = objectMapper.readValue(new File(filepath), Schedule.class);
-        schedule.setInfo(info);
-
-        //impl2
-        for(Appointment a : schedule.getAppointments()){
-            if(a.getStartDate() == null) {
-                a.setStartDate(schedule.getStartDate());
-                a.setEndDate(schedule.getEndDate());
-            }
-
-            if(!getSchedule().getPlaces().contains(a.getPlace())){
-                for(Places p : getSchedule().getPlaces()){
-                    if(a.getPlace().getName().equals(p.getName())){
-                        a.setPlace(p);
-                    }
-                }
-            }
-        }
-
-        sortAppointmentList();
-
-    }
+    public abstract void loadJSON(String filepath) throws IOException;
 
     protected void sortAppointmentList(){
         Collections.sort(getSchedule().getAppointments(), new Comparator<Appointment>(){
