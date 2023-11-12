@@ -1,5 +1,6 @@
 package raf.sk.projekat1;
 
+import raf.sk.projekat1.model.AppointmentRepeat;
 import raf.sk.projekat1.model.Info;
 import raf.sk.projekat1.model.Places;
 import raf.sk.projekat1.model.Schedule;
@@ -31,6 +32,15 @@ public class Main {
 
             ss.setSchedule(schedule);
             ss.loadJSON("E:\\IntellJ Projects\\projekat\\test\\src\\main\\resources\\terminiJSON1.json");
+//            Places place = new Places("RAF1");
+            Map<String, String> a = new HashMap<>();
+            a.put("racunari", "DA");
+//            ss.check("02/10/2023", "23/10/2023", "Pon");
+//            ss.addAppointment("10/10/2023",  "30/10/2023",  "11:00-13:00", "RAF1", AppointmentRepeat.EVERY_DAY, a);
+            ss.addAppointment("10/10/2023",  "30/12/2023",  "11:00-13:00", "RAF1", AppointmentRepeat.EVERY_WEDNESDAY, a);
+            ss.search();
+//            ss.removeAppointment("10/10/2023",  "30/10/2023",  "11:00-13:00", "RAF1", AppointmentRepeat.EVERY_DAY);
+            ss.removeAppointment("10/10/2023",  "30/12/2023",  "11:00-13:00", "RAF1", AppointmentRepeat.EVERY_WEDNESDAY);
             ss.search();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -63,9 +73,6 @@ public class Main {
 
 //        ss.search();
 
-        Places place = new Places("RAF1");
-        Map<String, String> a = new HashMap<>();
-        a.put("racunari", "NE");
 //
 //        ss.search("Ned", "02/10/2023", "23/10/2023", place, a);
 //        ss.check("10:00", "16:00","02/10/2023", "23/10/2023");

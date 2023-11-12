@@ -34,9 +34,15 @@ public class ScheduleServiceImpl extends ScheduleService {
     }
 
     @Override
-    public void removeAppointment() {
+    public void removeAppointment(String when, String place, String time) {
 
     }
+
+    @Override
+    public void removeAppointment(String startDate, String endDate, String time, String place, AppointmentRepeat repeat) {
+
+    }
+
 
     @Override
     public void updateAppointment() {

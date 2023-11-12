@@ -23,6 +23,23 @@ public class Appointment {
         additional = new HashMap<>();
     }
 
+    public Appointment(LocalTime startTime, LocalTime endTime, LocalDate startDate, LocalDate endDate, String day, Map<String, String> additional) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.day = day;
+        this.additional = additional;
+    }
+
+    public Appointment(LocalTime startTime, LocalTime endTime, LocalDate startDate, String day, Map<String, String> additional) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.startDate = startDate;
+        this.day = day;
+        this.additional = additional;
+    }
+
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);

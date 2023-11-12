@@ -36,7 +36,9 @@ public abstract class ScheduleService {
     //II - 13/10/2023 11:00-12:00 everyWeek 30/10/2023
     public abstract void addAppointment(String startDate, String endDate, String time, String place, AppointmentRepeat repeat, Map<String, String> additional);
 
-    public abstract void removeAppointment();
+    public abstract void removeAppointment(String when, String place, String time);
+    public abstract void removeAppointment(String startDate, String endDate, String time, String place, AppointmentRepeat repeat);
+
     public abstract void updateAppointment();
 
     public abstract void search();
@@ -160,7 +162,7 @@ public abstract class ScheduleService {
 
     }
 
-    private void sortAppointmentList(){
+    protected void sortAppointmentList(){
         Collections.sort(getSchedule().getAppointments(), new Comparator<Appointment>(){
             @Override
             public int compare(Appointment o1, Appointment o2) {

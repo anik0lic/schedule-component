@@ -26,6 +26,7 @@ public class Schedule {
     protected LocalTime startTime;
     protected LocalTime endTime;
     protected List<LocalDate> nonWorkingDates;
+    protected List<String> nonWorkingDaysOfTheWeek;
     protected Info info;
     protected List<Appointment> appointments;
     protected List<Places> places;
@@ -39,6 +40,7 @@ public class Schedule {
         this.appointments = new ArrayList<>();
         this.places = new ArrayList<>();
         this.info = info;
+        this.nonWorkingDaysOfTheWeek = new ArrayList<>();
     }
 
     public Schedule(Info info) {
@@ -46,12 +48,14 @@ public class Schedule {
         this.nonWorkingDates = new ArrayList<>();
         this.places = new ArrayList<>();
         this.info = info;
+        this.nonWorkingDaysOfTheWeek = new ArrayList<>();
     }
 
     public Schedule() {
         this.appointments = new ArrayList<>();
         this.nonWorkingDates = new ArrayList<>();
         this.places = new ArrayList<>();
+        this.nonWorkingDaysOfTheWeek = new ArrayList<>();
     }
 
 }
