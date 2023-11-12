@@ -31,7 +31,7 @@ public abstract class ScheduleService {
     public abstract void exportJSON(String filepath);
     //I - 13/10/2023 11:00-12:00
     //II - 13/10/2023 11:00-12:00
-    public abstract void addAppointment(String when, String place, String time, Map<String, String> additional);
+    public abstract boolean addAppointment(String when, String place, String time, Map<String, String> additional);
     //I - 13/10/2023 11:00-12:00 1 16/10/2023
     //II - 13/10/2023 11:00-12:00 everyWeek 30/10/2023
     public abstract void addAppointment(String startDate, String endDate, String time, String place, AppointmentRepeat repeat, Map<String, String> additional);
@@ -39,7 +39,14 @@ public abstract class ScheduleService {
     public abstract void removeAppointment(String when, String place, String time);
     public abstract void removeAppointment(String startDate, String endDate, String time, String place, AppointmentRepeat repeat);
 
-    public abstract void updateAppointment();
+    public abstract Appointment find(String when, String place, String time);
+
+    public abstract void updateAppointment(Appointment appointment, String when);
+    public abstract void updateAppointment(Appointment appointment, Places place);
+    public abstract void updateAppointment(Appointment appointment, String startTime, String endTime);
+    public abstract void updateAppointment(Appointment appointment, Map<String, String> additional);
+    public abstract void updateAppointment(Appointment appointment, String when, String startTime, String endTime);
+    public abstract void updateAppointment(Appointment appointment, String when, String startTime, String endTime, Places place);
 
     public abstract void search();
     public abstract void search(Places place);

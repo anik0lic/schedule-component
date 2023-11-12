@@ -1,9 +1,6 @@
 package raf.sk.projekat1;
 
-import raf.sk.projekat1.model.AppointmentRepeat;
-import raf.sk.projekat1.model.Info;
-import raf.sk.projekat1.model.Places;
-import raf.sk.projekat1.model.Schedule;
+import raf.sk.projekat1.model.*;
 import raf.sk.projekat1.specification.ScheduleService;
 
 import java.io.IOException;
@@ -32,15 +29,18 @@ public class Main {
 
             ss.setSchedule(schedule);
             ss.loadJSON("E:\\IntellJ Projects\\projekat\\test\\src\\main\\resources\\terminiJSON1.json");
-//            Places place = new Places("RAF1");
+            Places place = new Places("RAF2");
             Map<String, String> a = new HashMap<>();
             a.put("racunari", "DA");
 //            ss.check("02/10/2023", "23/10/2023", "Pon");
 //            ss.addAppointment("10/10/2023",  "30/10/2023",  "11:00-13:00", "RAF1", AppointmentRepeat.EVERY_DAY, a);
-            ss.addAppointment("10/10/2023",  "30/12/2023",  "11:00-13:00", "RAF1", AppointmentRepeat.EVERY_WEDNESDAY, a);
-            ss.search();
+//            ss.addAppointment("10/10/2023",  "30/12/2023",  "11:00-13:00", "RAF1", AppointmentRepeat.EVERY_WEDNESDAY, a);
+//            ss.search();
 //            ss.removeAppointment("10/10/2023",  "30/10/2023",  "11:00-13:00", "RAF1", AppointmentRepeat.EVERY_DAY);
-            ss.removeAppointment("10/10/2023",  "30/12/2023",  "11:00-13:00", "RAF1", AppointmentRepeat.EVERY_WEDNESDAY);
+//            ss.removeAppointment("10/10/2023",  "30/12/2023",  "11:00-13:00", "RAF1", AppointmentRepeat.EVERY_WEDNESDAY);
+//            ss.addAppointment("10/10/2023", "RAF1", "11:00-13:00", a);
+            Appointment app = ss.find("02/10/2023", "RAF1", "09:00-11:00");
+            ss.updateAppointment(app, "14:00", "15:00");
             ss.search();
         } catch (IOException e) {
             throw new RuntimeException(e);

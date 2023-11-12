@@ -1,5 +1,6 @@
 package raf.sk.projekat1;
 
+import raf.sk.projekat1.model.Appointment;
 import raf.sk.projekat1.model.AppointmentRepeat;
 import raf.sk.projekat1.model.Places;
 import raf.sk.projekat1.model.Schedule;
@@ -43,9 +44,38 @@ public class ScheduleServiceImpl extends ScheduleService {
 
     }
 
+    @Override
+    public Appointment find(String when, String place, String time) {
+        return null;
+    }
 
     @Override
-    public void updateAppointment() {
+    public void updateAppointment(Appointment appointment, String date) {
+
+    }
+
+    @Override
+    public void updateAppointment(Appointment appointment, Places place) {
+
+    }
+
+    @Override
+    public void updateAppointment(Appointment appointment, String startTime, String endTime) {
+
+    }
+
+    @Override
+    public void updateAppointment(Appointment appointment, Map<String, String> additional) {
+
+    }
+
+    @Override
+    public void updateAppointment(Appointment appointment, String date, String startTime, String endTime) {
+
+    }
+
+    @Override
+    public void updateAppointment(Appointment appointment, String date, String startTime, String endTime, Places place) {
 
     }
 
