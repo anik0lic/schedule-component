@@ -1,9 +1,5 @@
 package raf.sk.projekat1.specification;
 
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,13 +30,14 @@ public abstract class ScheduleService {
     public abstract boolean addAppointment(String when, String place, String time, Map<String, String> additional);
     //I - 13/10/2023 11:00-12:00 1 16/10/2023
     //II - 13/10/2023 11:00-12:00 everyWeek 30/10/2023
-    public abstract void addAppointment(String startDate, String endDate, String time, String place, AppointmentRepeat repeat, Map<String, String> additional);
+    public abstract boolean addAppointment(String startDate, String endDate, String time, String place, AppointmentRepeat repeat, Map<String, String> additional);
 
-    public abstract void removeAppointment(String when, String place, String time);
-    public abstract void removeAppointment(String startDate, String endDate, String time, String place, AppointmentRepeat repeat);
+    public abstract boolean removeAppointment(String when, String place, String time);
+    public abstract boolean removeAppointment(String startDate, String endDate, String time, String place, AppointmentRepeat repeat);
 
     public abstract Appointment find(String when, String place, String time);
 
+    //da ima boolean da li hoce i za sve do kraja isto da odredi?
     public abstract void updateAppointment(Appointment appointment, String when);
     public abstract void updateAppointment(Appointment appointment, Places place);
     public abstract void updateAppointment(Appointment appointment, String startTime, String endTime);

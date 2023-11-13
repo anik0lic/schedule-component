@@ -12,23 +12,24 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args){
-        List<String> dayFormat = new ArrayList<>();
-        dayFormat.add("Pon");
-        dayFormat.add("Uto");
-        dayFormat.add("Sre");
-        dayFormat.add("Cet");
-        dayFormat.add("Pet");
-        dayFormat.add("Sub");
-        dayFormat.add("Ned");
-
-        Info info = new Info(0,2,1,"dd/MM/yyyy", dayFormat);
-        Schedule schedule = new Schedule(info);
         try {
+            List<String> dayFormat = new ArrayList<>();
+            dayFormat.add("Pon");
+            dayFormat.add("Uto");
+            dayFormat.add("Sre");
+            dayFormat.add("Cet");
+            dayFormat.add("Pet");
+            dayFormat.add("Sub");
+            dayFormat.add("Ned");
+
+            Info info = new Info(0,2,1,"dd/MM/yyyy", dayFormat);
+            Schedule schedule = new Schedule(info);
+
             Class<?> impl = Class.forName("raf.sk.projekat1.ScheduleServiceImpl");
             ScheduleService ss = (ScheduleService) impl.getDeclaredConstructor().newInstance();
 
             ss.setSchedule(schedule);
-            ss.loadJSON("C:\\Users\\Lukam\\IdeaProjects\\projekat\\test\\src\\main\\resources\\terminiJSON2.json");
+            ss.loadJSON("C:\\Users\\anikolic11522rn\\IdeaProjects\\projekat\\test\\src\\main\\resources\\terminiJSON2.json");
             Places place = new Places("RAF1");
             Map<String, String> a = new HashMap<>();
             a.put("racunari", "DA");

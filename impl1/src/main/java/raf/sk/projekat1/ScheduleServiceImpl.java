@@ -36,8 +36,11 @@ public class ScheduleServiceImpl extends ScheduleService {
     @Override
     public boolean addAppointment(String when, String place, String time, Map<String, String> additional) {
         LocalDate date = LocalDate.parse(when, DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
-        if(date.isBefore(getSchedule().getStartDate()) || date.isAfter(getSchedule().getEndDate()))
+//        if(date.isBefore(getSchedule().getStartDate()) || date.isAfter(getSchedule().getEndDate()))
+        if(date.isBefore(getSchedule().getStartDate()) || date.isAfter(getSchedule().getEndDate())
+                || (getSchedule().getNonWorkingDates().contains(date) && getSchedule().getNonWorkingDaysOfTheWeek().contains(getSchedule().getInfo().getDayFormat().get(date.getDayOfWeek().getValue()-1))))
             return false;
+
         String[] split = time.split("-");
         LocalTime startTime = LocalTime.parse(split[0]);
         LocalTime endTime = LocalTime.parse(split[1]);
@@ -45,8 +48,10 @@ public class ScheduleServiceImpl extends ScheduleService {
             return false;
 
         for(Appointment a : getSchedule().getAppointments()){
+//            if((a.getStartDate().equals(date) && (a.getStartTime().equals(startTime) || a.getEndTime().equals(endTime) || (a.getStartTime().isBefore(startTime) && a.getEndTime().isAfter(startTime)) || (a.getStartTime().isBefore(endTime)
+//                    && a.getEndTime().isAfter(endTime))) && a.getPlace().getName().equals(place)) || (getSchedule().getNonWorkingDates().contains(date) && getSchedule().getNonWorkingDaysOfTheWeek().contains(getSchedule().getInfo().getDayFormat().get(date.getDayOfWeek().getValue()-1)))){
             if((a.getStartDate().equals(date) && (a.getStartTime().equals(startTime) || a.getEndTime().equals(endTime) || (a.getStartTime().isBefore(startTime) && a.getEndTime().isAfter(startTime)) || (a.getStartTime().isBefore(endTime)
-                    && a.getEndTime().isAfter(endTime))) && a.getPlace().getName().equals(place)) || (getSchedule().getNonWorkingDates().contains(date) && getSchedule().getNonWorkingDaysOfTheWeek().contains(getSchedule().getInfo().getDayFormat().get(date.getDayOfWeek().getValue()-1)))){
+                    && a.getEndTime().isAfter(endTime))) && a.getPlace().getName().equals(place))){
                 System.out.println("greska");
                 return false;
             }
@@ -61,19 +66,22 @@ public class ScheduleServiceImpl extends ScheduleService {
         }
         getSchedule().getAppointments().add(newAppointment);
         sortAppointmentList();
+
         return true;
     }
     @Override
-    public void addAppointment(String startDate, String endDate, String time, String place, AppointmentRepeat repeat, Map<String, String> additional) {
+    public boolean addAppointment(String startDate, String endDate, String time, String place, AppointmentRepeat repeat, Map<String, String> additional) {
         LocalDate start = LocalDate.parse(startDate, DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
         LocalDate end = LocalDate.parse(endDate, DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
         if(start.isBefore(getSchedule().getStartDate()) || end.isAfter(getSchedule().getEndDate()))
-            return;
+            return false;
+
         String[] split = time.split("-");
         LocalTime startTime = LocalTime.parse(split[0]);
         LocalTime endTime = LocalTime.parse(split[1]);
         if(startTime.isBefore(getSchedule().getStartTime()) || endTime.isAfter(getSchedule().getEndTime()))
-            return;
+            return false;
+
         Duration diff = Duration.between(start.atStartOfDay(), end.atStartOfDay());
         long diffDays = diff.toDays();
         List<Appointment> validAppointments = new ArrayList<>();
@@ -84,7 +92,7 @@ public class ScheduleServiceImpl extends ScheduleService {
                     if((a.getStartDate().equals(start.plusDays(i)) && (a.getStartTime().equals(startTime) || a.getEndTime().equals(endTime) || (a.getStartTime().isBefore(startTime) && a.getEndTime().isAfter(startTime)) || (a.getStartTime().isBefore(endTime)
                             && a.getEndTime().isAfter(endTime))) && a.getPlace().getName().equals(place))){
                         System.out.println("greska");
-                        return;
+                        return false;
                     }
                 }
 
@@ -104,7 +112,7 @@ public class ScheduleServiceImpl extends ScheduleService {
                     if((a.getStartDate().equals(start.plusDays(i)) && (a.getStartTime().equals(startTime) || a.getEndTime().equals(endTime) || (a.getStartTime().isBefore(startTime) && a.getEndTime().isAfter(startTime)) || (a.getStartTime().isBefore(endTime)
                             && a.getEndTime().isAfter(endTime))) && a.getPlace().getName().equals(place))){
                         System.out.println("greska");
-                        return;
+                        return false;
                     }
                 }
 
@@ -179,12 +187,13 @@ public class ScheduleServiceImpl extends ScheduleService {
             }
             diff = Duration.between(start.atStartOfDay(), end.atStartOfDay());
             diffDays = diff.toDays();
+
             for(int i = 0; i <= diffDays; i+=7) {
                 for (Appointment a : getSchedule().getAppointments()) {
                     if((a.getStartDate().equals(start.plusDays(i)) && (a.getStartTime().equals(startTime) || a.getEndTime().equals(endTime) || (a.getStartTime().isBefore(startTime) && a.getEndTime().isAfter(startTime)) || (a.getStartTime().isBefore(endTime)
                             && a.getEndTime().isAfter(endTime))) && a.getPlace().getName().equals(place))){
                         System.out.println("greska");
-                        return;
+                        return false;
                     }
                 }
 
@@ -205,9 +214,10 @@ public class ScheduleServiceImpl extends ScheduleService {
         }
 
         sortAppointmentList();
+        return true;
     }
     @Override
-    public void removeAppointment(String when, String place, String time) {
+    public boolean removeAppointment(String when, String place, String time) {
         LocalDate date = LocalDate.parse(when, DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
         String[] split = time.split("-");
         LocalTime startTime = LocalTime.parse(split[0]);
@@ -220,16 +230,22 @@ public class ScheduleServiceImpl extends ScheduleService {
                 break;
             }
         }
-        if(!(appointment == null))
+
+        if(!(appointment == null)) {
             getSchedule().getAppointments().remove(appointment);
+            return true;
+        }
+        return false;
     }
     @Override
-    public void removeAppointment(String startDate, String endDate, String time, String place, AppointmentRepeat repeat) {
+    public boolean removeAppointment(String startDate, String endDate, String time, String place, AppointmentRepeat repeat) {
         LocalDate start = LocalDate.parse(startDate, DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
         LocalDate end = LocalDate.parse(endDate, DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+
         String[] split = time.split("-");
         LocalTime startTime = LocalTime.parse(split[0]);
         LocalTime endTime = LocalTime.parse(split[1]);
+
         Duration diff = Duration.between(start.atStartOfDay(), end.atStartOfDay());
         long diffDays = diff.toDays();
         List<Appointment> validAppointments = new ArrayList<>();
@@ -259,11 +275,12 @@ public class ScheduleServiceImpl extends ScheduleService {
 
             if(!(counter == diffDays+1)) {
                 System.out.println("greska");
-                return;
+                return false;
             }
         }else if(repeat.equals(AppointmentRepeat.EVERY_WEEK)){
             int i = 0;
             int j = 0;
+
             while(i <= diffDays) {
                 if (!(getSchedule().getNonWorkingDates().contains(start.plusDays(i)) || getSchedule().getNonWorkingDaysOfTheWeek().contains(getSchedule().getInfo().getDayFormat().get(start.plusDays(i).getDayOfWeek().getValue() - 1)))) {
                     while (j < getSchedule().getAppointments().size()) {
@@ -285,7 +302,7 @@ public class ScheduleServiceImpl extends ScheduleService {
 
             if(!(counter == diffDays/7+1)) {
                 System.out.println("greska");
-                return;
+                return false;
             }
         }else{
             switch (repeat){
@@ -350,6 +367,7 @@ public class ScheduleServiceImpl extends ScheduleService {
             diffDays = diff.toDays();
             int i = 0;
             int j = 0;
+
             while(i <= diffDays) {
                 if (!(getSchedule().getNonWorkingDates().contains(start.plusDays(i)) || getSchedule().getNonWorkingDaysOfTheWeek().contains(getSchedule().getInfo().getDayFormat().get(start.plusDays(i).getDayOfWeek().getValue() - 1)))) {
                     while (j < getSchedule().getAppointments().size()) {
@@ -371,7 +389,7 @@ public class ScheduleServiceImpl extends ScheduleService {
 
             if(!(counter == diffDays/7+1)) {
                 System.out.println("greska");
-                return;
+                return false;
             }
         }
 
@@ -380,6 +398,7 @@ public class ScheduleServiceImpl extends ScheduleService {
         }
 
         sortAppointmentList();
+        return true;
     }
 
     @Override
@@ -400,52 +419,43 @@ public class ScheduleServiceImpl extends ScheduleService {
     @Override
     public void updateAppointment(Appointment appointment, String when) {
         String time = appointment.getStartTime() + "-" + appointment.getEndTime();
+
         if(addAppointment(when, appointment.getPlace().getName(), time, appointment.getAdditional())){
             getSchedule().getAppointments().remove(appointment);
         }else{
             System.out.println("greska");
         }
     }
-
     @Override
     public void updateAppointment(Appointment appointment, Places place) {
         String time = appointment.getStartTime() + "-" + appointment.getEndTime();
         String date = appointment.getStartDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+
         if(addAppointment(date, place.getName(), time, appointment.getAdditional())){
             getSchedule().getAppointments().remove(appointment);
         }else{
             System.out.println("greska");
         }
     }
-
     @Override
     public void updateAppointment(Appointment appointment, String startTime, String endTime) {
         String time = startTime + "-" + endTime;
         String date = appointment.getStartDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+
         if(addAppointment(date, appointment.getPlace().getName(), time, appointment.getAdditional())){
             getSchedule().getAppointments().remove(appointment);
         }else{
             System.out.println("greska");
         }
     }
-
     @Override
     public void updateAppointment(Appointment appointment, Map<String, String> additional) {
-
         for (Map.Entry<String, String> entry : additional.entrySet()) {
             appointment.getAdditional().put(entry.getKey(), entry.getValue());
-
-
+        }
     }
-
-
-
-
-    }
-
     @Override
     public void updateAppointment(Appointment appointment, String when, String startTime, String endTime) {
-
         String time = startTime + "-" + endTime;
 
         if(addAppointment(when, appointment.getPlace().getName(), time, appointment.getAdditional())){
@@ -453,15 +463,10 @@ public class ScheduleServiceImpl extends ScheduleService {
         }else{
             System.out.println("greska");
         }
-
-
-
-
     }
 
     @Override
     public void updateAppointment(Appointment appointment, String when, String startTime, String endTime, Places place) {
-
         String time = startTime + "-" + endTime;
 
         if(addAppointment(when, place.getName(), time, appointment.getAdditional())){
@@ -469,8 +474,6 @@ public class ScheduleServiceImpl extends ScheduleService {
         }else{
             System.out.println("greska");
         }
-
-
     }
 
     @Override
@@ -511,6 +514,7 @@ public class ScheduleServiceImpl extends ScheduleService {
     public void search(String startDate, String endDate) {
         LocalDate sd = LocalDate.parse(startDate, DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
         LocalDate ed = LocalDate.parse(endDate, DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+
         for(Appointment a : getSchedule().getAppointments()){
             if((a.getStartDate().isAfter(sd) && a.getStartDate().isBefore(ed)) || a.getStartDate().isEqual(sd) || a.getStartDate().isEqual(ed)) {
                 System.out.print(getSchedule().getInfo().getDayFormat().get(a.getStartDate().getDayOfWeek().getValue() - 1));
@@ -1047,28 +1051,19 @@ public class ScheduleServiceImpl extends ScheduleService {
         schedule = objectMapper.readValue(new File(filepath), Schedule.class);
         schedule.setInfo(info);
 
-
-        List<Appointment> appointments = new ArrayList<>();
-
-
+//        List<Appointment> appointments = new ArrayList<>();
+        //3/10/2023
+        //3/10/2023 Uto
         for(Appointment a : schedule.getAppointments()){
-
             if(a.getDay() == null){
                 a.setDay(getSchedule().getInfo().getDayFormat().get(a.getStartDate().getDayOfWeek().getValue()-1));
             }
 
-            if(a.getEndDate() == null) {
-                a.setEndDate(a.getStartDate());
-            }else{
-
-                appointments.add(a);
-
-
-
-            }
-
-
-
+//            if(a.getEndDate() == null) {
+//                a.setEndDate(a.getStartDate());
+//            }else{
+//                appointments.add(a);
+//            }
 
             if(!getSchedule().getPlaces().contains(a.getPlace())){
                 for(Places p : getSchedule().getPlaces()){
@@ -1079,11 +1074,8 @@ public class ScheduleServiceImpl extends ScheduleService {
             }
         }
 
-
-
-
-        for(Appointment a: appointments){
-            String time = a.getStartTime() + "-" + a.getEndTime();
+//        for(Appointment a: appointments){
+//            String time = a.getStartTime() + "-" + a.getEndTime();
 //            if(!a.getDay().equals(getSchedule().getInfo().getDayFormat().get(a.getStartDate().getDayOfWeek().getValue()-1))){
 //                Duration diff = Duration.between(a.getStartDate().atStartOfDay(), a.getEndDate().atStartOfDay());
 //                long diffDays = diff.toDays();
@@ -1100,20 +1092,11 @@ public class ScheduleServiceImpl extends ScheduleService {
 //                }
 //            }
 
-            String startDate = a.getStartDate().plusDays(7).format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
-            String endDate = a.getEndDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
-
-            addAppointment(startDate,endDate,time,a.getPlace().getName(),AppointmentRepeat.EVERY_WEEK,a.getAdditional());
-
-
-
-
-        }
-
-
-
-
-
+//            String startDate = a.getStartDate().plusDays(7).format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+//            String endDate = a.getEndDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+//
+//            addAppointment(startDate,endDate,time,a.getPlace().getName(),AppointmentRepeat.EVERY_WEEK,a.getAdditional());
+//        }
         sortAppointmentList();
     }
 
