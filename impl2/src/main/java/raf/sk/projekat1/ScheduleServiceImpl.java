@@ -8,6 +8,7 @@ import raf.sk.projekat1.specification.ScheduleService;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -31,7 +32,8 @@ public class ScheduleServiceImpl extends ScheduleService {
     @Override
     public boolean addAppointment(String when, String place, String time, Map<String, String> additional) {
         LocalDate date = LocalDate.parse(when, DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
-        if(date.isBefore(getSchedule().getStartDate()) || date.isAfter(getSchedule().getEndDate()))
+        if(date.isBefore(getSchedule().getStartDate()) || date.isAfter(getSchedule().getEndDate())
+                || (getSchedule().getNonWorkingDates().contains(date) && getSchedule().getNonWorkingDaysOfTheWeek().contains(getSchedule().getInfo().getDayFormat().get(date.getDayOfWeek().getValue()-1))))
             return false;
 
         String[] split = time.split("-");
@@ -40,10 +42,12 @@ public class ScheduleServiceImpl extends ScheduleService {
         if(startTime.isBefore(getSchedule().getStartTime()) || endTime.isAfter(getSchedule().getEndTime()))
             return false;
 
+        //16/10/2023
+        //02/10/2023 - 30/12/2023
         for(Appointment a : getSchedule().getAppointments()){
-            if(a.getStartDate().equals(date) || a.getEndDate().equals(date) || ( a.getStartDate().isBefore(date) && a.getEndDate().isAfter(date)  ) ) {
-                if( a.getPlace().getName().equals(place)  ) {
-                    if( startTime.isBefore(a.getEndTime()) && endTime.isAfter(a.getStartTime()) ) {
+            if(a.getStartDate().equals(date) || a.getEndDate().equals(date) || checkAppointmentForDate(a, date)) {
+                if(a.getPlace().getName().equals(place)){
+                    if(startTime.isBefore(a.getEndTime()) && endTime.isAfter(a.getStartTime())) {
                         System.out.println("Termin postoji");
                         return false;
                     }
@@ -65,6 +69,18 @@ public class ScheduleServiceImpl extends ScheduleService {
         return true;
     }
 
+    private boolean checkAppointmentForDate(Appointment a, LocalDate date){
+        Duration diff = Duration.between(a.getStartDate().atStartOfDay(), a.getEndDate().atStartOfDay());
+        long diffDays = diff.toDays();
+
+        for(int i = 0; i <= diffDays; i += 7){
+            if(a.getStartDate().plusDays(i) == date){
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     @Override
     public boolean addAppointment(String startDate, String endDate, String time, String place, AppointmentRepeat repeat, Map<String, String> additional) {
@@ -80,7 +96,7 @@ public class ScheduleServiceImpl extends ScheduleService {
             return false;
 
         for(Appointment a : getSchedule().getAppointments()){
-            if( (sd.isBefore(a.getEndDate()) || sd.equals(a.getEndDate()) ) && ( ed.isAfter(a.getStartDate()) || ed.equals(a.getStartDate()) ) ) {
+            if((sd.isBefore(a.getEndDate()) || sd.equals(a.getEndDate()) ) && (ed.isAfter(a.getStartDate()) || ed.equals(a.getStartDate()))){
                 if( a.getPlace().getName().equals(place)  ) {
                     if( startTime.isBefore(a.getEndTime()) && endTime.isAfter(a.getStartTime()) ) {
                         System.out.println("Termin postoji");
@@ -510,14 +526,10 @@ public class ScheduleServiceImpl extends ScheduleService {
             else if(a.getDay() == null && a.getStartDate() != null && a.getEndDate() != null){
                 a.setDay(getSchedule().getInfo().getDayFormat().get(a.getStartDate().getDayOfWeek().getValue()-1));
             }
-//            if(a.getEndDate() == null) {
-//                a.setEndDate(a.getStartDate());
-//            }
-//
-//            if(a.getDay() == null){
-//                a.setDay(getSchedule().getInfo().getDayFormat().get(a.getStartDate().getDayOfWeek().getValue()-1));
-//            }
-
+            else if(a.getDay() == null && a.getStartDate() != null && a.getEndDate() == null){
+                a.setDay(getSchedule().getInfo().getDayFormat().get(a.getStartDate().getDayOfWeek().getValue()-1));
+                a.setEndDate(a.getStartDate());
+            }
 
             if(!getSchedule().getPlaces().contains(a.getPlace())){
                 for(Places p : getSchedule().getPlaces()){

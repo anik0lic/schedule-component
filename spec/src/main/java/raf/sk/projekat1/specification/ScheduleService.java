@@ -69,6 +69,8 @@ public abstract class ScheduleService {
     public abstract void check(String startTime, String endTime, String day, String startDate, String endDate, Map<String, String> additional);
     public abstract void check(String startTime, String endTime, String day, String startDate, String endDate, Places place);
 
+    public abstract void loadJSON(String filepath) throws IOException;
+
     public void loadCSV(String filepath) throws IOException {
         Reader in = new FileReader(filepath);
         CSVFormat format = CSVFormat.DEFAULT.withFirstRecordAsHeader();
@@ -97,13 +99,12 @@ public abstract class ScheduleService {
                         schedule.getPlaces().add(place);
                         appointment.setPlace(place);
                     }
-                }else if(i == schedule.getInfo().getDate()){
+                }else if(i == schedule.getInfo().getStartDate()){
                     appointment.setStartDate(LocalDate.parse(record.get(i), DateTimeFormatter.ofPattern(schedule.getInfo().getDateFormat())));
-                    appointment.setDay(getSchedule().getInfo().getDayFormat().get(LocalDate.parse(record.get(i)).getDayOfWeek().getValue()-1));
-                }else if(i == schedule.getInfo().getDay()){
+                }else if(i == schedule.getInfo().getEndDate()){
+                    appointment.setEndDate(LocalDate.parse(record.get(i), DateTimeFormatter.ofPattern(schedule.getInfo().getDateFormat())));
+                } else if(i == schedule.getInfo().getDay()){
                     appointment.setDay(record.get(i));
-                    appointment.setStartDate(schedule.getStartDate());
-                    appointment.setEndDate(schedule.getEndDate());
                 }else if(i == schedule.getInfo().getTime()){
                     String[] time = record.get(i).split("-");
                     appointment.setStartTime(LocalTime.parse(time[0]));
@@ -111,6 +112,15 @@ public abstract class ScheduleService {
                 }else{
                     appointment.getAdditional().put(stringsList.get(i),record.get(i));
                 }
+            }
+
+            if(appointment.getDay() == null && appointment.getStartDate() != null && appointment.getEndDate() == null){
+                appointment.setDay(getSchedule().getInfo().getDayFormat().get(appointment.getStartDate().getDayOfWeek().getValue()-1));
+            }else if(appointment.getDay() != null && appointment.getStartDate() == null && appointment.getEndDate() == null){
+                appointment.setStartDate(getSchedule().getStartDate());
+                appointment.setEndDate(getSchedule().getEndDate());
+            }else if(appointment.getDay() == null && appointment.getStartDate() != null && appointment.getEndDate() != null){
+                appointment.setDay(getSchedule().getInfo().getDayFormat().get(appointment.getStartDate().getDayOfWeek().getValue()-1));
             }
             schedule.getAppointments().add(appointment);
         }
@@ -127,7 +137,7 @@ public abstract class ScheduleService {
         for(CSVRecord record : records){
             Places place = new Places();
 
-            for(int i=0;i<headers.size();i++){
+            for(int i = 0; i < headers.size(); i++){
                 if(i == 0){
                     place.setName(record.get(i));
                 }else{
@@ -137,7 +147,6 @@ public abstract class ScheduleService {
             schedule.getPlaces().add(place);
         }
     }
-    public abstract void loadJSON(String filepath) throws IOException;
 
     protected void sortAppointmentList(){
         Collections.sort(getSchedule().getAppointments(), new Comparator<Appointment>(){
