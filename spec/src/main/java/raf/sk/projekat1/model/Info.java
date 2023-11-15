@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -14,32 +13,31 @@ public class Info {
     protected int place;
     protected int time;
     protected int day;
-    protected int date;
+    protected int startDate;
+    protected int endDate;
     protected String dateFormat;
     protected List<String> dayFormat;
-    protected  List<String> headers;
-    //dd/MM/yyyy
 
-    public Info(int place, int time, int day, String dateFormat, List<String> dayFormat) {
+    public Info(int place, int time, int day, int startDate, int endDate, String dateFormat, List<String> dayFormat) {
         this.place = place;
         this.time = time;
         this.day = day;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.dateFormat = dateFormat;
         this.dayFormat = dayFormat;
-        this.headers = new ArrayList<>();
     }
 
-    public Info(int place, int time, int date, String dateFormat) {
+    public Info(int place, int time, int startDate, String dateFormat, List<String> dayFormat) {
         this.place = place;
         this.time = time;
-        this.date = date;
+        this.startDate = startDate;
         this.dateFormat = dateFormat;
-        this.headers = new ArrayList<>();
+        this.dayFormat = dayFormat;
     }
 
     public Info(String dateFormat, List<String> dayFormat) {
         this.dateFormat = dateFormat;
         this.dayFormat = dayFormat;
-        this.headers = new ArrayList<>();
     }
 }
