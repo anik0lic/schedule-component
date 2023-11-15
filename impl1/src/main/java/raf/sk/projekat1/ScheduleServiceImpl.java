@@ -3,17 +3,27 @@ package raf.sk.projekat1;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import raf.sk.projekat1.model.*;
 import raf.sk.projekat1.specification.ScheduleService;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +35,54 @@ public class ScheduleServiceImpl extends ScheduleService {
     public ScheduleServiceImpl(){}
 
     @Override
-    public void exportCSV(String filepath) {
+    public void exportCSV(String filepath) throws IOException {
+
+//        try (
+//                BufferedWriter writer = Files.newBufferedWriter(Paths.get(filepath));
+//
+//                CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader((ResultSet) getSchedule().getInfo().getHeaders()))
+//
+//        ) {
+//
+//            for(Appointment a: getSchedule().getAppointments()){
+//                csvPrinter.printRecord(a.getPlace().getName(),a.getStartDate(),a.getStartTime() + "-" + a.getEndTime());
+//            }
+//
+//
+//            csvPrinter.flush();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        try (
+//                BufferedWriter writer = Files.newBufferedWriter(Paths.get(filepath));
+//
+//                CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
+//                        .withHeader("ID", "Name", "Designation", "Company"));
+//        ) {
+//            csvPrinter.printRecord("1", "Sundar Pichai ♥", "CEO", "Google");
+//            csvPrinter.printRecord("2", "Satya Nadella", "CEO", "Microsoft");
+//            csvPrinter.printRecord("3", "Tim cook", "CEO", "Apple");
+//
+//            csvPrinter.printRecord(Arrays.asList("4", "Mark Zuckerberg", "CEO", "Facebook"));
+//
+//            csvPrinter.flush();
+//        }
+
+
+        FileWriter fileWriter = new FileWriter(filepath);
+        CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT);
+
+        for (Appointment appointment : getSchedule().getAppointments()) {
+            csvPrinter.printRecord(
+                    appointment.getPlace().getName(),
+                    appointment.getStartDate(),
+                    appointment.getStartTime() + "-" + appointment.getEndTime()
+            );
+        }
+
+        csvPrinter.close();
+        fileWriter.close();
+
 
     }
 
@@ -1139,6 +1196,15 @@ public class ScheduleServiceImpl extends ScheduleService {
                 }
             }
         }
+
+
+        List<String> headers = new ArrayList<>();
+        headers.add("Place");
+        headers.add("Date");
+        headers.add("Time");
+
+
+//        getSchedule().getInfo().setHeaders();
 
 //        for(Appointment a: appointments){
 //            String time = a.getStartTime() + "-" + a.getEndTime();

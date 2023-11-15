@@ -3,14 +3,18 @@ package raf.sk.projekat1;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import raf.sk.projekat1.model.*;
 import raf.sk.projekat1.specification.ScheduleService;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Map;
 public class ScheduleServiceImpl extends ScheduleService {
     public ScheduleServiceImpl(Schedule schedule) {
@@ -20,8 +24,22 @@ public class ScheduleServiceImpl extends ScheduleService {
     public ScheduleServiceImpl(){}
 
     @Override
-    public void exportCSV(String filepath) {
+    public void exportCSV(String filepath) throws IOException {
 
+
+        FileWriter fileWriter = new FileWriter(filepath);
+        CSVPrinter csvPrinter = new CSVPrinter(fileWriter, CSVFormat.DEFAULT);
+
+        for (Appointment appointment : getSchedule().getAppointments()) {
+            csvPrinter.printRecord(
+                    appointment.getPlace().getName(),
+                    appointment.getStartDate(),
+                    appointment.getStartTime() + "-" + appointment.getEndTime()
+            );
+        }
+
+        csvPrinter.close();
+        fileWriter.close();
     }
     @Override
     public void exportJSON(String filepath) {
@@ -44,7 +62,7 @@ public class ScheduleServiceImpl extends ScheduleService {
             if(a.getStartDate().equals(date) || a.getEndDate().equals(date) || ( a.getStartDate().isBefore(date) && a.getEndDate().isAfter(date)  ) ) {
                 if( a.getPlace().getName().equals(place)  ) {
                     if( startTime.isBefore(a.getEndTime()) && endTime.isAfter(a.getStartTime()) ) {
-                        System.out.println("Termin postoji");
+                        System.out.println("Greska: Termin vec postoji.");
                         return false;
                     }
                 }
@@ -83,7 +101,7 @@ public class ScheduleServiceImpl extends ScheduleService {
             if( (sd.isBefore(a.getEndDate()) || sd.equals(a.getEndDate()) ) && ( ed.isAfter(a.getStartDate()) || ed.equals(a.getStartDate()) ) ) {
                 if( a.getPlace().getName().equals(place)  ) {
                     if( startTime.isBefore(a.getEndTime()) && endTime.isAfter(a.getStartTime()) ) {
-                        System.out.println("Termin postoji");
+                        System.out.println("Greska: Termin vec postoji.");
                         return false;
                     }
                 }
@@ -226,36 +244,466 @@ public class ScheduleServiceImpl extends ScheduleService {
 
     @Override
     public Appointment find(String when, String place, String time) {
-        return null;
+
+        String[] dates = when.split("-");
+        LocalDate startDate = LocalDate.parse(dates[0], DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+        LocalDate endDate = LocalDate.parse(dates[1], DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+        String[] split = time.split("-");
+        LocalTime startTime = LocalTime.parse(split[0]);
+        LocalTime endTime = LocalTime.parse(split[1]);
+
+        String day = getSchedule().getInfo().getDayFormat().get(startDate.getDayOfWeek().getValue()-1);
+
+        Appointment foundAppointment = null;
+
+        for(Appointment a : getSchedule().getAppointments()){
+            if( (startDate.isBefore(a.getEndDate()) || startDate.equals(a.getEndDate()) ) && ( endDate.isAfter(a.getStartDate()) || endDate.equals(a.getStartDate()) ) ) {
+                if( a.getPlace().getName().equals(place)  ) {
+                    if( startTime.isBefore(a.getEndTime()) && endTime.isAfter(a.getStartTime()) ) {
+                        if(day.equals(a.getDay())) {
+                            foundAppointment = a;
+                        }
+
+                    }
+                }
+            }
+        }
+
+        if(foundAppointment == null){
+            return null;
+        }
+
+        Appointment newAppointment = new Appointment(foundAppointment.getStartTime(),foundAppointment.getEndTime(),startDate,endDate,foundAppointment.getDay(),foundAppointment.getAdditional());
+        newAppointment.setPlace(foundAppointment.getPlace());
+
+
+        return newAppointment;
     }
 
     @Override
     public void updateAppointment(Appointment appointment, String date) {
+
+
+
+
+        Appointment foundAppointment = null;
+
+        for(Appointment a : getSchedule().getAppointments()){
+            if( (appointment.getStartDate().isBefore(a.getEndDate()) || appointment.getStartDate().equals(a.getEndDate()) ) && ( appointment.getEndDate().isAfter(a.getStartDate()) || appointment.getEndDate().equals(a.getStartDate()) ) ) {
+                if( a.getPlace().getName().equals(appointment.getPlace().getName())  ) {
+                    if( appointment.getStartTime().isBefore(a.getEndTime()) && appointment.getEndTime().isAfter(a.getStartTime()) ) {
+                        if(appointment.getDay().equals(a.getDay())) {
+                            foundAppointment = a;
+                            break;
+                        }
+
+                    }
+                }
+            }
+        }
+
+
+        if(foundAppointment == null){
+            return;
+        }
+
+        String time = appointment.getStartTime() + "-" + appointment.getEndTime();
+        String[] dates = date.split("-");
+
+        if(addAppointment(dates[0],dates[1],time,appointment.getPlace().getName(),AppointmentRepeat.EVERY_WEEK,appointment.getAdditional())){
+
+            int appDay = foundAppointment.getStartDate().getDayOfWeek().getValue();
+            int sdDay = appointment.getStartDate().getDayOfWeek().getValue();
+            int edDay = appointment.getEndDate().getDayOfWeek().getValue();
+
+            LocalDate newStartdate = appointment.getEndDate();
+            LocalDate newEndDate = appointment.getStartDate();
+
+            newStartdate = newStartdate.plusDays((7-edDay+appDay)%7);
+            newEndDate = newEndDate.minusDays((7+sdDay-appDay)%7);
+
+            System.out.println(newStartdate + " " + newEndDate);
+
+            if(appointment.getStartDate().equals(foundAppointment.getStartDate()) && appointment.getEndDate().equals(foundAppointment.getEndDate())){
+                getSchedule().getAppointments().remove(foundAppointment);
+            }
+            else if(appointment.getStartDate().equals(foundAppointment.getStartDate()) && appointment.getEndDate().isBefore(foundAppointment.getEndDate()) ){
+                foundAppointment.setStartDate(newStartdate);
+            }
+            else if(appointment.getStartDate().isAfter(foundAppointment.getStartDate()) && appointment.getEndDate().equals(foundAppointment.getEndDate()) ){
+                foundAppointment.setEndDate(newEndDate);
+            }
+            else if(appointment.getStartDate().isAfter(foundAppointment.getStartDate()) && appointment.getEndDate().isBefore(foundAppointment.getEndDate()) ){
+                Appointment newappointment = new Appointment(foundAppointment.getStartTime(),foundAppointment.getEndTime(),foundAppointment.getStartDate(),newEndDate,foundAppointment.getDay(),foundAppointment.getAdditional());
+                newappointment.setPlace(foundAppointment.getPlace());
+
+                foundAppointment.setStartDate(newStartdate);
+
+                getSchedule().getAppointments().add(newappointment);
+            }
+            sortAppointmentList();
+
+
+
+
+        }
 
     }
 
     @Override
     public void updateAppointment(Appointment appointment, Places place) {
 
+        Appointment foundAppointment = null;
+
+        for(Appointment a : getSchedule().getAppointments()){
+            if( (appointment.getStartDate().isBefore(a.getEndDate()) || appointment.getStartDate().equals(a.getEndDate()) ) && ( appointment.getEndDate().isAfter(a.getStartDate()) || appointment.getEndDate().equals(a.getStartDate()) ) ) {
+                if( a.getPlace().getName().equals(appointment.getPlace().getName())  ) {
+                    if( appointment.getStartTime().isBefore(a.getEndTime()) && appointment.getEndTime().isAfter(a.getStartTime()) ) {
+                        if(appointment.getDay().equals(a.getDay())) {
+                            foundAppointment = a;
+                            break;
+                        }
+
+                    }
+                }
+            }
+        }
+
+
+        if(foundAppointment == null){
+            return;
+        }
+
+        String time = appointment.getStartTime() + "-" + appointment.getEndTime();
+
+        String startDate = appointment.getStartDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+        String endDate = appointment.getEndDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+
+        System.out.println(startDate + " " + endDate);
+
+
+        if(addAppointment(startDate,endDate,time,place.getName(),AppointmentRepeat.EVERY_WEEK,appointment.getAdditional())){
+
+            int appDay = foundAppointment.getStartDate().getDayOfWeek().getValue();
+            int sdDay = appointment.getStartDate().getDayOfWeek().getValue();
+            int edDay = appointment.getEndDate().getDayOfWeek().getValue();
+
+            LocalDate newStartdate = appointment.getEndDate();
+            LocalDate newEndDate = appointment.getStartDate();
+
+            newStartdate = newStartdate.plusDays((7-edDay+appDay)%7);
+            newEndDate = newEndDate.minusDays((7+sdDay-appDay)%7);
+
+            System.out.println(newStartdate + " " + newEndDate);
+
+            if(appointment.getStartDate().equals(foundAppointment.getStartDate()) && appointment.getEndDate().equals(foundAppointment.getEndDate())){
+                getSchedule().getAppointments().remove(foundAppointment);
+            }
+            else if(appointment.getStartDate().equals(foundAppointment.getStartDate()) && appointment.getEndDate().isBefore(foundAppointment.getEndDate()) ){
+                foundAppointment.setStartDate(newStartdate);
+            }
+            else if(appointment.getStartDate().isAfter(foundAppointment.getStartDate()) && appointment.getEndDate().equals(foundAppointment.getEndDate()) ){
+                foundAppointment.setEndDate(newEndDate);
+            }
+            else if(appointment.getStartDate().isAfter(foundAppointment.getStartDate()) && appointment.getEndDate().isBefore(foundAppointment.getEndDate()) ){
+                Appointment newappointment = new Appointment(foundAppointment.getStartTime(),foundAppointment.getEndTime(),foundAppointment.getStartDate(),newEndDate,foundAppointment.getDay(),foundAppointment.getAdditional());
+                newappointment.setPlace(foundAppointment.getPlace());
+
+                foundAppointment.setStartDate(newStartdate);
+
+                getSchedule().getAppointments().add(newappointment);
+            }
+            sortAppointmentList();
+
+
+
+
+        }
+
+
     }
 
     @Override
     public void updateAppointment(Appointment appointment, String startTime, String endTime) {
+
+        Appointment foundAppointment = null;
+
+        for(Appointment a : getSchedule().getAppointments()){
+            if( (appointment.getStartDate().isBefore(a.getEndDate()) || appointment.getStartDate().equals(a.getEndDate()) ) && ( appointment.getEndDate().isAfter(a.getStartDate()) || appointment.getEndDate().equals(a.getStartDate()) ) ) {
+                if( a.getPlace().getName().equals(appointment.getPlace().getName())  ) {
+                    if( appointment.getStartTime().isBefore(a.getEndTime()) && appointment.getEndTime().isAfter(a.getStartTime()) ) {
+                        if(appointment.getDay().equals(a.getDay())) {
+                            foundAppointment = a;
+                            break;
+                        }
+
+                    }
+                }
+            }
+        }
+
+
+        if(foundAppointment == null){
+            return;
+        }
+
+        String time = startTime + "-" + endTime;
+
+        String startDate = appointment.getStartDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+        String endDate = appointment.getEndDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+
+//        System.out.println(startDate + " " + endDate);
+
+
+        if(addAppointment(startDate,endDate,time,appointment.getPlace().getName(),AppointmentRepeat.EVERY_WEEK,appointment.getAdditional())){
+
+            int appDay = foundAppointment.getStartDate().getDayOfWeek().getValue();
+            int sdDay = appointment.getStartDate().getDayOfWeek().getValue();
+            int edDay = appointment.getEndDate().getDayOfWeek().getValue();
+
+            LocalDate newStartdate = appointment.getEndDate();
+            LocalDate newEndDate = appointment.getStartDate();
+
+            newStartdate = newStartdate.plusDays((7-edDay+appDay)%7);
+            newEndDate = newEndDate.minusDays((7+sdDay-appDay)%7);
+
+            System.out.println(newStartdate + " " + newEndDate);
+
+            if(appointment.getStartDate().equals(foundAppointment.getStartDate()) && appointment.getEndDate().equals(foundAppointment.getEndDate())){
+                getSchedule().getAppointments().remove(foundAppointment);
+            }
+            else if(appointment.getStartDate().equals(foundAppointment.getStartDate()) && appointment.getEndDate().isBefore(foundAppointment.getEndDate()) ){
+                foundAppointment.setStartDate(newStartdate);
+            }
+            else if(appointment.getStartDate().isAfter(foundAppointment.getStartDate()) && appointment.getEndDate().equals(foundAppointment.getEndDate()) ){
+                foundAppointment.setEndDate(newEndDate);
+            }
+            else if(appointment.getStartDate().isAfter(foundAppointment.getStartDate()) && appointment.getEndDate().isBefore(foundAppointment.getEndDate()) ){
+                Appointment newappointment = new Appointment(foundAppointment.getStartTime(),foundAppointment.getEndTime(),foundAppointment.getStartDate(),newEndDate,foundAppointment.getDay(),foundAppointment.getAdditional());
+                newappointment.setPlace(foundAppointment.getPlace());
+
+                foundAppointment.setStartDate(newStartdate);
+
+                getSchedule().getAppointments().add(newappointment);
+            }
+            sortAppointmentList();
+
+
+
+
+        }
+
 
     }
 
     @Override
     public void updateAppointment(Appointment appointment, Map<String, String> additional) {
 
+        Appointment foundAppointment = null;
+
+        for(Appointment a : getSchedule().getAppointments()){
+            if( (appointment.getStartDate().isBefore(a.getEndDate()) || appointment.getStartDate().equals(a.getEndDate()) ) && ( appointment.getEndDate().isAfter(a.getStartDate()) || appointment.getEndDate().equals(a.getStartDate()) ) ) {
+                if( a.getPlace().getName().equals(appointment.getPlace().getName())  ) {
+                    if( appointment.getStartTime().isBefore(a.getEndTime()) && appointment.getEndTime().isAfter(a.getStartTime()) ) {
+                        if(appointment.getDay().equals(a.getDay())) {
+                            foundAppointment = a;
+                            break;
+                        }
+
+                    }
+                }
+            }
+        }
+
+
+        if(foundAppointment == null){
+            return;
+        }
+
+        String time = appointment.getStartTime() + "-" + appointment.getEndTime();
+
+        String startDate = appointment.getStartDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+        String endDate = appointment.getEndDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+
+//        System.out.println(startDate + " " + endDate);
+
+        int appDay = foundAppointment.getStartDate().getDayOfWeek().getValue();
+        int sdDay = appointment.getStartDate().getDayOfWeek().getValue();
+        int edDay = appointment.getEndDate().getDayOfWeek().getValue();
+
+        LocalDate newStartdate = appointment.getEndDate().plusDays(7);
+        LocalDate newEndDate = appointment.getStartDate().minusDays(7);
+
+        newStartdate = newStartdate.plusDays((7-edDay+appDay)%7);
+        newEndDate = newEndDate.minusDays((7+sdDay-appDay)%7);
+
+        System.out.println(newStartdate + " " + newEndDate);
+
+        if(appointment.getStartDate().equals(foundAppointment.getStartDate()) && appointment.getEndDate().equals(foundAppointment.getEndDate())){
+            getSchedule().getAppointments().remove(foundAppointment);
+        }
+        else if(appointment.getStartDate().equals(foundAppointment.getStartDate()) && appointment.getEndDate().isBefore(foundAppointment.getEndDate()) ){
+            foundAppointment.setStartDate(newStartdate);
+        }
+        else if(appointment.getStartDate().isAfter(foundAppointment.getStartDate()) && appointment.getEndDate().equals(foundAppointment.getEndDate()) ){
+            foundAppointment.setEndDate(newEndDate);
+        }
+        else if(appointment.getStartDate().isAfter(foundAppointment.getStartDate()) && appointment.getEndDate().isBefore(foundAppointment.getEndDate()) ){
+            Appointment newappointment = new Appointment(foundAppointment.getStartTime(),foundAppointment.getEndTime(),foundAppointment.getStartDate(),newEndDate,foundAppointment.getDay(),foundAppointment.getAdditional());
+            newappointment.setPlace(foundAppointment.getPlace());
+
+            foundAppointment.setStartDate(newStartdate);
+
+            getSchedule().getAppointments().add(newappointment);
+        }
+        sortAppointmentList();
+
+
+
+
+        addAppointment(startDate,endDate,time,appointment.getPlace().getName(),AppointmentRepeat.EVERY_WEEK,additional);
+
+
     }
 
     @Override
     public void updateAppointment(Appointment appointment, String date, String startTime, String endTime) {
 
+        Appointment foundAppointment = null;
+
+        for(Appointment a : getSchedule().getAppointments()){
+            if( (appointment.getStartDate().isBefore(a.getEndDate()) || appointment.getStartDate().equals(a.getEndDate()) ) && ( appointment.getEndDate().isAfter(a.getStartDate()) || appointment.getEndDate().equals(a.getStartDate()) ) ) {
+                if( a.getPlace().getName().equals(appointment.getPlace().getName())  ) {
+                    if( appointment.getStartTime().isBefore(a.getEndTime()) && appointment.getEndTime().isAfter(a.getStartTime()) ) {
+                        if(appointment.getDay().equals(a.getDay())) {
+                            foundAppointment = a;
+                            break;
+                        }
+
+                    }
+                }
+            }
+        }
+
+
+        if(foundAppointment == null){
+            return;
+        }
+
+        String time = startTime + "-" + endTime;
+        String[] dates = date.split("-");
+
+//        System.out.println(startDate + " " + endDate);
+
+
+        if(addAppointment(dates[0],dates[1],time,appointment.getPlace().getName(),AppointmentRepeat.EVERY_WEEK,appointment.getAdditional())){
+
+            int appDay = foundAppointment.getStartDate().getDayOfWeek().getValue();
+            int sdDay = appointment.getStartDate().getDayOfWeek().getValue();
+            int edDay = appointment.getEndDate().getDayOfWeek().getValue();
+
+            LocalDate newStartdate = appointment.getEndDate();
+            LocalDate newEndDate = appointment.getStartDate();
+
+            newStartdate = newStartdate.plusDays((7-edDay+appDay)%7);
+            newEndDate = newEndDate.minusDays((7+sdDay-appDay)%7);
+
+            System.out.println(newStartdate + " " + newEndDate);
+
+            if(appointment.getStartDate().equals(foundAppointment.getStartDate()) && appointment.getEndDate().equals(foundAppointment.getEndDate())){
+                getSchedule().getAppointments().remove(foundAppointment);
+            }
+            else if(appointment.getStartDate().equals(foundAppointment.getStartDate()) && appointment.getEndDate().isBefore(foundAppointment.getEndDate()) ){
+                foundAppointment.setStartDate(newStartdate);
+            }
+            else if(appointment.getStartDate().isAfter(foundAppointment.getStartDate()) && appointment.getEndDate().equals(foundAppointment.getEndDate()) ){
+                foundAppointment.setEndDate(newEndDate);
+            }
+            else if(appointment.getStartDate().isAfter(foundAppointment.getStartDate()) && appointment.getEndDate().isBefore(foundAppointment.getEndDate()) ){
+                Appointment newappointment = new Appointment(foundAppointment.getStartTime(),foundAppointment.getEndTime(),foundAppointment.getStartDate(),newEndDate,foundAppointment.getDay(),foundAppointment.getAdditional());
+                newappointment.setPlace(foundAppointment.getPlace());
+
+                foundAppointment.setStartDate(newStartdate);
+
+                getSchedule().getAppointments().add(newappointment);
+            }
+            sortAppointmentList();
+
+
+
+
+        }
+
+
     }
 
     @Override
     public void updateAppointment(Appointment appointment, String date, String startTime, String endTime, Places place) {
+
+        Appointment foundAppointment = null;
+
+        for(Appointment a : getSchedule().getAppointments()){
+            if( (appointment.getStartDate().isBefore(a.getEndDate()) || appointment.getStartDate().equals(a.getEndDate()) ) && ( appointment.getEndDate().isAfter(a.getStartDate()) || appointment.getEndDate().equals(a.getStartDate()) ) ) {
+                if( a.getPlace().getName().equals(appointment.getPlace().getName())  ) {
+                    if( appointment.getStartTime().isBefore(a.getEndTime()) && appointment.getEndTime().isAfter(a.getStartTime()) ) {
+                        if(appointment.getDay().equals(a.getDay())) {
+                            foundAppointment = a;
+                            break;
+                        }
+
+                    }
+                }
+            }
+        }
+
+
+        if(foundAppointment == null){
+            return;
+        }
+
+        String time = startTime + "-" + endTime;
+        String[] dates = date.split("-");
+
+//        System.out.println(startDate + " " + endDate);
+
+
+        if(addAppointment(dates[0],dates[1],time,place.getName(),AppointmentRepeat.EVERY_WEEK,appointment.getAdditional())){
+
+            int appDay = foundAppointment.getStartDate().getDayOfWeek().getValue();
+            int sdDay = appointment.getStartDate().getDayOfWeek().getValue();
+            int edDay = appointment.getEndDate().getDayOfWeek().getValue();
+
+            LocalDate newStartdate = appointment.getEndDate();
+            LocalDate newEndDate = appointment.getStartDate();
+
+            newStartdate = newStartdate.plusDays((7-edDay+appDay)%7);
+            newEndDate = newEndDate.minusDays((7+sdDay-appDay)%7);
+
+            System.out.println(newStartdate + " " + newEndDate);
+
+            if(appointment.getStartDate().equals(foundAppointment.getStartDate()) && appointment.getEndDate().equals(foundAppointment.getEndDate())){
+                getSchedule().getAppointments().remove(foundAppointment);
+            }
+            else if(appointment.getStartDate().equals(foundAppointment.getStartDate()) && appointment.getEndDate().isBefore(foundAppointment.getEndDate()) ){
+                foundAppointment.setStartDate(newStartdate);
+            }
+            else if(appointment.getStartDate().isAfter(foundAppointment.getStartDate()) && appointment.getEndDate().equals(foundAppointment.getEndDate()) ){
+                foundAppointment.setEndDate(newEndDate);
+            }
+            else if(appointment.getStartDate().isAfter(foundAppointment.getStartDate()) && appointment.getEndDate().isBefore(foundAppointment.getEndDate()) ){
+                Appointment newappointment = new Appointment(foundAppointment.getStartTime(),foundAppointment.getEndTime(),foundAppointment.getStartDate(),newEndDate,foundAppointment.getDay(),foundAppointment.getAdditional());
+                newappointment.setPlace(foundAppointment.getPlace());
+
+                foundAppointment.setStartDate(newStartdate);
+
+                getSchedule().getAppointments().add(newappointment);
+            }
+            sortAppointmentList();
+
+
+
+
+        }
 
     }
 

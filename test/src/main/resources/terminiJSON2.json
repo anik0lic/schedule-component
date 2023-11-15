@@ -1,7 +1,7 @@
 {
   "startTime": "08:00",
   "endTime": "20:00",
-  "startDate": "01/10/2023",
+  "startDate": "01/09/2023",
   "endDate": "01/06/2024",
   "nonWorkingDates": ["05/10/2023", "02/01/2023"],
   "nonWorkingDaysOfTheWeek": ["Sub", "Ned"],
@@ -106,6 +106,7 @@
       "startTime": "09:00",
       "endTime": "11:00",
       "startDate": "22/10/2023",
+      "endDate": "25/10/2023",
       "additional": {
         "racunari": "NE",
         "predavac": "Surla"
@@ -116,6 +117,7 @@
       "startTime": "14:00",
       "endTime": "15:00",
       "startDate": "02/10/2023",
+      "endDate": "20/10/2023",
       "additional": {
         "racunari": "NE",
         "predavac": "Surla"

@@ -29,8 +29,8 @@ public class Main {
             ScheduleService ss = (ScheduleService) impl.getDeclaredConstructor().newInstance();
 
             ss.setSchedule(schedule);
-            ss.loadJSON("E:\\IntellJ Projects\\projekat\\test\\src\\main\\resources\\terminiJSON2.json");
-            Places place = new Places("RAF1");
+            ss.loadJSON("C:\\Users\\Lukam\\IdeaProjects\\projekat\\test\\src\\main\\resources\\terminiJSON2.json");
+            Places place = new Places("RAF2");
             Map<String, String> a = new HashMap<>();
             a.put("racunari", "DA");
 //            ss.check("02/10/2023", "23/10/2023", "Pon");
@@ -44,12 +44,16 @@ public class Main {
 //            ss.updateAppointment(app, "03/10/2023" , "13:00", "14:00",place);
             ss.search();
             System.out.println(" ");
+            Appointment appointment = ss.find("09/10/2023-23/10/2023","RAF1","09:00-11:00");
+            ss.updateAppointment(appointment,"09/09/2023-23/09/2023","11:00","13:00",place);
+//            System.out.println(appointment.getDay() + " " + appointment.getPlace().getName() + " " + appointment.getStartTime() + "-" + appointment.getEndTime() + " " + appointment.getStartDate() + "-" + appointment.getEndDate());
 //            System.out.println(ss.addAppointment("03/10/2023", "RAF1", "11:00-13:00",a));
 //            ss.addAppointment("01/10/2023","01/10/2023","14:00-15:00","RAF1",AppointmentRepeat.EVERY_WEEK,a);
 //            ss.removeAppointment("03/10/2023","04/10/2023","09:00-11:00","RAF1",AppointmentRepeat.EVERY_WEEK);
 //            ss.check("02/10/2023", "23/10/2023", "Pon", a);
-            ss.check("11:00", "17:00", "Pon", "02/10/2023", "23/10/2023", place);
-//            ss.search();
+//            ss.check("11:00", "17:00", "Pon", "02/10/2023", "23/10/2023", place);
+            ss.search();
+            ss.exportCSV("C:\\Users\\Lukam\\IdeaProjects\\projekat\\test\\src\\main\\resources\\crnja.csv");
 //            ss.search("Sre","05/10/2023","10/10/2023", place,a);
         } catch (IOException e) {
             throw new RuntimeException(e);

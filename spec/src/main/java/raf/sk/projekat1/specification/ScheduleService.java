@@ -23,7 +23,7 @@ public abstract class ScheduleService {
         this.schedule = schedule;
     }
 
-    public abstract void exportCSV(String filepath);
+    public abstract void exportCSV(String filepath) throws IOException;
     public abstract void exportJSON(String filepath);
     //I - 13/10/2023 11:00-12:00
     //II - 13/10/2023 11:00-12:00
@@ -77,6 +77,7 @@ public abstract class ScheduleService {
 
         Set<String> headers = records.iterator().next().toMap().keySet();
         List<String> stringsList = new ArrayList<>(headers);
+        schedule.getInfo().setHeaders(stringsList);
 
         for(CSVRecord record : records){
             Appointment appointment = new Appointment();

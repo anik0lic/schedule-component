@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -16,6 +17,8 @@ public class Info {
     protected int date;
     protected String dateFormat;
     protected List<String> dayFormat;
+    protected  List<String> headers;
+    //dd/MM/yyyy
 
     public Info(int place, int time, int day, String dateFormat, List<String> dayFormat) {
         this.place = place;
@@ -23,6 +26,7 @@ public class Info {
         this.day = day;
         this.dateFormat = dateFormat;
         this.dayFormat = dayFormat;
+        this.headers = new ArrayList<>();
     }
 
     public Info(int place, int time, int date, String dateFormat) {
@@ -30,10 +34,12 @@ public class Info {
         this.time = time;
         this.date = date;
         this.dateFormat = dateFormat;
+        this.headers = new ArrayList<>();
     }
 
     public Info(String dateFormat, List<String> dayFormat) {
         this.dateFormat = dateFormat;
         this.dayFormat = dayFormat;
+        this.headers = new ArrayList<>();
     }
 }
