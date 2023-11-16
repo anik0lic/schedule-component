@@ -105,8 +105,9 @@
       "place": "RAF2",
       "startTime": "09:00",
       "endTime": "11:00",
-      "startDate": "22/10/2023",
-      "endDate": "25/10/2023",
+      "startDate": "23/10/2023",
+      "endDate": "30/10/2023",
+      "day": "Pon",
       "additional": {
         "racunari": "NE",
         "predavac": "Surla"
@@ -117,7 +118,6 @@
       "startTime": "14:00",
       "endTime": "15:00",
       "startDate": "02/10/2023",
-      "endDate": "20/10/2023",
       "additional": {
         "racunari": "NE",
         "predavac": "Surla"

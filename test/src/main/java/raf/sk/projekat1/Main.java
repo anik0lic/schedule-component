@@ -54,7 +54,7 @@ public class Main {
 //            ss.search();
 //            ss.removeAppointment("10/10/2023",  "30/10/2023",  "11:00-13:00", "RAF1", AppointmentRepeat.EVERY_DAY);
 //            ss.removeAppointment("10/10/2023",  "30/12/2023",  "11:00-13:00", "RAF1", AppointmentRepeat.EVERY_WEDNESDAY);
-            ss.addAppointment("14/10/2023", "RAF1", "09:00-11:00", a);
+//            ss.addAppointment("14/10/2023", "RAF1", "09:00-11:00", a);
 //            Appointment app = ss.find("02/10/2023", "RAF1", "09:00-11:00");
 //            ss.updateAppointment(app, "03/10/2023" , "13:00", "14:00",place);
             ss.search();
@@ -66,6 +66,7 @@ public class Main {
 //            ss.check("11:00", "17:00", "Pon", "02/10/2023", "23/10/2023", place);
 //            ss.search();
 //            ss.search("Sre","02/10/2023","10/10/2023", place,a);
+            ss.check("01/10/2023", "30/10/2023");
         } catch (IOException | ClassNotFoundException | NoSuchMethodException | IllegalAccessException |
                  InstantiationException | InvocationTargetException e) {
             throw new RuntimeException(e);

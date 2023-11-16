@@ -3,6 +3,8 @@ package raf.sk.projekat1;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import raf.sk.projekat1.model.*;
 import raf.sk.projekat1.specification.ScheduleService;
 
@@ -21,7 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -516,7 +518,6 @@ public class ScheduleServiceImpl extends ScheduleService {
             System.out.println("greska");
         }
     }
-
     @Override
     public void updateAppointment(Appointment appointment, String when, String startTime, String endTime, Places place) {
         String time = startTime + "-" + endTime;
@@ -1143,5 +1144,35 @@ public class ScheduleServiceImpl extends ScheduleService {
 //            addAppointment(startDate,endDate,time,a.getPlace().getName(),AppointmentRepeat.EVERY_WEEK,a.getAdditional());
 //        }
         sortAppointmentList();
+    }
+
+    private void sortAppointmentList(){
+        getSchedule().getAppointments().sort(new Comparator<Appointment>() {
+            @Override
+            public int compare(Appointment o1, Appointment o2) {
+                return o1.getPlace().getName().compareTo(o2.getPlace().getName());
+            }
+        });
+
+        getSchedule().getAppointments().sort(new Comparator<Appointment>() {
+            @Override
+            public int compare(Appointment o1, Appointment o2) {
+                return o1.getStartTime().compareTo(o2.getStartTime());
+            }
+        });
+
+        getSchedule().getAppointments().sort(new Comparator<Appointment>() {
+            @Override
+            public int compare(Appointment o1, Appointment o2) {
+                return o1.getStartDate().compareTo(o2.getStartDate());
+            }
+        });
+
+        getSchedule().getPlaces().sort(new Comparator<Places>() {
+            @Override
+            public int compare(Places o1, Places o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
     }
 }

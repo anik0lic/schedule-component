@@ -79,7 +79,7 @@ public abstract class ScheduleService {
 
         Set<String> headers = records.iterator().next().toMap().keySet();
         List<String> stringsList = new ArrayList<>(headers);
-        schedule.getInfo().setHeaders(stringsList);
+//        schedule.getInfo().setHeaders(stringsList);
 
         for(CSVRecord record : records){
             Appointment appointment = new Appointment();
@@ -147,36 +147,6 @@ public abstract class ScheduleService {
             }
             schedule.getPlaces().add(place);
         }
-    }
-
-    protected void sortAppointmentList(){
-        Collections.sort(getSchedule().getAppointments(), new Comparator<Appointment>(){
-            @Override
-            public int compare(Appointment o1, Appointment o2) {
-                return o1.getPlace().getName().compareTo(o2.getPlace().getName());
-            }
-        });
-
-        Collections.sort(getSchedule().getAppointments(), new Comparator<Appointment>(){
-            @Override
-            public int compare(Appointment o1, Appointment o2) {
-                return o1.getStartTime().compareTo(o2.getStartTime());
-            }
-        });
-
-        Collections.sort(getSchedule().getAppointments(), new Comparator<Appointment>(){
-            @Override
-            public int compare(Appointment o1, Appointment o2) {
-                return o1.getStartDate().compareTo(o2.getStartDate());
-            }
-        });
-
-        Collections.sort(getSchedule().getPlaces(), new Comparator<Places>(){
-            @Override
-            public int compare(Places o1, Places o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-        });
     }
 
 }
