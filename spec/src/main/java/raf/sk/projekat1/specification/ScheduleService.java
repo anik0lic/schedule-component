@@ -38,23 +38,23 @@ public abstract class ScheduleService {
     public abstract Appointment find(String when, String place, String time);
 
     //da ima boolean da li hoce i za sve do kraja isto da odredi?
-    public abstract void updateAppointment(Appointment appointment, String when);
-    public abstract void updateAppointment(Appointment appointment, Places place);
-    public abstract void updateAppointment(Appointment appointment, String startTime, String endTime);
-    public abstract void updateAppointment(Appointment appointment, Map<String, String> additional);
-    public abstract void updateAppointment(Appointment appointment, String when, String startTime, String endTime);
-    public abstract void updateAppointment(Appointment appointment, String when, String startTime, String endTime, Places place);
+    public abstract boolean updateAppointment(Appointment appointment, String when);
+    public abstract boolean updateAppointment(Appointment appointment, Places place);
+    public abstract boolean updateAppointment(Appointment appointment, String startTime, String endTime);
+    public abstract boolean updateAppointment(Appointment appointment, Map<String, String> additional);
+    public abstract boolean updateAppointment(Appointment appointment, String when, String startTime, String endTime);
+    public abstract boolean updateAppointment(Appointment appointment, String when, String startTime, String endTime, Places place);
 
-    public abstract void search();
-    public abstract void search(Places place);
-    public abstract void search(Map<String, String> additional);
-    public abstract void search(String startDate, String endDate);
-    public abstract void search(String startDate, String endDate, Map<String, String> additional);
-    public abstract void search(String startDate, String endDate, Places place);
-    public abstract void search(String startDate, String endDate, Places place, Map<String, String> additional);
-    public abstract void search(String day, String startDate, String endDate, Places place);
-    public abstract void search(String day, String startDate, String endDate, Map<String, String> additional);
-    public abstract void search(String day, String startDate, String endDate, Places place, Map<String, String> additional);
+    public abstract List<String> search();
+    public abstract List<String> search(Places place);
+    public abstract List<String> search(Map<String, String> additional);
+    public abstract List<String> search(String startDate, String endDate);
+    public abstract List<String> search(String startDate, String endDate, Map<String, String> additional);
+    public abstract List<String> search(String startDate, String endDate, Places place);
+    public abstract List<String> search(String startDate, String endDate, Places place, Map<String, String> additional);
+    public abstract List<String> search(String day, String startDate, String endDate, Places place);
+    public abstract List<String> search(String day, String startDate, String endDate, Map<String, String> additional);
+    public abstract List<String> search(String day, String startDate, String endDate, Places place, Map<String, String> additional);
 
     public abstract void check(String startDate, String endDate);
     public abstract void check(String startDate, String endDate, Map<String, String> additional);

@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -42,6 +43,13 @@ public class Appointment {
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if (this == obj) return true;
+        if(obj == null || getClass() != obj.getClass()) return false;
+        Appointment that = (Appointment) obj;
+        return Objects.equals(startTime, that.startTime) && Objects.equals(endTime, that.endTime) && Objects.equals(startDate, that.startDate)
+                && Objects.equals(endDate, that.endDate) && Objects.equals(place, that.place);
     }
+
+    //napravi toString metodu za obe implementacije
+    //ovaj appointment je abstract?
 }

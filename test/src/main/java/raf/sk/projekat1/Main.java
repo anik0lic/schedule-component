@@ -57,8 +57,11 @@ public class Main {
 //            ss.addAppointment("14/10/2023", "RAF1", "09:00-11:00", a);
 //            Appointment app = ss.find("02/10/2023", "RAF1", "09:00-11:00");
 //            ss.updateAppointment(app, "03/10/2023" , "13:00", "14:00",place);
-            ss.search();
-            System.out.println(" ");
+            for(String s : ss.search()){
+                System.out.println(s);
+            }
+//            ss.search();
+//            System.out.println(" ");
 //            System.out.println(ss.addAppointment("03/10/2023", "RAF1", "11:00-13:00",a));
 //            ss.addAppointment("01/10/2023", "31/10/2023", "14:00-15:00", "RAF1", AppointmentRepeat.EVERY_WEEK, a);
 //            ss.removeAppointment("03/10/2023","04/10/2023","09:00-11:00","RAF1",AppointmentRepeat.EVERY_WEEK);
@@ -66,7 +69,7 @@ public class Main {
 //            ss.check("11:00", "17:00", "Pon", "02/10/2023", "23/10/2023", place);
 //            ss.search();
 //            ss.search("Sre","02/10/2023","10/10/2023", place,a);
-            ss.check("01/10/2023", "30/10/2023");
+//            ss.check("01/10/2023", "30/10/2023");
         } catch (IOException | ClassNotFoundException | NoSuchMethodException | IllegalAccessException |
                  InstantiationException | InvocationTargetException e) {
             throw new RuntimeException(e);
