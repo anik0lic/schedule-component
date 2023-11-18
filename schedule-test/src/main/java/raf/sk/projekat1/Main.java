@@ -43,7 +43,7 @@ public class Main {
             ScheduleService ss = (ScheduleService) impl.getDeclaredConstructor().newInstance();
 
             ss.setSchedule(schedule);
-            ss.loadJSON("E:\\IntellJ Projects\\projekat\\test\\src\\main\\resources\\terminiJSON2.json");
+            ss.loadJSON("E:\\IntellJ Projects\\schedule-component\\schedule-test\\src\\main\\resources\\terminiJSON22.json");
 //            ss.loadCSV("E:\\IntellJ Projects\\projekat\\test\\src\\main\\resources\\terminiCSV23.csv");
             Places place = new Places("RAF1");
             Map<String, String> a = new HashMap<>();
@@ -59,9 +59,27 @@ public class Main {
             ss.printAppointments(ss.search());
             System.out.println(" ");
 
-            for(String s : ss.check("09:00","13:00","03/10/2023", "30/10/2023")){
-                System.out.println(s);
-            }
+//            System.out.println(ss.addAppointment("04/09/2023", "RAF1", "11:00-14:00", a));
+            System.out.println(ss.addAppointment("04/09/2023", "30/09/2023", "11:00-14:00", "RAF1", AppointmentRepeat.EVERY_WEEK, a));
+
+            ss.printAppointments(List.of(ss.find("11/09/2023-18/09/2023", "RAF1", "11:00-14:00")));
+
+//            System.out.println(ss.removeAppointment("01/09/2023", "15/09/2023", "11:00-14:00", "RAF1", AppointmentRepeat.EVERY_MONDAY));
+//            ss.printAppointments(ss.search());
+//            System.out.println(ss.addAppointment("04/09/2023", "RAF1", "14:00-15:00", a));
+//            System.out.println(ss.addAppointment("04/09/2023", "RAF1", "10:00-12:00", a));
+//            System.out.println(ss.addAppointment("04/09/2023", "RAF1", "11:00-14:00", a));
+//
+//            System.out.println(ss.addAppointment("27/11/2023", "RAF1", "08:00-10:00", a));
+//            System.out.println(ss.addAppointment("27/11/2023", "RAF1", "11:00-14:00", a));
+//
+//            System.out.println(ss.addAppointment("11/09/2023", "RAF1", "08:00-10:00", a));
+
+
+
+//            for(String s : ss.check("03/09/2023", "30/09/2023")){
+//                System.out.println(s);
+//            }
 
 //            ss.printAppointments(ss.search("Pon", "02/10/2023", "30/10/2023", place));
 

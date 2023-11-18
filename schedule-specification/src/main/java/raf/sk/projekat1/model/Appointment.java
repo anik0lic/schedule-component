@@ -3,6 +3,7 @@ package raf.sk.projekat1.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
@@ -55,6 +56,26 @@ public class Appointment {
         return this.startTime.equals(sTime) && this.endTime.equals(eTime) && this.startDate.equals(date) && this.getPlace().getName().equals(place);
     }
 
+    public boolean equals(LocalTime sTime, LocalTime eTime, LocalDate sDate, LocalDate eDate, String place) {
+        if(this.startTime.equals(sTime) && this.endTime.equals(eTime) && this.startDate.equals(sDate) && this.endDate.equals(eDate) && this.getPlace().getName().equals(place)){
+            return true;
+        }
+        else if(this.startTime.equals(sTime) && this.endTime.equals(eTime) && this.getPlace().getName().equals(place)){
+            if(this.startDate.equals(sDate) && this.endDate.isAfter(eDate))
+                return true;
+            else if(this.startDate.isBefore(sDate) && this.endDate.isEqual(eDate))
+                return true;
+            else if(this.startDate.isBefore(sDate) && this.endDate.isAfter(eDate)){
+                Duration diff = Duration.between(this.getStartDate().atStartOfDay(), sDate.atStartOfDay());
+                long diffDays = diff.toDays();
+
+                return diffDays % 7 == 0;
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -63,7 +84,4 @@ public class Appointment {
         return Objects.equals(startTime, that.startTime) && Objects.equals(endTime, that.endTime) && Objects.equals(startDate, that.startDate)
                 && Objects.equals(endDate, that.endDate) && Objects.equals(place, that.place);
     }
-
-    //napravi toString metodu za obe implementacije
-    //ovaj appointment je abstract?
 }

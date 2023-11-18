@@ -118,6 +118,8 @@
       "startTime": "14:00",
       "endTime": "15:00",
       "startDate": "02/10/2023",
+      "endDate": "30/10/2023",
+      "day": "Cet",
       "additional": {
         "racunari": "NE",
         "predavac": "Surla"

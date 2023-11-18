@@ -27,7 +27,39 @@ public abstract class ScheduleService {
     public abstract void exportJSON(String filepath);
     //I - 13/10/2023 11:00-12:00
     //II - 13/10/2023 11:00-12:00
-    public abstract boolean addAppointment(String when, String place, String time, Map<String, String> additional);
+//    public abstract boolean addAppointment(String when, String place, String time, Map<String, String> additional);
+    public boolean addAppointment(String when, String place, String time, Map<String, String> additional) {
+        LocalDate date = LocalDate.parse(when, DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+        if(date.isBefore(getSchedule().getStartDate()) || date.isAfter(getSchedule().getEndDate())
+                || (getSchedule().getNonWorkingDates().contains(date) && getSchedule().getNonWorkingDaysOfTheWeek().contains(getSchedule().getInfo().getDayFormat().get(date.getDayOfWeek().getValue()-1))))
+            return false;
+
+        String[] split = time.split("-");
+        LocalTime startTime = LocalTime.parse(split[0]);
+        LocalTime endTime = LocalTime.parse(split[1]);
+        if(startTime.isBefore(getSchedule().getStartTime()) || endTime.isAfter(getSchedule().getEndTime()))
+            return false;
+
+        for(Appointment a : getSchedule().getAppointments()){
+//            if((a.getStartDate().equals(date) && (a.getStartTime().equals(startTime) || a.getEndTime().equals(endTime) || (a.getStartTime().isBefore(startTime) && a.getEndTime().isAfter(startTime)) || (a.getStartTime().isBefore(endTime)
+//                    && a.getEndTime().isAfter(endTime))) && a.getPlace().getName().equals(place))){
+            if(overlappingAppointments(a, startTime, endTime, date, place)){
+                return false;
+            }
+        }
+
+        Appointment newAppointment = new Appointment(startTime, endTime, date, date, getSchedule().getInfo().getDayFormat().get(date.getDayOfWeek().getValue()-1), additional);
+
+        for(Places p : getSchedule().getPlaces()){
+            if(p.getName().equals(place)){
+                newAppointment.setPlace(p);
+            }
+        }
+        getSchedule().getAppointments().add(newAppointment);
+        sortAppointmentList();
+
+        return true;
+    }
     //I - 13/10/2023 11:00-12:00 1 16/10/2023
     //II - 13/10/2023 11:00-12:00 everyWeek 30/10/2023
     public abstract boolean addAppointment(String startDate, String endDate, String time, String place, AppointmentRepeat repeat, Map<String, String> additional);
@@ -96,6 +128,8 @@ public abstract class ScheduleService {
     public abstract List<String> check(String startTime, String endTime, String day, String startDate, String endDate, Places place);
 
     public abstract void printAppointments(List<Appointment> appointments);
+    public abstract boolean overlappingAppointments(Appointment a, LocalTime sTime, LocalTime eTime, LocalDate date, String place);
+    public abstract void sortAppointmentList();
 
     public abstract void loadJSON(String filepath) throws IOException;
 
