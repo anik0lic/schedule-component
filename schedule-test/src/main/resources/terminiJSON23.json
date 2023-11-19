@@ -1,0 +1,798 @@
+{
+  "startTime": "09:00",
+  "endTime": "21:00",
+  "startDate": "02/10/2023",
+  "endDate": "12/01/2024",
+  "nonWorkingDates": [
+    "20/11/2023",
+    "21/11/2023",
+    "22/11/2023",
+    "23/11/2023",
+    "24/11/2023",
+    "01/01/2024",
+    "02/01/2024",
+    "03/01/2024",
+    "04/01/2024",
+    "05/01/2024"
+  ],
+  "nonWorkingDaysOfTheWeek": [
+    "SUB",
+    "NED"
+  ],
+  "places": [
+    {
+      "name": "Raf01",
+      "additional": {
+        "Racunari": "DA"
+      }
+    },
+    {
+      "name": "Raf02",
+      "additional": {
+        "Racunari": "DA"
+      }
+    },
+    {
+      "name": "Raf03",
+      "additional": {
+        "Racunari": "DA"
+      }
+    },
+    {
+      "name": "Raf04",
+      "additional": {
+        "Racunari": "DA"
+      }
+    },
+    {
+      "name": "Raf05",
+      "additional": {
+        "Racunari": "DA"
+      }
+    },
+    {
+      "name": "Raf07",
+      "additional": {
+        "Racunari": "DA"
+      }
+    },
+    {
+      "name": "Raf09",
+      "additional": {
+        "Racunari": "NE"
+      }
+    },
+    {
+      "name": "Raf10",
+      "additional": {
+        "Racunari": "DA"
+      }
+    },
+    {
+      "name": "Raf11",
+      "additional": {
+        "Racunari": "NE"
+      }
+    },
+    {
+      "name": "Raf20",
+      "additional": {
+        "Racunari": "NE"
+      }
+    },
+    {
+      "name": "Raf21",
+      "additional": {
+        "Racunari": "NE"
+      }
+    },
+    {
+      "name": "Rg01",
+      "additional": {
+        "Racunari": "DA"
+      }
+    },
+    {
+      "name": "Rg07",
+      "additional": {
+        "Racunari": "DA"
+      }
+    },
+    {
+      "name": "Kolarac2",
+      "additional": {
+        "Racunari": "NE"
+      }
+    },
+    {
+      "name": "Kolarac3",
+      "additional": {
+        "Racunari": "NE"
+      }
+    },
+    {
+      "name": "CET",
+      "additional": {
+        "Racunari": "NE"
+      }
+    }
+  ],
+  "appointments": [
+    {
+      "place": "Raf07",
+      "startTime": "14:00",
+      "endTime": "16:00",
+      "startDate": "03/10/2023",
+      "endDate": "15/11/2023",
+      "additional": {
+        "Predmet": "Skript jezici",
+        "Nastavnik": "Ciganovic Igor",
+        "Tip": "V",
+        "Grupe": "301a"
+      }
+    },
+    {
+      "place": "Raf20",
+      "startTime": "11:00",
+      "endTime": "13:00",
+      "startDate": "12/10/2023",
+      "endDate": "11/01/2024",
+      "additional": {
+        "Predmet": "Testiranje softvera",
+        "Nastavnik": "Dimic Surla Bojana",
+        "Tip": "P",
+        "Grupe": "301a-301b-302a-302b"
+      }
+    },
+    {
+      "place": "Raf20",
+      "startTime": "09:00",
+      "endTime": "11:00",
+      "startDate": "06/10/2023",
+      "endDate": "12/01/2024",
+      "additional": {
+        "Predmet": "Verovatnoca i statistika",
+        "Nastavnik": "Maric Nevena",
+        "Tip": "P",
+        "Grupe": "301a-301b-302a-302b-303-304-305"
+      }
+    },
+    {
+      "place": "Kolarac2",
+      "startTime": "16:00",
+      "endTime": "18:00",
+      "startDate": "01/11/2023",
+      "endDate": "30/11/2023",
+      "additional": {
+        "Predmet": "Softverske komponente",
+        "Nastavnik": "Dimic Surla Bojana",
+        "Tip": "P",
+        "Grupe": "301a-301b-302a-302b-305-306-307a-307b"
+      }
+    },
+    {
+      "place": "Raf20",
+      "startTime": "11:00",
+      "endTime": "13:00",
+      "startDate": "28/11/2023",
+      "endDate": "09/01/2024",
+      "additional": {
+        "Predmet": "Programski prevodioci",
+        "Nastavnik": "Vujosevic Dusan",
+        "Tip": "P",
+        "Grupe": "301a-301b-302a-303-302b"
+      }
+    },
+    {
+      "place": "Raf20",
+      "startTime": "11:00",
+      "endTime": "13:00",
+      "startDate": "20/10/2023",
+      "endDate": "29/12/2023",
+      "additional": {
+        "Predmet": "Skript jezici",
+        "Nastavnik": "Radenkovic Milos",
+        "Tip": "P",
+        "Grupe": "301a-301b-304-305-306-307a-307b-322-323"
+      }
+    },
+    {
+      "place": "Raf05",
+      "startTime": "14:00",
+      "endTime": "16:00",
+      "startDate": "18/10/2023",
+      "endDate": "13/12/2023",
+      "additional": {
+        "Predmet": "Verovatnoca i statistika",
+        "Nastavnik": "Maric Nevena",
+        "Tip": "V",
+        "Grupe": "301a-302a"
+      }
+    },
+    {
+      "place": "Raf07",
+      "startTime": "09:00",
+      "endTime": "11:00",
+      "startDate": "03/10/2023",
+      "endDate": "15/11/2023",
+      "additional": {
+        "Predmet": "Softverske komponente",
+        "Nastavnik": "Najdic Jefimija",
+        "Tip": "V",
+        "Grupe": "301a-302a"
+      }
+    },
+    {
+      "place": "Raf07",
+      "startTime": "09:00",
+      "endTime": "11:00",
+      "startDate": "12/10/2023",
+      "endDate": "11/01/2024",
+      "additional": {
+        "Predmet": "Programski prevodioci",
+        "Nastavnik": "Stojanovic Mihajlo",
+        "Tip": "V",
+        "Grupe": "301a-302a"
+      }
+    },
+    {
+      "place": "Raf04",
+      "startTime": "09:00",
+      "endTime": "11:00",
+      "startDate": "04/10/2023",
+      "endDate": "10/01/2024",
+      "additional": {
+        "Predmet": "Testiranje softvera",
+        "Nastavnik": "Ivkovic Sava",
+        "Tip": "V",
+        "Grupe": "301a-302a"
+      }
+    },
+    {
+      "place": "Raf02",
+      "startTime": "14:00",
+      "endTime": "16:00",
+      "startDate": "08/11/2023",
+      "endDate": "27/12/2023",
+      "additional": {
+        "Predmet": "Skript jezici",
+        "Nastavnik": "Ciganovic Igor",
+        "Tip": "V",
+        "Grupe": "301b"
+      }
+    },
+    {
+      "place": "Raf05",
+      "startTime": "18:00",
+      "endTime": "20:00",
+      "startDate": "01/11/2023",
+      "endDate": "10/01/2024",
+      "additional": {
+        "Predmet": "Verovatnoca i statistika",
+        "Nastavnik": "Maric Nevena",
+        "Tip": "V",
+        "Grupe": "301b-302b"
+      }
+    },
+    {
+      "place": "Raf01",
+      "startTime": "13:00",
+      "endTime": "15:00",
+      "startDate": "05/10/2023",
+      "endDate": "11/01/2024",
+      "additional": {
+        "Predmet": "Programski prevodioci",
+        "Nastavnik": "Stojanovic Mihajlo",
+        "Tip": "V",
+        "Grupe": "301b-302b"
+      }
+    },
+    {
+      "place": "Raf05",
+      "startTime": "11:00",
+      "endTime": "13:00",
+      "startDate": "02/10/2023",
+      "endDate": "23/10/2023",
+      "additional": {
+        "Predmet": "Softverske komponente",
+        "Nastavnik": "Najdic Jefimija",
+        "Tip": "V",
+        "Grupe": "301b-302b"
+      }
+    },
+    {
+      "place": "Rg07",
+      "startTime": "09:00",
+      "endTime": "11:00",
+      "startDate": "28/11/2023",
+      "endDate": "09/01/2024",
+      "additional": {
+        "Predmet": "Testiranje softvera",
+        "Nastavnik": "Ivkovic Sava",
+        "Tip": "V",
+        "Grupe": "301b-302b"
+      }
+    },
+    {
+      "place": "Raf09",
+      "startTime": "14:00",
+      "endTime": "16:00",
+      "startDate": "03/10/2023",
+      "endDate": "15/11/2023",
+      "additional": {
+        "Predmet": "Upravljanje informacijama",
+        "Nastavnik": "Radenkovic Milos",
+        "Tip": "P",
+        "Grupe": "302a-302b-307a-307b"
+      }
+    },
+    {
+      "place": "Raf01",
+      "startTime": "11:00",
+      "endTime": "13:00",
+      "startDate": "04/10/2023",
+      "endDate": "06/12/2023",
+      "additional": {
+        "Predmet": "Upravljanje informacijama",
+        "Nastavnik": "Stojanovic Mihajlo",
+        "Tip": "V",
+        "Grupe": "302a-302b-307a-307b"
+      }
+    },
+    {
+      "place": "Raf09",
+      "startTime": "16:00",
+      "endTime": "18:00",
+      "startDate": "12/10/2023",
+      "endDate": "28/12/2023",
+      "additional": {
+        "Predmet": "Geometrijski algoritmi",
+        "Nastavnik": "Urosevic Dragan",
+        "Tip": "V",
+        "Grupe": "303"
+      }
+    },
+    {
+      "place": "Raf09",
+      "startTime": "14:00",
+      "endTime": "16:00",
+      "startDate": "12/10/2023",
+      "endDate": "11/01/2024",
+      "additional": {
+        "Predmet": "Geometrijski algoritmi",
+        "Nastavnik": "Urosevic Dragan",
+        "Tip": "P",
+        "Grupe": "303"
+      }
+    },
+    {
+      "place": "Raf03",
+      "startTime": "19:00",
+      "endTime": "21:00",
+      "startDate": "05/10/2023",
+      "endDate": "11/01/2024",
+      "additional": {
+        "Predmet": "Paralelni algoritmi",
+        "Nastavnik": "Jeremic Adrijana",
+        "Tip": "V",
+        "Grupe": "303-304-305"
+      }
+    },
+    {
+      "place": "Raf20",
+      "startTime": "13:00",
+      "endTime": "15:00",
+      "startDate": "03/11/2023",
+      "endDate": "15/12/2023",
+      "additional": {
+        "Predmet": "Paralelni algoritmi",
+        "Nastavnik": "Rakocevic Goran",
+        "Tip": "P",
+        "Grupe": "303-304-305"
+      }
+    },
+    {
+      "place": "Rg07",
+      "startTime": "11:00",
+      "endTime": "13:00",
+      "startDate": "04/10/2023",
+      "endDate": "10/01/2024",
+      "additional": {
+        "Predmet": "Racunarska grafika",
+        "Nastavnik": "Masulovic Dragan",
+        "Tip": "P",
+        "Grupe": "303-306"
+      }
+    },
+    {
+      "place": "Raf01",
+      "startTime": "09:00",
+      "endTime": "11:00",
+      "startDate": "01/11/2023",
+      "endDate": "10/01/2024",
+      "additional": {
+        "Predmet": "Racunarska grafika",
+        "Nastavnik": "Dotlic Emilija",
+        "Tip": "V",
+        "Grupe": "303-306"
+      }
+    },
+    {
+      "place": "Raf05",
+      "startTime": "13:00",
+      "endTime": "15:00",
+      "startDate": "16/10/2023",
+      "endDate": "18/12/2023",
+      "additional": {
+        "Predmet": "Skript jezici",
+        "Nastavnik": "Ciganovic Igor",
+        "Tip": "V",
+        "Grupe": "304-305"
+      }
+    },
+    {
+      "place": "Raf21",
+      "startTime": "17:00",
+      "endTime": "19:00",
+      "startDate": "09/11/2023",
+      "endDate": "07/12/2023",
+      "additional": {
+        "Predmet": "Programski prevodioci",
+        "Nastavnik": "Vujosevic Dusan",
+        "Tip": "P",
+        "Grupe": "304-305-306-307a-307b"
+      }
+    },
+    {
+      "place": "Raf09",
+      "startTime": "17:00",
+      "endTime": "19:00",
+      "startDate": "03/10/2023",
+      "endDate": "15/11/2023",
+      "additional": {
+        "Predmet": "Sistemi u realnom vremenu",
+        "Nastavnik": "Jovanovic Milos",
+        "Tip": "P",
+        "Grupe": "304-323"
+      }
+    },
+    {
+      "place": "Raf07",
+      "startTime": "16:00",
+      "endTime": "18:00",
+      "startDate": "30/10/2023",
+      "endDate": "04/12/2023",
+      "additional": {
+        "Predmet": "Sistemi u realnom vremenu",
+        "Nastavnik": "Jovanovic Milos",
+        "Tip": "V",
+        "Grupe": "304-323"
+      }
+    },
+    {
+      "place": "Raf03",
+      "startTime": "12:00",
+      "endTime": "14:00",
+      "startDate": "03/10/2023",
+      "endDate": "09/01/2024",
+      "additional": {
+        "Predmet": "Programski prevodioci",
+        "Nastavnik": "Stojanovic Mihajlo",
+        "Tip": "V",
+        "Grupe": "305"
+      }
+    },
+    {
+      "place": "Rg01",
+      "startTime": "17:00",
+      "endTime": "19:00",
+      "startDate": "03/10/2023",
+      "endDate": "09/01/2024",
+      "additional": {
+        "Predmet": "Verovatnoca i statistika",
+        "Nastavnik": "Maric Nevena",
+        "Tip": "V",
+        "Grupe": "305-303-307a"
+      }
+    },
+    {
+      "place": "Raf01",
+      "startTime": "15:00",
+      "endTime": "17:00",
+      "startDate": "05/10/2023",
+      "endDate": "11/01/2024",
+      "additional": {
+        "Predmet": "Softverske komponente",
+        "Nastavnik": "Redzic Nikola Jovan",
+        "Tip": "V",
+        "Grupe": "305-307a"
+      }
+    },
+    {
+      "place": "Rg07",
+      "startTime": "15:00",
+      "endTime": "17:00",
+      "startDate": "24/10/2023",
+      "endDate": "26/12/2023",
+      "additional": {
+        "Predmet": "Programski prevodioci",
+        "Nastavnik": "Stojanovic Mihajlo",
+        "Tip": "V",
+        "Grupe": "306,303"
+      }
+    },
+    {
+      "place": "Rg07",
+      "startTime": "15:00",
+      "endTime": "17:00",
+      "startDate": "19/10/2023",
+      "endDate": "14/12/2023",
+      "additional": {
+        "Predmet": "Verovatnoca i statistika",
+        "Nastavnik": "Maric Nevena",
+        "Tip": "V",
+        "Grupe": "306-304-307b"
+      }
+    },
+    {
+      "place": "Raf02",
+      "startTime": "09:00",
+      "endTime": "11:00",
+      "startDate": "12/10/2023",
+      "endDate": "28/12/2023",
+      "additional": {
+        "Predmet": "Skript jezici",
+        "Nastavnik": "Prvulovic Petar",
+        "Tip": "V",
+        "Grupe": "306-307a"
+      }
+    },
+    {
+      "place": "Raf21",
+      "startTime": "11:00",
+      "endTime": "13:00",
+      "startDate": "05/10/2023",
+      "endDate": "11/01/2024",
+      "additional": {
+        "Predmet": "Verovatnoca i statistika",
+        "Nastavnik": "Maric Nevena",
+        "Tip": "P",
+        "Grupe": "306-307a-307b-321-322-323"
+      }
+    },
+    {
+      "place": "Raf05",
+      "startTime": "17:00",
+      "endTime": "19:00",
+      "startDate": "28/11/2023",
+      "endDate": "09/01/2024",
+      "additional": {
+        "Predmet": "Softverske komponente",
+        "Nastavnik": "Redzic Nikola Jovan",
+        "Tip": "V",
+        "Grupe": "306-307b"
+      }
+    },
+    {
+      "place": "Raf02",
+      "startTime": "09:00",
+      "endTime": "11:00",
+      "startDate": "04/10/2023",
+      "endDate": "10/01/2024",
+      "additional": {
+        "Predmet": "Programski prevodioci",
+        "Nastavnik": "Stojanovic Mihajlo",
+        "Tip": "V",
+        "Grupe": "307a-304-307b"
+      }
+    },
+    {
+      "place": "Raf07",
+      "startTime": "13:00",
+      "endTime": "15:00",
+      "startDate": "18/10/2023",
+      "endDate": "13/12/2023",
+      "additional": {
+        "Predmet": "Skript jezici",
+        "Nastavnik": "Prvulovic Petar",
+        "Tip": "V",
+        "Grupe": "307b-323"
+      }
+    },
+    {
+      "place": "Raf05",
+      "startTime": "17:00",
+      "endTime": "19:00",
+      "startDate": "23/10/2023",
+      "endDate": "25/12/2023",
+      "additional": {
+        "Predmet": "Povezivanje mreza",
+        "Nastavnik": "Milovic Njegovan",
+        "Tip": "V",
+        "Grupe": "321"
+      }
+    },
+    {
+      "place": "Raf09",
+      "startTime": "14:00",
+      "endTime": "16:00",
+      "startDate": "06/12/2023",
+      "endDate": "06/12/2023",
+      "additional": {
+        "Predmet": "Virtuelizovani mrezni sistemi",
+        "Nastavnik": "Bojovic Petar",
+        "Tip": "P",
+        "Grupe": "321"
+      }
+    },
+    {
+      "place": "Rg07",
+      "startTime": "09:00",
+      "endTime": "11:00",
+      "startDate": "26/10/2023",
+      "endDate": "09/11/2023",
+      "additional": {
+        "Predmet": "Virtuelizovani mrezni sistemi",
+        "Nastavnik": "Zivanovic Marko",
+        "Tip": "V",
+        "Grupe": "321"
+      }
+    },
+    {
+      "place": "Raf11",
+      "startTime": "15:00",
+      "endTime": "17:00",
+      "startDate": "13/11/2023",
+      "endDate": "13/11/2023",
+      "additional": {
+        "Predmet": "Povezivanje mreza",
+        "Nastavnik": "Bojovic Petar",
+        "Tip": "P",
+        "Grupe": "321-322"
+      }
+    },
+    {
+      "place": "CET",
+      "startTime": "11:00",
+      "endTime": "13:00",
+      "startDate": "01/11/2023",
+      "endDate": "15/11/2023",
+      "additional": {
+        "Predmet": "Projektovanje racunarskih sistema",
+        "Nastavnik": "Radivojevic Mirjana",
+        "Tip": "P",
+        "Grupe": "321-322"
+      }
+    },
+    {
+      "place": "Kolarac3",
+      "startTime": "14:00",
+      "endTime": "16:00",
+      "startDate": "05/10/2023",
+      "endDate": "09/11/2023",
+      "additional": {
+        "Predmet": "Primenjena vestacka inteligencija",
+        "Nastavnik": "Vasiljevic Jelena",
+        "Tip": "P",
+        "Grupe": "321-322-323"
+      }
+    },
+    {
+      "place": "Raf05",
+      "startTime": "16:00",
+      "endTime": "18:00",
+      "startDate": "18/10/2023",
+      "endDate": "13/12/2023",
+      "additional": {
+        "Predmet": "Verovatnoca i statistika",
+        "Nastavnik": "Maric Nevena",
+        "Tip": "V",
+        "Grupe": "321-323"
+      }
+    },
+    {
+      "place": "Raf05",
+      "startTime": "15:00",
+      "endTime": "17:00",
+      "startDate": "28/11/2023",
+      "endDate": "09/01/2024",
+      "additional": {
+        "Predmet": "Primenjena vestacka inteligencija",
+        "Nastavnik": "Tomic Milan",
+        "Tip": "V",
+        "Grupe": "321-323"
+      }
+    },
+    {
+      "place": "Raf01",
+      "startTime": "19:00",
+      "endTime": "21:00",
+      "startDate": "27/12/2023",
+      "endDate": "08/01/2024",
+      "additional": {
+        "Predmet": "Povezivanje mreza",
+        "Nastavnik": "Milovic Njegovan",
+        "Tip": "V",
+        "Grupe": "322"
+      }
+    },
+    {
+      "place": "Rg07",
+      "startTime": "17:00",
+      "endTime": "19:00",
+      "startDate": "28/11/2023",
+      "endDate": "09/01/2024",
+      "additional": {
+        "Predmet": "Primenjena vestacka inteligencija",
+        "Nastavnik": "Tomic Milan",
+        "Tip": "V",
+        "Grupe": "322"
+      }
+    },
+    {
+      "place": "Rg01",
+      "startTime": "16:00",
+      "endTime": "18:00",
+      "startDate": "08/11/2023",
+      "endDate": "27/12/2023",
+      "additional": {
+        "Predmet": "Skript jezici",
+        "Nastavnik": "Ciganovic Igor",
+        "Tip": "V",
+        "Grupe": "322"
+      }
+    },
+    {
+      "place": "Raf04",
+      "startTime": "09:00",
+      "endTime": "11:00",
+      "startDate": "05/10/2023",
+      "endDate": "11/01/2024",
+      "additional": {
+        "Predmet": "Verovatnoca i statistika",
+        "Nastavnik": "Maric Nevena",
+        "Tip": "V",
+        "Grupe": "322"
+      }
+    },
+    {
+      "place": "CET",
+      "startTime": "09:00",
+      "endTime": "11:00",
+      "startDate": "04/10/2023",
+      "endDate": "06/12/2023",
+      "additional": {
+        "Predmet": "Projektovanje racunarskih sistema",
+        "Nastavnik": "Radivojevic Mirjana",
+        "Tip": "V",
+        "Grupe": "322-321"
+      }
+    },
+    {
+      "place": "Rg07",
+      "startTime": "18:00",
+      "endTime": "20:00",
+      "startDate": "18/10/2023",
+      "endDate": "13/12/2023",
+      "additional": {
+        "Predmet": "Sistemsko programiranje",
+        "Nastavnik": "Jovanovic Milos",
+        "Tip": "V",
+        "Grupe": "323"
+      }
+    },
+    {
+      "place": "Raf10",
+      "startTime": "18:00",
+      "endTime": "20:00",
+      "startDate": "27/12/2023",
+      "endDate": "08/01/2024",
+      "additional": {
+        "Predmet": "Sistemsko programiranje",
+        "Nastavnik": "Jovanovic Milos",
+        "Tip": "P",
+        "Grupe": "323"
+      }
+    }
+  ]
+}

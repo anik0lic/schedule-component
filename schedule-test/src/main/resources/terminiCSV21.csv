@@ -1,0 +1,53 @@
+Predmet,Tip,Nastavnik,Grupe,Dan,Termin,Ucionica
+Skript jezici,V,Ciganovic Igor,301a,UTO,14:00-16:00,Raf07
+Testiranje softvera,P,Dimic Surla Bojana,301a-301b-302a-302b,CET,11:00-13:00,Raf20
+Verovatnoca i statistika,P,Maric Nevena,301a-301b-302a-302b-303-304-305,PET,09:00-11:00,Raf20
+Softverske komponente,P,Dimic Surla Bojana,301a-301b-302a-302b-305-306-307a-307b,SRE,16:00-18:00,Kolarac2
+Programski prevodioci,P,Vujosevic Dusan,301a-301b-302a-303-302b,UTO,11:00-13:00,Raf20
+Skript jezici,P,Radenkovic Milos,301a-301b-304-305-306-307a-307b-322-323,PET,11:00-13:00,Raf20
+Verovatnoca i statistika,V,Maric Nevena,301a-302a,SRE,14:00-16:00,Raf05
+Softverske komponente,V,Najdic Jefimija,301a-302a,UTO,09:00-11:00,Raf07
+Programski prevodioci,V,Stojanovic Mihajlo,301a-302a,CET,09:00-11:00,Raf07
+Testiranje softvera,V,Ivkovic Sava,301a-302a,SRE,09:00-11:00,Raf04
+Skript jezici,V,Ciganovic Igor,301b,SRE,14:00-16:00,Raf02
+Verovatnoca i statistika,V,Maric Nevena,301b-302b,SRE,18:00-20:00,Raf05
+Programski prevodioci,V,Stojanovic Mihajlo,301b-302b,CET,13:00-15:00,Raf01
+Softverske komponente,V,Najdic Jefimija,301b-302b,PON,11:00-13:00,Raf05
+Testiranje softvera,V,Ivkovic Sava,301b-302b,UTO,09:00-11:00,Rg07
+Upravljanje informacijama,P,Radenkovic Milos,302a-302b-307a-307b,UTO,14:00-16:00,Raf09
+Upravljanje informacijama,V,Stojanovic Mihajlo,302a-302b-307a-307b,SRE,11:00-13:00,Raf01
+Geometrijski algoritmi,V,Urosevic Dragan,303,CET,16:00-18:00,Raf09
+Geometrijski algoritmi,P,Urosevic Dragan,303,CET,14:00-16:00,Raf09
+Paralelni algoritmi,V,Jeremic Adrijana,303-304-305,CET,19:00-21:00,Raf03
+Paralelni algoritmi,P,Rakocevic Goran,303-304-305,PET,13:00-15:00,Raf20
+Racunarska grafika,P,Masulovic Dragan,303-306,SRE,11:00-13:00,Rg07
+Racunarska grafika,V,Dotlic Emilija,303-306,SRE,09:00-11:00,Raf01
+Skript jezici,V,Ciganovic Igor,304-305,PON,13:00-15:00,Raf05
+Programski prevodioci,P,Vujosevic Dusan,304-305-306-307a-307b,CET,17:00-19:00,Raf21
+Sistemi u realnom vremenu,P,Jovanovic Milos,304-323,UTO,17:00-19:00,Raf09
+Sistemi u realnom vremenu,V,Jovanovic Milos,304-323,PON,16:00-18:00,Raf07
+Programski prevodioci,V,Stojanovic Mihajlo,305,UTO,12:00-14:00,Raf03
+Verovatnoca i statistika,V,Maric Nevena,305-303-307a,UTO,17:00-19:00,Rg01
+Softverske komponente,V,Redzic Nikola Jovan,305-307a,CET,15:00-17:00,Raf01
+Programski prevodioci,V,Stojanovic Mihajlo,"306,303",UTO,15:00-17:00,Rg07
+Verovatnoca i statistika,V,Maric Nevena,306-304-307b,CET,15:00-17:00,Rg07
+Skript jezici,V,Prvulovic Petar,306-307a,CET,09:00-11:00,Raf02
+Verovatnoca i statistika,P,Maric Nevena,306-307a-307b-321-322-323,CET,11:00-13:00,Raf21
+Softverske komponente,V,Redzic Nikola Jovan,306-307b,UTO,17:00-19:00,Raf05
+Programski prevodioci,V,Stojanovic Mihajlo,307a-304-307b,SRE,09:00-11:00,Raf02
+Skript jezici,V,Prvulovic Petar,307b-323,SRE,13:00-15:00,Raf07
+Povezivanje mreza,V,Milovic Njegovan,321,PON,17:00-19:00,Raf05
+Virtuelizovani mrezni sistemi,P,Bojovic Petar,321,SRE,14:00-16:00,Raf09
+Virtuelizovani mrezni sistemi,V,Zivanovic Marko,321,CET,09:00-11:00,Rg07
+Povezivanje mreza,P,Bojovic Petar,321-322,PON,15:00-17:00,Raf11
+Projektovanje racunarskih sistema,P,Radivojevic Mirjana,321-322,SRE,11:00-13:00,CET
+Primenjena vestacka inteligencija,P,Vasiljevic Jelena,321-322-323,CET,14:00-16:00,Kolarac3
+Verovatnoca i statistika,V,Maric Nevena,321-323,SRE,16:00-18:00,Raf05
+Primenjena vestacka inteligencija,V,Tomic Milan,321-323,UTO,15:00-17:00,Raf05
+Povezivanje mreza,V,Milovic Njegovan,322,PON,19:00-21:00,Raf01
+Primenjena vestacka inteligencija,V,Tomic Milan,322,UTO,17:00-19:00,Rg07
+Skript jezici,V,Ciganovic Igor,322,SRE,16:00-18:00,Rg01
+Verovatnoca i statistika,V,Maric Nevena,322,CET,09:00-11:00,Raf04
+Projektovanje racunarskih sistema,V,Radivojevic Mirjana,322-321,SRE,09:00-11:00,CET
+Sistemsko programiranje,V,Jovanovic Milos,323,SRE,18:00-20:00,Rg07
+Sistemsko programiranje,P,Jovanovic Milos,323,PON,18:00-20:00,Raf10
