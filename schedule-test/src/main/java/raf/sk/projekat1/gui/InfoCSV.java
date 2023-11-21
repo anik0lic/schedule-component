@@ -14,7 +14,7 @@ public class InfoCSV extends JFrame {
 
         setSize((int) (screenWidth / 2.5), (int) (screenHeight / 2.5));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(owner);
 
         JLabel place = new JLabel("Place");
         JTextField tfPlace = new JTextField();
@@ -51,6 +51,7 @@ public class InfoCSV extends JFrame {
         JButton placeBtn = new JButton("Places");
 
         JButton nextBtn = new JButton("Next");
+        nextBtn.setAction(StartGui.getInstance().getActionManager().getMainFrameAction());
 
         JPanel panel = new JPanel(new GridBagLayout());
 

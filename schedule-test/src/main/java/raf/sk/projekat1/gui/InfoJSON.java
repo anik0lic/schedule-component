@@ -24,6 +24,7 @@ public class InfoJSON extends JFrame {
         dugmeJfc.setBackground(Color.CYAN);
 
         dugme.setBackground(Color.CYAN);
+        dugme.setAction(StartGui.getInstance().getActionManager().getMainFrameAction());
 
 
 
