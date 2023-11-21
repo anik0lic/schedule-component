@@ -115,13 +115,6 @@ public class InfoCSV extends JFrame {
         gbc.gridx = 1;
         panelWest.add(placeBtn, gbc);
 
-//        gbc.gridx = 0;
-//        gbc.gridy = 9;
-//        gbc.gridwidth = 2;
-//        gbc.anchor = GridBagConstraints.EAST;
-//        gbc.insets = new Insets(20, 0, 0, 0);
-//        panelWest.add(nextBtn, gbc);
-
         gbc.gridx = 0;
         gbc.gridy = 0;
         panelEast.add(new Label("Start Date"), gbc);

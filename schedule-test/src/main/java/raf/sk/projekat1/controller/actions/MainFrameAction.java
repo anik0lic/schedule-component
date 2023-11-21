@@ -25,9 +25,6 @@ public class MainFrameAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        MainFrame frame = new MainFrame(StartGui.getInstance());
-        frame.setVisible(true);
-
         if(StartGui.getInstance().getActionManager().getInfoCSVAction().getFrame() != null){
 
             String[] dayFormat = StartGui.getInstance().getActionManager().getInfoCSVAction().getFrame().getTfDayFormat().getText().split(",");
@@ -64,9 +61,6 @@ public class MainFrameAction extends AbstractAction {
                 Class<?> impl = Class.forName("raf.sk.projekat1.ScheduleServiceImpl");
                 ScheduleService ss = (ScheduleService) impl.getDeclaredConstructor().newInstance();
 
-
-
-
                 ss.setSchedule(schedule);
 
                 if(pathPlaces != null){
@@ -91,14 +85,6 @@ public class MainFrameAction extends AbstractAction {
                 throw new RuntimeException(ex);
             }
 
-
-
-
-
-
-
-
-
             StartGui.getInstance().getActionManager().getInfoCSVAction().getFrame().setVisible(false);
 
         }else if(StartGui.getInstance().getActionManager().getInfoJSONAction().getFrame() != null) {
@@ -121,6 +107,10 @@ public class MainFrameAction extends AbstractAction {
                 ss.loadJSON(path);
                 ss.printAppointments(ss.search());
 
+                MainFrame frame = new MainFrame(StartGui.getInstance(), ss);
+                frame.setVisible(true);
+                StartGui.getInstance().getActionManager().getInfoJSONAction().getFrame().setVisible(false);
+
             } catch (InstantiationException ex) {
                 throw new RuntimeException(ex);
             } catch (IllegalAccessException ex) {
@@ -134,9 +124,6 @@ public class MainFrameAction extends AbstractAction {
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-
-
-            StartGui.getInstance().getActionManager().getInfoJSONAction().getFrame().setVisible(false);
         }
     }
 }

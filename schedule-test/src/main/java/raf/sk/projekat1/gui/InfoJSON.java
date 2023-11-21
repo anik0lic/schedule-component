@@ -24,18 +24,12 @@ public class InfoJSON extends JFrame {
     private JButton dugme = new JButton("Next");
 
     public InfoJSON(Frame owner) throws HeadlessException {
-
-
-
         dugmeJfc.setBackground(Color.CYAN);
 
         dugme.setBackground(Color.CYAN);
         dugme.setAction(StartGui.getInstance().getActionManager().getMainFrameAction());
         dugmeJfc.setAction(StartGui.getInstance().getActionManager().getImportSchedule());
 
-
-
-//        JFrame frame = new JFrame("Json Presets");
         setTitle("Json Presets");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
