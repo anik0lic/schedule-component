@@ -1,5 +1,6 @@
 package raf.sk.projekat1.controller.actions;
 
+import lombok.Getter;
 import raf.sk.projekat1.gui.InfoCSV;
 import raf.sk.projekat1.gui.InfoJSON;
 import raf.sk.projekat1.gui.MainFrame;
@@ -18,7 +19,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class MainFrameAction extends AbstractAction {
+    MainFrame frame;
+
     public MainFrameAction() {
         putValue(NAME, "Next");
     }
@@ -69,29 +73,24 @@ public class MainFrameAction extends AbstractAction {
                 }
 
                 ss.loadCSV(pathFile);
-                ss.printAppointments(ss.search());
+                for(String s : ss.printAppointments(ss.getSchedule().getAppointments())){
+                    System.out.println(s);
+                }
 
-            } catch (InstantiationException ex) {
-                throw new RuntimeException(ex);
-            } catch (IllegalAccessException ex) {
-                throw new RuntimeException(ex);
-            } catch (InvocationTargetException ex) {
-                throw new RuntimeException(ex);
-            } catch (NoSuchMethodException ex) {
-                throw new RuntimeException(ex);
-            } catch (ClassNotFoundException ex) {
-                throw new RuntimeException(ex);
-            } catch (IOException ex) {
+                frame = new MainFrame(StartGui.getInstance(), ss);
+                frame.setVisible(true);
+                StartGui.getInstance().getActionManager().getInfoCSVAction().getFrame().setVisible(false);
+
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                     NoSuchMethodException | ClassNotFoundException | IOException ex) {
                 throw new RuntimeException(ex);
             }
-
-            StartGui.getInstance().getActionManager().getInfoCSVAction().getFrame().setVisible(false);
 
         }else if(StartGui.getInstance().getActionManager().getInfoJSONAction().getFrame() != null) {
 
             String[] dayFormat = StartGui.getInstance().getActionManager().getInfoJSONAction().getFrame().getDayFTF().getText().split(",");
             String dateFormat = StartGui.getInstance().getActionManager().getInfoJSONAction().getFrame().getDateFTF().getText();
-            System.out.println(dayFormat + " " + dateFormat);
+
             Info info = new Info(dateFormat, List.of(dayFormat));
             String path = StartGui.getInstance().getActionManager().getImportSchedule().getNesto().getAbsolutePath();
 
@@ -101,27 +100,19 @@ public class MainFrameAction extends AbstractAction {
                 Class<?> impl = Class.forName("raf.sk.projekat1.ScheduleServiceImpl");
                 ScheduleService ss = (ScheduleService) impl.getDeclaredConstructor().newInstance();
 
-
                 ss.setSchedule(schedule);
 
                 ss.loadJSON(path);
-                ss.printAppointments(ss.search());
+                for(String s : ss.printAppointments(ss.getSchedule().getAppointments())){
+                    System.out.println(s);
+                }
 
-                MainFrame frame = new MainFrame(StartGui.getInstance(), ss);
+                frame = new MainFrame(StartGui.getInstance(), ss);
                 frame.setVisible(true);
                 StartGui.getInstance().getActionManager().getInfoJSONAction().getFrame().setVisible(false);
 
-            } catch (InstantiationException ex) {
-                throw new RuntimeException(ex);
-            } catch (IllegalAccessException ex) {
-                throw new RuntimeException(ex);
-            } catch (InvocationTargetException ex) {
-                throw new RuntimeException(ex);
-            } catch (NoSuchMethodException ex) {
-                throw new RuntimeException(ex);
-            } catch (ClassNotFoundException ex) {
-                throw new RuntimeException(ex);
-            } catch (IOException ex) {
+            } catch (InstantiationException | ClassNotFoundException | NoSuchMethodException |
+                     InvocationTargetException | IllegalAccessException | IOException ex) {
                 throw new RuntimeException(ex);
             }
         }

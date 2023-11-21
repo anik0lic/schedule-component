@@ -1455,13 +1455,17 @@ public class ScheduleServiceImpl extends ScheduleService {
     }
 
     @Override
-    public void printAppointments(List<Appointment> appointments) {
+    public List<String> printAppointments(List<Appointment> appointments) {
+        List<String> results = new ArrayList<>();
+
         for(Appointment a : appointments){
             String result = a.getPlace().getName() + ", " + a.getDay() + " " + a.getStartTime() + "-" + a.getEndTime() + " ";
             result += a.getStartDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat())) + "-";
             result += a.getEndDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
-            System.out.println(result);
+            results.add(result);
         }
+
+        return results;
     }
     @Override
     public void sortAppointmentList(){

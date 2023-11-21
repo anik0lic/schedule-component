@@ -13,6 +13,7 @@ public class ActionManager {
     private MainFrameAction mainFrameAction;
     private ImportSchedule importSchedule;
     private ImportPlaces importPlaces;
+    private RunAction runAction;
 
     public ActionManager(){
         infoCSVAction = new InfoCSVAction();
@@ -20,6 +21,7 @@ public class ActionManager {
         mainFrameAction = new MainFrameAction();
         importSchedule = new ImportSchedule();
         importPlaces = new ImportPlaces();
+        runAction = new RunAction();
     }
 
 }

@@ -48,9 +48,6 @@ public class InfoJSON extends JFrame {
 
         constraints.insets = new Insets(10, 0, 0, 10);
 
-
-
-        // add components to the panel
         constraints.gridx = 0;
         constraints.gridy = 0;
         newPanel.add(dayFLabel, constraints);
@@ -73,9 +70,6 @@ public class InfoJSON extends JFrame {
 
         newPanel.add(dugmeJfc, constraints);
 
-
-
-
         constraints.gridx = 0;
         constraints.gridy = 3;
         constraints.gridwidth = 2;
@@ -85,12 +79,6 @@ public class InfoJSON extends JFrame {
         newPanel.add(dugme, constraints);
 
 
-
-
-
         add(newPanel);
-
-
-
     }
 }

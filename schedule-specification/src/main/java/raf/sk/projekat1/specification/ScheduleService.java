@@ -150,7 +150,7 @@ public abstract class ScheduleService {
     public abstract List<String> check(String startTime, String endTime, String day, String startDate, String endDate, Map<String, String> additional);
     public abstract List<String> check(String startTime, String endTime, String day, String startDate, String endDate, Places place);
 
-    public abstract void printAppointments(List<Appointment> appointments);
+    public abstract List<String> printAppointments(List<Appointment> appointments);
     public abstract boolean overlappingAppointments(Appointment a, LocalTime sTime, LocalTime eTime, LocalDate date, String place);
     public abstract void sortAppointmentList();
 

@@ -14,7 +14,12 @@ import java.time.format.DateTimeFormatter;
 @Setter
 public class MainFrame extends JFrame {
 
-    ScheduleService ss;
+    private ScheduleService ss;
+    private JComboBox comboBox;
+    private DefaultTableModel model;
+    private JTable table;
+    private JScrollPane scrollPane;
+    private JTextArea textArea;
 
     public MainFrame(Frame owner, ScheduleService ss) throws HeadlessException {
         this.ss = ss;
@@ -31,19 +36,13 @@ public class MainFrame extends JFrame {
 
         JPanel panelForTable = new JPanel();
 
-        DefaultTableModel model = new DefaultTableModel();
-        JTable table = new JTable(model);
-        JScrollPane scrollPane = new JScrollPane(table);
+        model = new DefaultTableModel();
+        table = new JTable(model);
+        scrollPane = new JScrollPane(table);
 
         model.addColumn("Termini");
 
-        for(Appointment a : ss.getSchedule().getAppointments()){
-            //staviti da printAppointments vraca listu stringova i onda samo stavljati u row te stringove
-            String result = ss.getSchedule().getInfo().getDayFormat().get(a.getStartDate().getDayOfWeek().getValue()-1);
-            result += ", " + a.getStartDate().format(DateTimeFormatter.ofPattern(ss.getSchedule().getInfo().getDateFormat()));
-            result += " " + a.getStartTime() + "-" + a.getEndTime() + ", " + a.getPlace().getName();
-            model.addRow(new Object[]{result});
-        }
+        updateTable();
 
         panelForTable.add(scrollPane);
 
@@ -53,12 +52,13 @@ public class MainFrame extends JFrame {
         gbc.insets = new Insets(10, 5, 0, 5);
 
         String[] boxItems = {"Add", "Remove", "Update", "Search", "Check"};
-        JComboBox comboBox = new JComboBox(boxItems);
+        comboBox = new JComboBox(boxItems);
 
-        JTextArea textArea = new JTextArea();
-        textArea.setPreferredSize(new Dimension(300, 300));
+        textArea = new JTextArea();
+        textArea.setPreferredSize(new Dimension(450, 100));
 
         JButton runBtn = new JButton("Run");
+        runBtn.setAction(StartGui.getInstance().getActionManager().getRunAction());
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -73,6 +73,13 @@ public class MainFrame extends JFrame {
         add(panelForTable, BorderLayout.WEST);
         add(menu, BorderLayout.EAST);
         add(exitBtn, BorderLayout.SOUTH);
+    }
+
+    public void updateTable(){
+        model.getDataVector().removeAllElements();
+        for(String s : ss.printAppointments(ss.getSchedule().getAppointments())){
+            model.addRow(new Object[]{s});
+        }
     }
 
 }
