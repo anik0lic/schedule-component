@@ -5,9 +5,14 @@ import java.awt.*;
 
 public class InfoCSV extends JFrame {
 
-    public InfoCSV() throws HeadlessException {
+    public InfoCSV(Frame owner) throws HeadlessException {
         setTitle("Info");
-        setSize(700, 600);
+        Toolkit kit = Toolkit.getDefaultToolkit();
+        Dimension screenSize = kit.getScreenSize();
+        int screenHeight = screenSize.height;
+        int screenWidth = screenSize.width;
+
+        setSize((int) (screenWidth / 2.5), (int) (screenHeight / 2.5));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -45,12 +50,14 @@ public class InfoCSV extends JFrame {
         JLabel places = new JLabel("Places");
         JButton placeBtn = new JButton("Places");
 
+        JButton nextBtn = new JButton("Next");
+
         JPanel panel = new JPanel(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(10, 0, 0, 5);
+        gbc.anchor = GridBagConstraints.WEST;
+//        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(10, 5, 0, 5);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -105,6 +112,13 @@ public class InfoCSV extends JFrame {
         panel.add(places, gbc);
         gbc.gridx = 1;
         panel.add(placeBtn, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 9;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.insets = new Insets(20, 0, 0, 0);
+        panel.add(nextBtn, gbc);
 
         add(panel);
 

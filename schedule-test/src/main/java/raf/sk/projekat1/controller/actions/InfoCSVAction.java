@@ -4,6 +4,7 @@ import raf.sk.projekat1.gui.InfoCSV;
 import raf.sk.projekat1.gui.StartGui;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class InfoCSVAction extends AbstractAction {
@@ -13,7 +14,7 @@ public class InfoCSVAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        InfoCSV frame = new InfoCSV();
+        InfoCSV frame = new InfoCSV(StartGui.getInstance());
         StartGui.getInstance().setVisible(false);
         frame.setVisible(true);
     }

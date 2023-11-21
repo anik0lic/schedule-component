@@ -31,7 +31,7 @@ public class StartGui extends JFrame {
         int screenHeight = screenSize.height;
         int screenWidth = screenSize.width;
 
-        setSize((int) (screenWidth / 3), (int) (screenHeight / 3));
+        setSize(screenWidth / 3, screenHeight / 3);
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel(new GridBagLayout());
