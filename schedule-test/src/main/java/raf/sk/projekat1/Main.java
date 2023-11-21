@@ -1,6 +1,7 @@
 package raf.sk.projekat1;
 
 import com.itextpdf.text.DocumentException;
+import raf.sk.projekat1.gui.StartGui;
 import raf.sk.projekat1.model.*;
 import raf.sk.projekat1.specification.ScheduleService;
 
@@ -64,6 +65,8 @@ public class Main {
 
             ss.exportPDF("E:\\IntellJ Projects\\schedule-component\\schedule-test\\src\\main\\resources\\test.pdf", ss.getSchedule().getAppointments());
             ss.printAppointments(ss.search());
+
+            StartGui.getInstance();
 
 
 //            System.out.println(ss.addAppointment("04/09/2023", "RAF1", "11:00-14:00", a));

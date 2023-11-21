@@ -3,31 +3,13 @@ package raf.sk.projekat1;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.itextpdf.text.*;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import raf.sk.projekat1.model.*;
 import raf.sk.projekat1.specification.ScheduleService;
 
-import javax.swing.event.DocumentListener;
-import javax.swing.event.UndoableEditListener;
-import java.awt.*;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -35,7 +17,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class ScheduleServiceImpl extends ScheduleService {
     public ScheduleServiceImpl(Schedule schedule) {
@@ -219,8 +200,6 @@ public class ScheduleServiceImpl extends ScheduleService {
 
         for(int i = 0; i <= diffDays; i+=j) {
             for (Appointment a : getSchedule().getAppointments()) {
-//                if((a.getStartDate().equals(start.plusDays(i)) && (a.getStartTime().equals(startTime) || a.getEndTime().equals(endTime) || (a.getStartTime().isBefore(startTime) && a.getEndTime().isAfter(startTime)) || (a.getStartTime().isBefore(endTime)
-//                        && a.getEndTime().isAfter(endTime))) && a.getPlace().getName().equals(place))){
                 if(overlappingAppointments(a, startTime, endTime, start.plusDays(i), place)){
                     return false;
                 }
@@ -969,55 +948,6 @@ public class ScheduleServiceImpl extends ScheduleService {
         return a.getStartDate().equals(date) && (a.getStartTime().equals(sTime) || a.getEndTime().equals(eTime) || (a.getStartTime().isBefore(sTime) && a.getEndTime().isAfter(sTime)) || (a.getStartTime().isBefore(eTime)
                 && a.getEndTime().isAfter(eTime))) && a.getPlace().getName().equals(place);
     }
-
-//    @Override
-//    public void exportPDF(String filepath, List<Appointment> appointments) throws IOException, DocumentException {
-//        Document document = new Document();
-//        PdfWriter.getInstance(document, new FileOutputStream(filepath));
-//
-//        document.open();
-//        Font headerFont = FontFactory.getFont(FontFactory.HELVETICA, 11, Font.BOLD);
-//        Font bodyFont = FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL);
-//
-//        PdfPTable table = new PdfPTable(getSchedule().getInfo().getHeaders().size());
-//
-//        for (int j = 0; j < getSchedule().getInfo().getHeaders().size(); j++) {
-//            Phrase phrase = new Phrase(getSchedule().getInfo().getHeaders().get(j), headerFont);
-//            PdfPCell cell = new PdfPCell(phrase);
-//            cell.setBackgroundColor(new BaseColor(Color.lightGray.getRGB()));
-//            table.addCell(cell);
-//        }
-//
-//        for(Appointment a : appointments){
-//            for(int i = 0; i < getSchedule().getInfo().getHeaders().size(); i++){
-//                if(a.getAdditional().containsKey(getSchedule().getInfo().getHeaders().get(i))){
-//                    table.addCell(new Phrase(a.getAdditional().get(getSchedule().getInfo().getHeaders().get(i)), bodyFont));
-//                }
-//                else{
-//                    if(i == getSchedule().getInfo().getPlace() || getSchedule().getInfo().getHeaders().get(i).equals("Place")){
-//                        table.addCell(new Phrase(a.getPlace().getName(), bodyFont));
-//                    }
-//                    else if(i == getSchedule().getInfo().getTime() || getSchedule().getInfo().getHeaders().get(i).equals("Time")){
-//                        table.addCell(new Phrase(a.getStartTime() + "-" + a.getEndTime(), bodyFont));
-//                    }
-//                    else if(i == getSchedule().getInfo().getStartDate() || getSchedule().getInfo().getHeaders().get(i).equals("Start Date")){
-//                        table.addCell(new Phrase(a.getStartDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat())), bodyFont));
-//                    }
-//                    else if(i == getSchedule().getInfo().getDay() || getSchedule().getInfo().getHeaders().get(i).equals("Day")){
-//                        table.addCell(new Phrase(a.getDay(), bodyFont));
-//                    }
-//                    else if(i == getSchedule().getInfo().getEndDate() || getSchedule().getInfo().getHeaders().get(i).equals("End Date")){
-//                        table.addCell(new Phrase(a.getEndDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat())), bodyFont));
-//                    }
-//                }
-//            }
-//        }
-//
-//        table.setWidthPercentage(100);
-//
-//        document.add(table);
-//        document.close();
-//    }
 
     private List<String> check(long diffDays, LocalDate sd, LocalTime startTime, LocalTime endTime, List<Appointment> appointments, List<Places> places, String day){
         List<String> results = new ArrayList<>();

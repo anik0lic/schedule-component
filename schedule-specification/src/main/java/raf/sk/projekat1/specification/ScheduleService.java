@@ -69,8 +69,6 @@ public abstract class ScheduleService {
             return false;
 
         for(Appointment a : getSchedule().getAppointments()){
-//            if((a.getStartDate().equals(date) && (a.getStartTime().equals(startTime) || a.getEndTime().equals(endTime) || (a.getStartTime().isBefore(startTime) && a.getEndTime().isAfter(startTime)) || (a.getStartTime().isBefore(endTime)
-//                    && a.getEndTime().isAfter(endTime))) && a.getPlace().getName().equals(place))){
             if(overlappingAppointments(a, startTime, endTime, date, place)){
                 return false;
             }
