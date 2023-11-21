@@ -4,6 +4,22 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InfoCSV extends JFrame {
+    private JTextField tfPlace = new JTextField();
+    private JTextField tfTime = new JTextField();
+    private JTextField tfstartDate = new JTextField();
+    private JTextField tfendDate = new JTextField();
+    private JTextField tfDay = new JTextField();
+    private JTextField tfDateFormat = new JTextField();
+    private JTextField tfDayFormat = new JTextField();
+    private JTextField tfSchStartDate = new JTextField();
+    private JTextField tfSchEndDate = new JTextField();
+    private JTextField tfSchStartTime = new JTextField();
+    private JTextField tfSchEndTime = new JTextField();
+    private JTextField tfSchNonWorkingDates = new JTextField();
+    private JTextField tfSchNonWorkingDays = new JTextField();
+    private JButton fileBtn = new JButton("File");
+    private JButton placeBtn = new JButton("Places");
+    private JButton nextBtn = new JButton("Next");
 
     public InfoCSV(Frame owner) throws HeadlessException {
         setTitle("Info");
@@ -12,117 +28,139 @@ public class InfoCSV extends JFrame {
         int screenHeight = screenSize.height;
         int screenWidth = screenSize.width;
 
-        setSize((int) (screenWidth / 2.5), (int) (screenHeight / 2.5));
+        setSize((int) (screenWidth / 2), (int) (screenHeight / 2));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(owner);
 
-        JLabel place = new JLabel("Place");
-        JTextField tfPlace = new JTextField();
         tfPlace.setPreferredSize(new Dimension(200, 20));
-
-        JLabel time = new JLabel("Time");
-        JTextField tfTime = new JTextField();
         tfTime.setPreferredSize(new Dimension(200, 20));
-
-        JLabel startDate = new JLabel("Start Date");
-        JTextField tfstartDate = new JTextField();
         tfstartDate.setPreferredSize(new Dimension(200, 20));
-
-        JLabel endDate = new JLabel("End Date");
-        JTextField tfendDate = new JTextField();
         tfendDate.setPreferredSize(new Dimension(200, 20));
-
-        JLabel day = new JLabel("Place");
-        JTextField tfDay = new JTextField();
         tfDay.setPreferredSize(new Dimension(200, 20));
-
-        JLabel dateFormat = new JLabel("Date Format");
-        JTextField tfDateFormat = new JTextField();
         tfDateFormat.setPreferredSize(new Dimension(200, 20));
-
-        JLabel dayFormat = new JLabel("Day Format");
-        JTextField tfDayFormat = new JTextField();
         tfDayFormat.setPreferredSize(new Dimension(200, 20));
+        tfSchStartDate.setPreferredSize(new Dimension(200, 20));
+        tfSchEndDate.setPreferredSize(new Dimension(200, 20));
+        tfSchStartTime.setPreferredSize(new Dimension(200, 20));
+        tfSchEndTime.setPreferredSize(new Dimension(200, 20));
+        tfSchNonWorkingDates.setPreferredSize(new Dimension(200, 20));
+        tfSchNonWorkingDays.setPreferredSize(new Dimension(200, 20));
 
-        JLabel file = new JLabel("File");
-        JButton fileBtn = new JButton("File");
-
-        JLabel places = new JLabel("Places");
-        JButton placeBtn = new JButton("Places");
-
-        JButton nextBtn = new JButton("Next");
         nextBtn.setAction(StartGui.getInstance().getActionManager().getMainFrameAction());
 
-        JPanel panel = new JPanel(new GridBagLayout());
+        JPanel panelWest = new JPanel(new GridBagLayout());
+        JPanel panelEast = new JPanel(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.WEST;
-//        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(10, 5, 0, 5);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        panel.add(place, gbc);
+        panelWest.add(new Label("Place"), gbc);
         gbc.gridx = 1;
-        panel.add(tfPlace, gbc);
+        panelWest.add(tfPlace, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        panel.add(time, gbc);
+        panelWest.add(new Label("Time"), gbc);
         gbc.gridx = 1;
-        panel.add(tfTime, gbc);
+        panelWest.add(tfTime, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        panel.add(startDate, gbc);
+        panelWest.add(new Label("Start Date"), gbc);
         gbc.gridx = 1;
-        panel.add(tfstartDate, gbc);
+        panelWest.add(tfstartDate, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
-        panel.add(endDate, gbc);
+        panelWest.add(new Label("End Date"), gbc);
         gbc.gridx = 1;
-        panel.add(tfendDate, gbc);
+        panelWest.add(tfendDate, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
-        panel.add(day, gbc);
+        panelWest.add(new Label("Day"), gbc);
         gbc.gridx = 1;
-        panel.add(tfDay, gbc);
+        panelWest.add(tfDay, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 5;
-        panel.add(dateFormat, gbc);
+        panelWest.add(new Label("Date Format"), gbc);
         gbc.gridx = 1;
-        panel.add(tfDateFormat, gbc);
+        panelWest.add(tfDateFormat, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 6;
-        panel.add(dayFormat, gbc);
+        panelWest.add(new Label("Day Format"), gbc);
         gbc.gridx = 1;
-        panel.add(tfDayFormat, gbc);
+        panelWest.add(tfDayFormat, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 7;
-        panel.add(file, gbc);
+        panelWest.add(new Label("File"), gbc);
         gbc.gridx = 1;
-        panel.add(fileBtn, gbc);
+        panelWest.add(fileBtn, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 8;
-        panel.add(places, gbc);
+        panelWest.add(new Label("Places"), gbc);
         gbc.gridx = 1;
-        panel.add(placeBtn, gbc);
+        panelWest.add(placeBtn, gbc);
+
+//        gbc.gridx = 0;
+//        gbc.gridy = 9;
+//        gbc.gridwidth = 2;
+//        gbc.anchor = GridBagConstraints.EAST;
+//        gbc.insets = new Insets(20, 0, 0, 0);
+//        panelWest.add(nextBtn, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 9;
+        gbc.gridy = 0;
+        panelEast.add(new Label("Start Date"), gbc);
+        gbc.gridx = 1;
+        panelEast.add(tfSchStartDate, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panelEast.add(new Label("End Date"), gbc);
+        gbc.gridx = 1;
+        panelEast.add(tfSchEndDate, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panelEast.add(new Label("Start Time"), gbc);
+        gbc.gridx = 1;
+        panelEast.add(tfSchStartTime, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        panelEast.add(new Label("End Time"), gbc);
+        gbc.gridx = 1;
+        panelEast.add(tfSchEndTime, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        panelEast.add(new Label("Non Working Dates"), gbc);
+        gbc.gridx = 1;
+        panelEast.add(tfSchNonWorkingDates, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        panelEast.add(new Label("Non Working Days"), gbc);
+        gbc.gridx = 1;
+        panelEast.add(tfSchNonWorkingDays, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 6;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.EAST;
-        gbc.insets = new Insets(20, 0, 0, 0);
-        panel.add(nextBtn, gbc);
+        gbc.insets = new Insets(80, 0, 0, 0);
+        panelEast.add(nextBtn, gbc);
 
-        add(panel);
-
-
+        this.setLayout(new GridLayout(1, 2));
+        add(panelWest);
+        add(panelEast);
     }
 }
