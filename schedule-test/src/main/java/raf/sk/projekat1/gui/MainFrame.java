@@ -1,8 +1,12 @@
 package raf.sk.projekat1.gui;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.swing.*;
 import java.awt.*;
-
+@Getter
+@Setter
 public class MainFrame extends JFrame {
 
     public MainFrame(Frame owner) throws HeadlessException {

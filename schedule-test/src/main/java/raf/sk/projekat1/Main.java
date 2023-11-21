@@ -17,15 +17,15 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        try {
-            List<String> dayFormat = new ArrayList<>();
-            dayFormat.add("PON");
-            dayFormat.add("UTO");
-            dayFormat.add("SRE");
-            dayFormat.add("CET");
-            dayFormat.add("PET");
-            dayFormat.add("SUB");
-            dayFormat.add("NED");
+//        try {
+//            List<String> dayFormat = new ArrayList<>();
+//            dayFormat.add("PON");
+//            dayFormat.add("UTO");
+//            dayFormat.add("SRE");
+//            dayFormat.add("CET");
+//            dayFormat.add("PET");
+//            dayFormat.add("SUB");
+//            dayFormat.add("NED");
 
             //csv11
 //            Info info = new Info(7, 6, 4, 5, "dd/MM/yyyy", dayFormat);
@@ -34,26 +34,26 @@ public class Main {
             //csv21
 //            Info info = new Info(6, 5, 4, -1, -1, "dd/MM/yyyy", dayFormat);
             //csv22
-            Info info = new Info(8, 7, 4, 5, 6, "dd/MM/yyyy", dayFormat);
+//            Info info = new Info(8, 7, 4, 5, 6, "dd/MM/yyyy", dayFormat);
             //csv23
 //            Info info = new Info(7, 6, -1, 4, 5, "dd/MM/yyyy", dayFormat);
-            LocalDate startDate = LocalDate.parse("01/10/2023", DateTimeFormatter.ofPattern(info.getDateFormat()));
-            LocalDate endDate = LocalDate.parse("01/06/2024", DateTimeFormatter.ofPattern(info.getDateFormat()));
-            LocalTime startTime = LocalTime.parse("09:00", DateTimeFormatter.ofPattern("HH:mm"));
-            LocalTime endTime = LocalTime.parse("21:00", DateTimeFormatter.ofPattern("HH:mm"));
-            Schedule schedule = new Schedule(startDate, endDate, startTime, endTime, info);
+//            LocalDate startDate = LocalDate.parse("01/10/2023", DateTimeFormatter.ofPattern(info.getDateFormat()));
+//            LocalDate endDate = LocalDate.parse("01/06/2024", DateTimeFormatter.ofPattern(info.getDateFormat()));
+//            LocalTime startTime = LocalTime.parse("09:00", DateTimeFormatter.ofPattern("HH:mm"));
+//            LocalTime endTime = LocalTime.parse("21:00", DateTimeFormatter.ofPattern("HH:mm"));
+//            Schedule schedule = new Schedule(startDate, endDate, startTime, endTime, info);
 
-            Class<?> impl = Class.forName("raf.sk.projekat1.ScheduleServiceImpl");
-            ScheduleService ss = (ScheduleService) impl.getDeclaredConstructor().newInstance();
+//            Class<?> impl = Class.forName("raf.sk.projekat1.ScheduleServiceImpl");
+//            ScheduleService ss = (ScheduleService) impl.getDeclaredConstructor().newInstance();
 
-            ss.setSchedule(schedule);
+//            ss.setSchedule(schedule);
 
 //            ss.loadPlacesCSV("E:\\IntellJ Projects\\schedule-component\\schedule-test\\src\\main\\resources\\places.csv");
-            ss.loadCSV("E:\\IntellJ Projects\\schedule-component\\schedule-test\\src\\main\\resources\\terminiCSV22.csv");
-            Places place = new Places("RAF1");
-
-            Map<String, String> a = new HashMap<>();
-            a.put("racunari", "NE");
+//            ss.loadCSV("C:\\Users\\Lukam\\Desktop\\softverskjo\\projekat2\\schedule-test\\src\\main\\resources\\terminiCSV22.csv");
+//            Places place = new Places("RAF1");
+//
+//            Map<String, String> a = new HashMap<>();
+//            a.put("racunari", "NE");
 //            ss.check("02/10/2023", "23/10/2023", "Pon");
 //            ss.addAppointment("10/10/2023",  "30/10/2023",  "11:00-13:00", "RAF1", AppointmentRepeat.EVERY_DAY, a);
 //            ss.addAppointment("10/10/2023",  "30/12/2023",  "11:00-13:00", "RAF1", AppointmentRepeat.EVERY_WEDNESDAY, a);
@@ -63,8 +63,8 @@ public class Main {
 //            Appointment app = ss.find("02/10/2023", "RAF1", "09:00-11:00");
 //            ss.updateAppointment(app, "03/10/2023" , "13:00", "14:00",place);
 
-            ss.exportPDF("E:\\IntellJ Projects\\schedule-component\\schedule-test\\src\\main\\resources\\test.pdf", ss.getSchedule().getAppointments());
-            ss.printAppointments(ss.search());
+//            ss.exportPDF("C:\\Users\\Lukam\\Desktop\\softverskjo\\projekat2\\schedule-test\\src\\main\\resources\\test.pdf", ss.getSchedule().getAppointments());
+//            ss.printAppointments(ss.search());
 
             StartGui.getInstance();
 
@@ -90,11 +90,11 @@ public class Main {
 //
 //            System.out.println(ss.addAppointment("11/09/2023", "RAF1", "08:00-10:00", a));
 
-        } catch (IOException | ClassNotFoundException | NoSuchMethodException | IllegalAccessException |
-                 InstantiationException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        } catch (DocumentException e) {
-            throw new RuntimeException(e);
-        }
+//        } catch (NoSuchMethodException | IllegalAccessException |
+//                 InstantiationException | InvocationTargetException e) {
+//            throw new RuntimeException(e);
+//        } catch (DocumentException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 }

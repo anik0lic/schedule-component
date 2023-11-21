@@ -1,14 +1,20 @@
 package raf.sk.projekat1.gui;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.swing.*;
 import java.awt.*;
 
+
+@Getter
+@Setter
 public class InfoJSON extends JFrame {
 
     JLabel dayFLabel = new JLabel("Day Format");
     JLabel dateFLabel = new JLabel("Date Format");
     JLabel fExpLabel = new JLabel("File");
-    JTextField dayFTF = new JTextField(20);
+    public JTextField dayFTF = new JTextField(20);
     JTextField dateFTF = new JTextField(20);
 
 
@@ -25,6 +31,7 @@ public class InfoJSON extends JFrame {
 
         dugme.setBackground(Color.CYAN);
         dugme.setAction(StartGui.getInstance().getActionManager().getMainFrameAction());
+        dugmeJfc.setAction(StartGui.getInstance().getActionManager().getImportSchedule());
 
 
 

@@ -1,8 +1,12 @@
 package raf.sk.projekat1.gui;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.swing.*;
 import java.awt.*;
-
+@Getter
+@Setter
 public class InfoCSV extends JFrame {
     private JTextField tfPlace = new JTextField();
     private JTextField tfTime = new JTextField();
@@ -47,6 +51,8 @@ public class InfoCSV extends JFrame {
         tfSchNonWorkingDays.setPreferredSize(new Dimension(200, 20));
 
         nextBtn.setAction(StartGui.getInstance().getActionManager().getMainFrameAction());
+        fileBtn.setAction(StartGui.getInstance().getActionManager().getImportSchedule());
+        placeBtn.setAction(StartGui.getInstance().getActionManager().getImportPlaces());
 
         JPanel panelWest = new JPanel(new GridBagLayout());
         JPanel panelEast = new JPanel(new GridBagLayout());

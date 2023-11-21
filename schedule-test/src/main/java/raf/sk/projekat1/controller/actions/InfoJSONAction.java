@@ -12,6 +12,7 @@ public class InfoJSONAction extends AbstractAction {
     InfoJSON frame;
 
     public InfoJSONAction() {
+
         putValue(NAME, "JSON");
     }
 
