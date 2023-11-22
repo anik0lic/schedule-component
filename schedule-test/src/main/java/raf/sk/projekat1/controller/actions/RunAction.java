@@ -2,12 +2,16 @@ package raf.sk.projekat1.controller.actions;
 
 import raf.sk.projekat1.gui.InfoCSV;
 import raf.sk.projekat1.gui.StartGui;
+import raf.sk.projekat1.model.Appointment;
 import raf.sk.projekat1.model.AppointmentRepeat;
+import raf.sk.projekat1.model.Places;
 import raf.sk.projekat1.specification.ScheduleService;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RunAction extends AbstractAction {
@@ -90,6 +94,86 @@ public class RunAction extends AbstractAction {
             case "Update":
                 break;
             case "Search":
+
+
+                List<Appointment> appointments = new ArrayList<>();
+                if(parameters.length == 2){
+
+                    appointments = ss.search(parameters[0],parameters[1]);
+
+                }else if(parameters.length == 3){
+
+                    if(parameters[2].contains("=")){
+
+                        String[] map1 = parameters[parameters.length-1].split("-");
+                        Map<String, String> additional1 = new HashMap<>();
+                        for(String s : map1){
+                            String[] keyValue = s.split("=");
+                            additional1.put(keyValue[0], keyValue[1]);
+                        }
+
+                        appointments = ss.search(parameters[0],parameters[1],additional1);
+
+                    }else {
+
+                        Places place = new Places(parameters[2]);
+
+                        appointments = ss.search(parameters[0],parameters[1],place);
+
+                    }
+
+                }else if(parameters.length == 4){
+
+                    if(parameters[3].contains("=")){
+
+                        String[] map1 = parameters[parameters.length-1].split("-");
+                        Map<String, String> additional1 = new HashMap<>();
+                        for(String s : map1){
+                            String[] keyValue = s.split("=");
+                            additional1.put(keyValue[0], keyValue[1]);
+                        }
+
+                        if(ss.getSchedule().getInfo().getDayFormat().contains(parameters[0])){
+                            appointments = ss.search(parameters[0],parameters[1],parameters[2],additional1);
+                        }else {
+                            Places place = new Places(parameters[2]);
+                            appointments = ss.search(parameters[0],parameters[1],place,additional1);
+                        }
+
+
+
+
+                    }else {
+
+                        Places place = new Places(parameters[3]);
+
+                        appointments = ss.search(parameters[0],parameters[1],parameters[2],place);
+
+                    }
+
+
+
+                }else if(parameters.length == 5){
+                    Places place = new Places(parameters[3]);
+
+                    String[] map1 = parameters[parameters.length-1].split("-");
+                    Map<String, String> additional1 = new HashMap<>();
+                    for(String s : map1){
+                        String[] keyValue = s.split("=");
+                        additional1.put(keyValue[0], keyValue[1]);
+                    }
+
+                    appointments = ss.search(parameters[0],parameters[1],parameters[2],place,additional1);
+
+
+                }else if(StartGui.getInstance().getActionManager().getMainFrameAction().getFrame().getTextArea().getText().isEmpty()){
+                    appointments = ss.search();
+                }
+
+
+                StartGui.getInstance().getActionManager().getMainFrameAction().getFrame().searchUpdate(ss.printAppointments(appointments));
+
+
                 break;
             case "Check":
                 break;
