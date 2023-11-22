@@ -2,12 +2,16 @@ package raf.sk.projekat1.controller.actions;
 
 import raf.sk.projekat1.gui.InfoCSV;
 import raf.sk.projekat1.gui.StartGui;
+import raf.sk.projekat1.model.Appointment;
 import raf.sk.projekat1.model.AppointmentRepeat;
+import raf.sk.projekat1.model.Places;
 import raf.sk.projekat1.specification.ScheduleService;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RunAction extends AbstractAction {
@@ -88,13 +92,167 @@ public class RunAction extends AbstractAction {
 
                 break;
             case "Update":
+                int row = StartGui.getInstance().getActionManager().getMainFrameAction().getFrame().getTable().getSelectedRow();
+                String tableString = (String) StartGui.getInstance().getActionManager().getMainFrameAction().getFrame().getTable().getValueAt(row, 0);
+                //UTO 28/11/2023 17:00-19:00 Raf05
+                //Raf05 PON 17:00-19:00 28/11/2023-28/11/2023
+                Appointment selected;
+                boolean updated = false;
+
+                String[] data = tableString.split(" ");
+                System.out.println(data[0]);
+                System.out.println(data[1]);
+                System.out.println(data[2]);
+                System.out.println(data[3]);
+
+                if(data[3].contains("-")){
+                    selected = ss.find(data[3], data[0], data[2]);
+                }
+                else{
+                    selected = ss.find(data[1], data[3], data[2]);
+                }
+
+                if(parameters.length == 1){
+                    if(parameters[0].contains("=")){
+                        String[] mapa = parameters[parameters.length-1].split("-");
+                        Map<String, String> additionals = new HashMap<>();
+                        for(String s : mapa){
+                            String[] keyValue = s.split("=");
+                            additionals.put(keyValue[0], keyValue[1]);
+                        }
+
+                        updated = ss.updateAppointment(selected, additionals);
+                    }
+                    else {
+                        int flag = 0;
+                        for (Places p : ss.getSchedule().getPlaces()) {
+                            if (p.getName().equals(parameters[0])) {
+                                flag = 1;
+                                break;
+                            }
+                        }
+
+                        if (flag == 1) {
+                            Places place = new Places(parameters[0]);
+                            updated = ss.updateAppointment(selected, place);
+                        } else {
+                            updated = ss.updateAppointment(selected, parameters[0]);
+                        }
+                    }
+                }
+                else if(parameters.length == 2){
+                    updated = ss.updateAppointment(selected, parameters[0], parameters[1]);
+                }
+                else if(parameters.length == 3){
+                    updated = ss.updateAppointment(selected, parameters[0], parameters[1], parameters[2]);
+                }
+                else if(parameters.length == 4){
+                    Places place = new Places(parameters[3]);
+
+                    updated = ss.updateAppointment(selected, parameters[0], parameters[1], parameters[2], place);
+                }
+
+                if(updated){
+                    System.out.println("Uspesno promenjen termin");
+                    StartGui.getInstance().getActionManager().getMainFrameAction().getFrame().updateTable();
+                }
+                else{
+                    //error
+                    System.out.println("Termin nije promenjen");
+                }
+
                 break;
             case "Search":
                 break;
             case "Check":
+                List<String> results = new ArrayList<>();
+                //2 3 4 5 6
+                if(parameters.length == 2){
+                    results = ss.check(parameters[0], parameters[1]);
+                }
+                else if(parameters.length == 3){
+                    if(parameters[2].contains("=")){
+                        String[] mapa = parameters[parameters.length-1].split("-");
+                        Map<String, String> additionals = new HashMap<>();
+                        for(String s : mapa){
+                            String[] keyValue = s.split("=");
+                            additionals.put(keyValue[0], keyValue[1]);
+                        }
+
+                        results = ss.check(parameters[0], parameters[1], additionals);
+                    }
+                    else if(ss.getSchedule().getInfo().getDayFormat().contains(parameters[2])){
+                        results = ss.check(parameters[0], parameters[1], parameters[2]);
+                    }
+                    else{
+                        Places place = new Places(parameters[2]);
+
+                        results = ss.check(parameters[0], parameters[1], place);
+                    }
+                }
+                else if(parameters.length == 4){
+                    if(parameters[3].contains("=")){
+                        String[] mapa = parameters[parameters.length-1].split("-");
+                        Map<String, String> additionals = new HashMap<>();
+                        for(String s : mapa){
+                            String[] keyValue = s.split("=");
+                            additionals.put(keyValue[0], keyValue[1]);
+                        }
+
+                        results = ss.check(parameters[0], parameters[1], parameters[2], additionals);
+                    }
+                    else if(ss.getSchedule().getInfo().getDayFormat().contains(parameters[2])){
+                        Places place = new Places(parameters[3]);
+
+                        results = ss.check(parameters[0], parameters[1], parameters[2], place);
+                    }
+                    else{
+                        results = ss.check(parameters[0], parameters[1], parameters[2], parameters[3]);
+                    }
+                }
+                else if(parameters.length == 5){
+                    if(parameters[4].contains("=")){
+                        String[] mapa = parameters[parameters.length-1].split("-");
+                        Map<String, String> additionals = new HashMap<>();
+                        for(String s : mapa){
+                            String[] keyValue = s.split("=");
+                            additionals.put(keyValue[0], keyValue[1]);
+                        }
+
+                        results = ss.check(parameters[0], parameters[1], parameters[2], parameters[3], additionals);
+                    }
+                    else if(ss.getSchedule().getInfo().getDayFormat().contains(parameters[2])){
+                        results = ss.check(parameters[0], parameters[1], parameters[2], parameters[3],  parameters[4]);
+                    }
+                    else{
+                        Places place = new Places(parameters[4]);
+
+                        results = ss.check(parameters[0], parameters[1], parameters[2], parameters[3], place);
+                    }
+                }
+                else if(parameters.length == 6){
+                    if(parameters[5].contains("=")){
+                        String[] mapa = parameters[parameters.length-1].split("-");
+                        Map<String, String> additionals = new HashMap<>();
+                        for(String s : mapa){
+                            String[] keyValue = s.split("=");
+                            additionals.put(keyValue[0], keyValue[1]);
+                        }
+
+                        results = ss.check(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], additionals);
+                    }
+                    else{
+                        Places place = new Places(parameters[5]);
+
+                        results = ss.check(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], place);
+                    }
+                }
+
+                StartGui.getInstance().getActionManager().getMainFrameAction().getFrame().searchUpdate(results);
+
                 break;
             default:
-                //greska je
+                System.out.println("Greska");
                 break;
         }
 

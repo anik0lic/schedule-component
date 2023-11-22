@@ -1459,10 +1459,13 @@ public class ScheduleServiceImpl extends ScheduleService {
         List<String> results = new ArrayList<>();
 
         for(Appointment a : appointments){
-            String result = a.getPlace().getName() + ", " + a.getDay() + " " + a.getStartTime() + "-" + a.getEndTime() + " ";
-            result += a.getStartDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat())) + "-";
-            result += a.getEndDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
-            results.add(result);
+            StringBuilder result = new StringBuilder(a.getPlace().getName() + " " + a.getDay() + " " + a.getStartTime() + "-" + a.getEndTime() + " ");
+            result.append(a.getStartDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()))).append("-");
+            result.append(a.getEndDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()))).append(" ");
+            for(Map.Entry<String,String> entry : a.getAdditional().entrySet()) {
+                result.append(entry.getValue()).append(" ");
+            }
+            results.add(result.toString());
         }
 
         return results;

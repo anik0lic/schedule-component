@@ -607,7 +607,7 @@ public class ScheduleServiceImpl extends ScheduleService {
         Duration diff = Duration.between(sd.atStartOfDay(), ed.atStartOfDay());
         long diffDays = diff.toDays();
 
-        return check(diffDays, sd, getSchedule().getStartTime(), getSchedule().getEndTime(), getSchedule().getAppointments(), getSchedule().getPlaces(), null);
+        return check(diffDays, sd, getSchedule().getStartTime(), getSchedule().getEndTime(), getSchedule().getPlaces(), null);
     }
     @Override
     public List<String> check(String startDate, String endDate, Map<String, String> additional) {
@@ -620,7 +620,6 @@ public class ScheduleServiceImpl extends ScheduleService {
         long diffDays = diff.toDays();
 
         List<Places> validPlaces = new ArrayList<>();
-        List<Appointment> validAppointments = new ArrayList<>();
 
         for(Places p : getSchedule().getPlaces()) {
             for (Map.Entry<String, String> entry : p.getAdditional().entrySet()) {
@@ -629,16 +628,7 @@ public class ScheduleServiceImpl extends ScheduleService {
                 }
             }
         }
-
-        for(Appointment a : getSchedule().getAppointments()){
-            for(Places p : validPlaces){
-                if(a.getPlace().getName().equals(p.getName())){
-                    validAppointments.add(a);
-                }
-            }
-        }
-
-        return check(diffDays, sd, getSchedule().getStartTime(), getSchedule().getEndTime(), validAppointments, validPlaces, null);
+        return check(diffDays, sd, getSchedule().getStartTime(), getSchedule().getEndTime(), validPlaces, null);
     }
     @Override
     public List<String> check(String startDate, String endDate, String day) {
@@ -650,7 +640,7 @@ public class ScheduleServiceImpl extends ScheduleService {
         Duration diff = Duration.between(sd.atStartOfDay(), ed.atStartOfDay());
         long diffDays = diff.toDays();
 
-        return check(diffDays, sd, getSchedule().getStartTime(), getSchedule().getEndTime(), getSchedule().getAppointments(), getSchedule().getPlaces(), day);
+        return check(diffDays, sd, getSchedule().getStartTime(), getSchedule().getEndTime(), getSchedule().getPlaces(), day);
     }
     @Override
     public List<String> check(String startDate, String endDate, String day, Map<String, String> additional) {
@@ -673,15 +663,8 @@ public class ScheduleServiceImpl extends ScheduleService {
             }
         }
 
-        for(Appointment a : getSchedule().getAppointments()){
-            for(Places p : validPlaces){
-                if(a.getPlace().getName().equals(p.getName())){
-                    validAppointments.add(a);
-                }
-            }
-        }
 
-        return check(diffDays, sd, getSchedule().getStartTime(), getSchedule().getEndTime(), validAppointments, validPlaces, day);
+        return check(diffDays, sd, getSchedule().getStartTime(), getSchedule().getEndTime(), validPlaces, day);
     }
     @Override
     public List<String> check(String startDate, String endDate, Places place) {
@@ -694,7 +677,6 @@ public class ScheduleServiceImpl extends ScheduleService {
         long diffDays = diff.toDays();
 
         List<Places> validPlaces = new ArrayList<>();
-        List<Appointment> validAppointments = search(place);
 
         for(Places p : getSchedule().getPlaces()) {
             if (p.getName().equals(place.getName())){
@@ -702,15 +684,8 @@ public class ScheduleServiceImpl extends ScheduleService {
             }
         }
 
-//        for(Appointment a : getSchedule().getAppointments()){
-//            for(Places p : validPlaces){
-//                if(a.getPlace().getName().equals(p.getName())){
-//                    validAppointments.add(a);
-//                }
-//            }
-//        }
 
-        return check(diffDays, sd, getSchedule().getStartTime(), getSchedule().getEndTime(), validAppointments, validPlaces, null);
+        return check(diffDays, sd, getSchedule().getStartTime(), getSchedule().getEndTime(), validPlaces, null);
     }
     @Override
     public List<String> check(String startDate, String endDate, String day, Places place) {
@@ -723,7 +698,6 @@ public class ScheduleServiceImpl extends ScheduleService {
         long diffDays = diff.toDays();
 
         List<Places> validPlaces = new ArrayList<>();
-        List<Appointment> validAppointments = search(place);
 
         for(Places p : getSchedule().getPlaces()) {
             if (p.getName().equals(place.getName())){
@@ -731,15 +705,7 @@ public class ScheduleServiceImpl extends ScheduleService {
             }
         }
 
-//        for(Appointment a : getSchedule().getAppointments()){
-//            for(Places p : validPlaces){
-//                if(a.getPlace().getName().equals(p.getName())){
-//                    validAppointments.add(a);
-//                }
-//            }
-//        }
-
-        return check(diffDays, sd, getSchedule().getStartTime(), getSchedule().getEndTime(), validAppointments, validPlaces, day);
+        return check(diffDays, sd, getSchedule().getStartTime(), getSchedule().getEndTime(), validPlaces, day);
     }
     @Override
     public List<String> check(String startTime, String endTime, String startDate, String endDate) {
@@ -754,7 +720,7 @@ public class ScheduleServiceImpl extends ScheduleService {
         LocalTime st = LocalTime.parse(startTime);
         LocalTime et = LocalTime.parse(endTime);
 
-        return check(diffDays, sd, st, et, getSchedule().getAppointments(), getSchedule().getPlaces(), null);
+        return check(diffDays, sd, st, et, getSchedule().getPlaces(), null);
     }
     @Override
     public List<String> check(String startTime, String endTime, String startDate, String endDate, Map<String, String> additional) {
@@ -767,7 +733,6 @@ public class ScheduleServiceImpl extends ScheduleService {
         long diffDays = diff.toDays();
 
         List<Places> validPlaces = new ArrayList<>();
-        List<Appointment> validAppointments = new ArrayList<>();
 
         for(Places p : getSchedule().getPlaces()) {
             for (Map.Entry<String, String> entry : p.getAdditional().entrySet()) {
@@ -777,18 +742,10 @@ public class ScheduleServiceImpl extends ScheduleService {
             }
         }
 
-        for(Appointment a : getSchedule().getAppointments()){
-            for(Places p : validPlaces){
-                if(a.getPlace().getName().equals(p.getName())){
-                    validAppointments.add(a);
-                }
-            }
-        }
-
         LocalTime st = LocalTime.parse(startTime);
         LocalTime et = LocalTime.parse(endTime);
 
-        return check(diffDays, sd, st, et, validAppointments, validPlaces, null);
+        return check(diffDays, sd, st, et, validPlaces, null);
     }
     @Override
     public List<String> check(String startTime, String endTime, String startDate, String endDate, Places place) {
@@ -801,7 +758,6 @@ public class ScheduleServiceImpl extends ScheduleService {
         long diffDays = diff.toDays();
 
         List<Places> validPlaces = new ArrayList<>();
-        List<Appointment> validAppointments = search(place);
 
         for(Places p : getSchedule().getPlaces()) {
             if (p.getName().equals(place.getName())){
@@ -809,18 +765,10 @@ public class ScheduleServiceImpl extends ScheduleService {
             }
         }
 
-//        for(Appointment a : getSchedule().getAppointments()){
-//            for(Places p : validPlaces){
-//                if(a.getPlace().getName().equals(p.getName())){
-//                    validAppointments.add(a);
-//                }
-//            }
-//        }
-
         LocalTime st = LocalTime.parse(startTime);
         LocalTime et = LocalTime.parse(endTime);
 
-        return check(diffDays, sd, st, et, validAppointments, validPlaces, null);
+        return check(diffDays, sd, st, et, validPlaces, null);
     }
     @Override
     public List<String> check(String startTime, String endTime, String day, String startDate, String endDate) {
@@ -835,7 +783,7 @@ public class ScheduleServiceImpl extends ScheduleService {
         LocalTime st = LocalTime.parse(startTime);
         LocalTime et = LocalTime.parse(endTime);
 
-        return check(diffDays, sd, st, et, getSchedule().getAppointments(), getSchedule().getPlaces(), day);
+        return check(diffDays, sd, st, et, getSchedule().getPlaces(), day);
     }
     @Override
     public List<String> check(String startTime, String endTime, String day, String startDate, String endDate, Map<String, String> additional) {
@@ -848,7 +796,6 @@ public class ScheduleServiceImpl extends ScheduleService {
         long diffDays = diff.toDays();
 
         List<Places> validPlaces = new ArrayList<>();
-        List<Appointment> validAppointments = new ArrayList<>();
 
         for(Places p : getSchedule().getPlaces()) {
             for (Map.Entry<String, String> entry : p.getAdditional().entrySet()) {
@@ -858,18 +805,10 @@ public class ScheduleServiceImpl extends ScheduleService {
             }
         }
 
-        for(Appointment a : getSchedule().getAppointments()){
-            for(Places p : validPlaces){
-                if(a.getPlace().getName().equals(p.getName())){
-                    validAppointments.add(a);
-                }
-            }
-        }
-
         LocalTime st = LocalTime.parse(startTime);
         LocalTime et = LocalTime.parse(endTime);
 
-        return check(diffDays, sd, st, et, validAppointments, validPlaces, day);
+        return check(diffDays, sd, st, et, validPlaces, day);
     }
     @Override
     public List<String> check(String startTime, String endTime, String day, String startDate, String endDate, Places place) {
@@ -882,7 +821,6 @@ public class ScheduleServiceImpl extends ScheduleService {
         long diffDays = diff.toDays();
 
         List<Places> validPlaces = new ArrayList<>();
-        List<Appointment> validAppointments = search(place);
 
         for(Places p : getSchedule().getPlaces()) {
             if (p.getName().equals(place.getName())){
@@ -890,18 +828,10 @@ public class ScheduleServiceImpl extends ScheduleService {
             }
         }
 
-//        for(Appointment a : getSchedule().getAppointments()){
-//            for(Places p : validPlaces){
-//                if(a.getPlace().getName().equals(p.getName())){
-//                    validAppointments.add(a);
-//                }
-//            }
-//        }
-
         LocalTime st = LocalTime.parse(startTime);
         LocalTime et = LocalTime.parse(endTime);
 
-        return check(diffDays, sd, st, et, validAppointments, validPlaces, day);
+        return check(diffDays, sd, st, et, validPlaces, day);
     }
 
     @Override
@@ -909,10 +839,13 @@ public class ScheduleServiceImpl extends ScheduleService {
         List<String> results = new ArrayList<>();
 
         for(Appointment a : appointments){
-            String result = getSchedule().getInfo().getDayFormat().get(a.getStartDate().getDayOfWeek().getValue()-1);
-            result += ", " + a.getStartDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
-            result += " " + a.getStartTime() + "-" + a.getEndTime() + ", " + a.getPlace().getName();
-            results.add(result);
+            StringBuilder result = new StringBuilder(getSchedule().getInfo().getDayFormat().get(a.getStartDate().getDayOfWeek().getValue() - 1));
+            result.append(" ").append(a.getStartDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat())));
+            result.append(" ").append(a.getStartTime()).append("-").append(a.getEndTime()).append(" ").append(a.getPlace().getName()).append(" ");
+            for(Map.Entry<String,String> entry : a.getAdditional().entrySet()) {
+                result.append(entry.getValue()).append(" ");
+            }
+            results.add(result.toString());
         }
 
         return results;
@@ -922,14 +855,14 @@ public class ScheduleServiceImpl extends ScheduleService {
         getSchedule().getAppointments().sort(new Comparator<Appointment>() {
             @Override
             public int compare(Appointment o1, Appointment o2) {
-                return o1.getPlace().getName().compareTo(o2.getPlace().getName());
+                return o1.getStartTime().compareTo(o2.getStartTime());
             }
         });
 
         getSchedule().getAppointments().sort(new Comparator<Appointment>() {
             @Override
             public int compare(Appointment o1, Appointment o2) {
-                return o1.getStartTime().compareTo(o2.getStartTime());
+                return o1.getPlace().getName().compareTo(o2.getPlace().getName());
             }
         });
 
@@ -953,90 +886,133 @@ public class ScheduleServiceImpl extends ScheduleService {
                 && a.getEndTime().isAfter(eTime))) && a.getPlace().getName().equals(place);
     }
 
-    private List<String> check(long diffDays, LocalDate sd, LocalTime startTime, LocalTime endTime, List<Appointment> appointments, List<Places> places, String day){
+    private List<String> check(long diffDays, LocalDate sd, LocalTime startTime, LocalTime endTime, List<Places> places, String day){
         List<String> results = new ArrayList<>();
-        int i = 0, j = 0;
+        List<Appointment> appointments;
+//        int i = 0, j = 0;
+        int i = 0;
 
-        while(true){
-            if(j >= appointments.size() || i >= diffDays)
-                break;
-
-            Appointment a = appointments.get(j);
-            if(!(getSchedule().getNonWorkingDates().contains(sd.plusDays(i)) || getSchedule().getNonWorkingDaysOfTheWeek().contains(getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1)) || (day != null && !(day.equals(getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1)))))){
-                if (sd.plusDays(i).equals(a.getStartDate())) {
+        while(i <= diffDays) {
+            if (!(getSchedule().getNonWorkingDaysOfTheWeek().contains(getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1)) || getSchedule().getNonWorkingDates().contains(sd.plusDays(i)))){
+                if(!(day != null && !(getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1).equals(day)))) {
                     for (Places p : places) {
-                        if (a.getPlace().getName().equals(p.getName())) {
-                            String result = getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1);
-                            result += ", " + sd.plusDays(i).format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+                        appointments = search(sd.plusDays(i).format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat())), sd.plusDays(i).format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat())), p);
+                        if (!appointments.isEmpty()) {
+                            StringBuilder result = new StringBuilder(getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue() - 1) + " " + sd.plusDays(i).format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat())) + " ");
                             LocalTime start = startTime;
+                            int j = 0;
 
                             while (j < appointments.size()) {
-                                Appointment a2 = appointments.get(j);
-                                if (a2.getStartDate().equals(a.getStartDate()) && a2.getPlace().getName().equals(a.getPlace().getName())) {
-                                    if (!a2.getStartTime().equals(start)) {
-                                        if(a2.getStartTime().isAfter(endTime)){
-                                            result += " " + start + "-" + endTime;
-                                        }else{
-                                            result += " " + start + "-" + a2.getStartTime();
-                                            System.out.print(" " + start + "-" + a2.getStartTime());
-                                        }
+                                if (!appointments.get(j).getStartTime().equals(start) && appointments.get(j).getStartTime().isAfter(start) && start.isBefore(endTime)) {
+                                    if (appointments.get(j).getStartTime().isBefore(endTime)) {
+                                        result.append(start).append("-").append(appointments.get(j).getStartTime()).append(" ");
+                                    } else {
+                                        result.append(start).append("-").append(endTime).append(" ");
                                     }
-                                    start = a2.getEndTime();
-                                    j++;
                                 }
-                                else {
-                                    break;
-                                }
+                                start = appointments.get(j).getEndTime();
+
+                                j++;
                             }
-                            if (!start.equals(endTime)){
-                                result += " " + start + "-" + endTime;
-                            }
-                            result += " " + a.getPlace().getName();
-                            results.add(result);
-                        }
-                        else{
-                            String result = getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1);
-                            result += ", " + sd.plusDays(i).format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
-                            result += " " + startTime + "-" + endTime;
-                            result += " " + p.getName();
-                            results.add(result);
+                            if (!start.equals(endTime) && start.isBefore(endTime))
+                                result.append(start).append("-").append(endTime).append(" ");
+
+                            result.append(p.getName());
+
+                            results.add(result.toString());
+                        } else {
+//                        if(!(day != null && day.equals(getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1)))) {
+                            StringBuilder result = new StringBuilder(getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue() - 1) + " " + sd.plusDays(i).format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat())) + " ");
+                            result.append(startTime).append("-").append(endTime);
+                            result.append(p.getName());
+                            results.add(String.valueOf(result));
+//                        }
                         }
                     }
-                    i++;
-                }
-                else if(sd.plusDays(i).isAfter(a.getStartDate())){
-                    j++;
-                }
-                else{
-                    for (Places p : places) {
-                        String result = getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1);
-                        result += ", " + sd.plusDays(i).format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
-                        result += " " + startTime + "-" + endTime;
-                        result += " " + p.getName();
-                        results.add(result);
-                    }
-                    i++;
                 }
             }
-            else{
-                i++;
-            }
+            i++;
         }
 
-        if(i != diffDays){
-            while(i <= diffDays) {
-                if(!(getSchedule().getNonWorkingDates().contains(sd.plusDays(i)) || getSchedule().getNonWorkingDaysOfTheWeek().contains(getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1)) || (day != null && !(day.equals(getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1)))))){
-                    for (Places p : places) {
-                        String result = getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1);
-                        result += ", " + sd.plusDays(i).format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
-                        result += " " + startTime + "-" + endTime;
-                        result += " " + p.getName();
-                        results.add(result);
-                    }
-                }
-                i++;
-            }
-        }
+//        while(true){
+//            if(j >= appointments.size() || i > diffDays)
+//                break;
+//
+//            Appointment a = appointments.get(j);
+//            if(!(getSchedule().getNonWorkingDates().contains(sd.plusDays(i)) || getSchedule().getNonWorkingDaysOfTheWeek().contains(getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1)) || (day != null && !(day.equals(getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1)))))){
+//                if (sd.plusDays(i).equals(a.getStartDate())) {
+//                    for (Places p : places) {
+//                        if (a.getPlace().getName().equals(p.getName())) {
+//                            String result = getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1);
+//                            result += ", " + sd.plusDays(i).format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+//                            LocalTime start = startTime;
+//
+//                            while (j < appointments.size()) {
+//                                Appointment a2 = appointments.get(j);
+//                                if (a2.getStartDate().equals(a.getStartDate()) && a2.getPlace().getName().equals(a.getPlace().getName())) {
+//                                    if (!a2.getStartTime().equals(start) && appointments.get(j).getStartTime().isAfter(start) && start.isBefore(endTime)) {
+//                                        if(a2.getStartTime().isAfter(endTime)){
+//                                            result += " " + start + "-" + endTime;
+//                                        }else{
+//                                            result += " " + start + "-" + a2.getStartTime();
+//                                        }
+//                                    }
+//                                    start = a2.getEndTime();
+//                                    j++;
+//                                }
+//                                else {
+//                                    break;
+//                                }
+//                            }
+//                            if (!start.equals(endTime) && start.isBefore(endTime)){
+//                                result += " " + start + "-" + endTime;
+//                            }
+//                            result += " " + a.getPlace().getName();
+//                            results.add(result);
+//                        }
+//                        else{
+//                            String result = getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1);
+//                            result += ", " + sd.plusDays(i).format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+//                            result += " " + startTime + "-" + endTime;
+//                            result += " " + p.getName();
+//                            results.add(result);
+//                        }
+//                    }
+//                    i++;
+//                }
+//                else if(sd.plusDays(i).isAfter(a.getStartDate())){
+//                    j++;
+//                }
+//                else{
+//                    for (Places p : places) {
+//                        String result = getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1);
+//                        result += ", " + sd.plusDays(i).format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+//                        result += " " + startTime + "-" + endTime;
+//                        result += " " + p.getName();
+//                        results.add(result);
+//                    }
+//                    i++;
+//                }
+//            }
+//            else{
+//                i++;
+//            }
+//        }
+//
+//        if(i != diffDays){
+//            while(i <= diffDays) {
+//                if(!(getSchedule().getNonWorkingDates().contains(sd.plusDays(i)) || getSchedule().getNonWorkingDaysOfTheWeek().contains(getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1)) || (day != null && !(day.equals(getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1)))))){
+//                    for (Places p : places) {
+//                        String result = getSchedule().getInfo().getDayFormat().get(sd.plusDays(i).getDayOfWeek().getValue()-1);
+//                        result += ", " + sd.plusDays(i).format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+//                        result += " " + startTime + "-" + endTime;
+//                        result += " " + p.getName();
+//                        results.add(result);
+//                    }
+//                }
+//                i++;
+//            }
+//        }
 
         return results;
     }

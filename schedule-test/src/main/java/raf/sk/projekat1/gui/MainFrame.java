@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Getter
 @Setter
@@ -38,6 +39,7 @@ public class MainFrame extends JFrame {
 
         model = new DefaultTableModel();
         table = new JTable(model);
+        table.setFont(new Font("Arial", Font.PLAIN, 12));
         scrollPane = new JScrollPane(table);
 
         model.addColumn("Termini");
@@ -73,6 +75,20 @@ public class MainFrame extends JFrame {
         add(panelForTable, BorderLayout.WEST);
         add(menu, BorderLayout.EAST);
         add(exitBtn, BorderLayout.SOUTH);
+    }
+
+    public void searchUpdate(List<String> appointments){
+
+        if(appointments.isEmpty()){
+            model.setRowCount(0);
+            return;
+        }
+
+        model.getDataVector().removeAllElements();
+        for(String s : appointments){
+            model.addRow(new Object[]{s});
+        }
+
     }
 
     public void updateTable(){
