@@ -359,11 +359,6 @@ public class ScheduleServiceImpl extends ScheduleService {
             return false;
         }
 
-        // 02/10/2023 - 23/10/2023
-        //ako brisu 02/10/2023 onda je 09/10/2023 - 23/10/2023
-        //ako brisu 23/10/2023 onda je 02/10/2023 - 16/10/2023
-        //ako brisu 09/10/2023 onda je 02/10/2023 - 02/10/2023 i 16/10/2023 - 23/10/2023
-
         if(date.equals(app.getStartDate()) && date.equals(app.getEndDate())){
             getSchedule().getAppointments().remove(app);
         }
@@ -536,12 +531,6 @@ public class ScheduleServiceImpl extends ScheduleService {
 
         Appointment app = null;
 
-        // 02/10/2023 - 23/10/2023
-        // 02/10/2023 - 23/10/2023 ceo interval
-        // 02/10/2023 - 09/10/2023 onda ide od 16/10/2023 - 23/10/2023 (menja se startDate)
-        // 16/10/2023 - 23/10/2023 onda ide od 02/10/2023 - 09/10/2023 (menja se endDate)
-        // 09/10/2023 - 16/10/2023 onda imamo dva app 02/10/2023 - 02/10/2023 i 23/10/2023 - 23/10/2023
-
         for(Appointment a : getSchedule().getAppointments()){
             if(a.equals(startTime, endTime, sd, ed, place)){
                 app = a;
@@ -619,6 +608,8 @@ public class ScheduleServiceImpl extends ScheduleService {
         String time = appointment.getStartTime() + "-" + appointment.getEndTime();
         String[] dates = date.split("-");
 
+        Appointment deleted = foundAppointment;
+        getSchedule().getAppointments().remove(deleted);
         if(addAppointment(dates[0], dates[1], time, appointment.getPlace().getName(), AppointmentRepeat.EVERY_WEEK, appointment.getAdditional())){
             LocalDate newStartdate = LocalDate.parse(dates[0], DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
             LocalDate newEndDate = LocalDate.parse(dates[1], DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
@@ -640,11 +631,13 @@ public class ScheduleServiceImpl extends ScheduleService {
                 foundAppointment.setStartDate(newStartdate.plusDays(7));
 
                 getSchedule().getAppointments().add(newappointment);
+                getSchedule().getAppointments().add(foundAppointment);
             }
-            sortAppointmentList();
         }else{
+            getSchedule().getAppointments().add(deleted);
             return false;
         }
+        sortAppointmentList();
         return true;
     }
     @Override
@@ -721,16 +714,20 @@ public class ScheduleServiceImpl extends ScheduleService {
         String startDate = appointment.getStartDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
         String endDate = appointment.getEndDate().format(DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
 
+        Appointment deleted = foundAppointment;
+        getSchedule().getAppointments().remove(deleted);
         if(addAppointment(startDate,endDate,time,appointment.getPlace().getName(),AppointmentRepeat.EVERY_WEEK,appointment.getAdditional())){
-            int appDay = foundAppointment.getStartDate().getDayOfWeek().getValue();
-            int sdDay = appointment.getStartDate().getDayOfWeek().getValue();
-            int edDay = appointment.getEndDate().getDayOfWeek().getValue();
-
-            LocalDate newStartdate = appointment.getEndDate();
-            LocalDate newEndDate = appointment.getStartDate();
-
-            newStartdate = newStartdate.plusDays((7-edDay+appDay)%7);
-            newEndDate = newEndDate.minusDays((7+sdDay-appDay)%7);
+//            int appDay = foundAppointment.getStartDate().getDayOfWeek().getValue();
+//            int sdDay = appointment.getStartDate().getDayOfWeek().getValue();
+//            int edDay = appointment.getEndDate().getDayOfWeek().getValue();
+//
+//            LocalDate newStartdate = appointment.getEndDate();
+//            LocalDate newEndDate = appointment.getStartDate();
+//
+//            newStartdate = newStartdate.plusDays((7-edDay+appDay)%7);
+//            newEndDate = newEndDate.minusDays((7+sdDay-appDay)%7);
+            LocalDate newStartdate = appointment.getStartDate();
+            LocalDate newEndDate = appointment.getEndDate();
 
             if(appointment.getStartDate().equals(foundAppointment.getStartDate()) && appointment.getEndDate().equals(foundAppointment.getEndDate())){
                 getSchedule().getAppointments().remove(foundAppointment);
@@ -748,11 +745,13 @@ public class ScheduleServiceImpl extends ScheduleService {
                 foundAppointment.setStartDate(newStartdate.plusDays(7));
 
                 getSchedule().getAppointments().add(newappointment);
+                getSchedule().getAppointments().add(foundAppointment);
             }
-            sortAppointmentList();
         }else{
+            getSchedule().getAppointments().add(deleted);
             return false;
         }
+        sortAppointmentList();
         return true;
     }
     @Override
@@ -827,16 +826,20 @@ public class ScheduleServiceImpl extends ScheduleService {
         String time = startTime + "-" + endTime;
         String[] dates = date.split("-");
 
+        Appointment deleted = foundAppointment;
+        getSchedule().getAppointments().remove(deleted);
         if(addAppointment(dates[0],dates[1],time,appointment.getPlace().getName(),AppointmentRepeat.EVERY_WEEK,appointment.getAdditional())){
-            int appDay = foundAppointment.getStartDate().getDayOfWeek().getValue();
-            int sdDay = appointment.getStartDate().getDayOfWeek().getValue();
-            int edDay = appointment.getEndDate().getDayOfWeek().getValue();
-
-            LocalDate newStartdate = appointment.getEndDate();
-            LocalDate newEndDate = appointment.getStartDate();
-
-            newStartdate = newStartdate.plusDays((7-edDay+appDay)%7);
-            newEndDate = newEndDate.minusDays((7+sdDay-appDay)%7);
+//            int appDay = foundAppointment.getStartDate().getDayOfWeek().getValue();
+//            int sdDay = appointment.getStartDate().getDayOfWeek().getValue();
+//            int edDay = appointment.getEndDate().getDayOfWeek().getValue();
+//
+//            LocalDate newStartdate = appointment.getEndDate();
+//            LocalDate newEndDate = appointment.getStartDate();
+//
+//            newStartdate = newStartdate.plusDays((7-edDay+appDay)%7);
+//            newEndDate = newEndDate.minusDays((7+sdDay-appDay)%7);
+            LocalDate newStartdate = LocalDate.parse(dates[0], DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
+            LocalDate newEndDate = LocalDate.parse(dates[1], DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
 
             if(appointment.getStartDate().equals(foundAppointment.getStartDate()) && appointment.getEndDate().equals(foundAppointment.getEndDate())){
                 getSchedule().getAppointments().remove(foundAppointment);
@@ -854,11 +857,13 @@ public class ScheduleServiceImpl extends ScheduleService {
                 foundAppointment.setStartDate(newStartdate.plusDays(7));
 
                 getSchedule().getAppointments().add(newappointment);
+                getSchedule().getAppointments().add(foundAppointment);
             }
-            sortAppointmentList();
         }else{
+            getSchedule().getAppointments().add(deleted);
             return false;
         }
+        sortAppointmentList();
         return true;
     }
     @Override
@@ -921,21 +926,6 @@ public class ScheduleServiceImpl extends ScheduleService {
 
         LocalDate sd = LocalDate.parse(startDate, DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
         LocalDate ed = LocalDate.parse(endDate, DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
-        // 02/10/2023 - 30/10/2023
-
-        // 02/10/2023 - 30/10/2023 jednaki
-        // 03/10/2023 - 30/10/2023 start unutar kraj jednak start i endDate
-        // 02/10/2023 - 29/10/2023 pocetak jednak kraj unutar startDate i end
-
-        // 02/10/2023 - 31/10/2023 start jednak kraj spolja startDate i endDate
-        // 01/10/2023 - 30/10/2023 start spolja kraj jednak startDate i endDate
-
-        // 01/10/2023 - 31/10/2023 oba spolja onda pisemo startDate endDate
-
-        // 01/10/2023 - 29/10/2023 start spolja end unutra onda startDate i end
-        // 03/10/2023 - 31/10/2023 start unutra end spolja onda start i endDate
-
-        // 03/10/2023 - 29/10/2023 oba unutra onda start i end
 
         for(Appointment a : getSchedule().getAppointments()){
             if((a.getEndDate().isAfter(sd) || a.getEndDate().isEqual(sd)) && (a.getStartDate().isBefore(ed) || a.getStartDate().isEqual(ed))){
@@ -1475,9 +1465,9 @@ public class ScheduleServiceImpl extends ScheduleService {
         });
     }
     @Override
-    public boolean overlappingAppointments(Appointment a, LocalTime sTime, LocalTime eTime, LocalDate date, String place){
-        return (a.getStartDate().equals(date) || a.getEndDate().equals(date) || checkAppointmentForDate(a, date)) && (a.getStartTime().equals(sTime) || a.getEndTime().equals(eTime) || (a.getStartTime().isBefore(sTime) && a.getEndTime().isAfter(sTime)) || (a.getStartTime().isBefore(eTime)
-                && a.getEndTime().isAfter(eTime))) && a.getPlace().getName().equals(place);
+    public boolean overlappingAppointments(Appointment appointment, LocalTime sTime, LocalTime eTime, LocalDate date, String place){
+        return (appointment.getStartDate().equals(date) || appointment.getEndDate().equals(date) || checkAppointmentForDate(appointment, date)) && (appointment.getStartTime().equals(sTime) || appointment.getEndTime().equals(eTime) || (appointment.getStartTime().isBefore(sTime) && appointment.getEndTime().isAfter(sTime)) || (appointment.getStartTime().isBefore(eTime)
+                && appointment.getEndTime().isAfter(eTime))) && appointment.getPlace().getName().equals(place);
     }
 
     private boolean checkAppointmentForDate(Appointment a, LocalDate date){

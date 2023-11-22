@@ -30,7 +30,6 @@ public class MainFrameAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(StartGui.getInstance().getActionManager().getInfoCSVAction().getFrame() != null){
-
             String[] dayFormat = StartGui.getInstance().getActionManager().getInfoCSVAction().getFrame().getTfDayFormat().getText().split(",");
             String dateFormat = StartGui.getInstance().getActionManager().getInfoCSVAction().getFrame().getTfDateFormat().getText();
             int place = Integer.parseInt(StartGui.getInstance().getActionManager().getInfoCSVAction().getFrame().getTfPlace().getText());
@@ -40,7 +39,7 @@ public class MainFrameAction extends AbstractAction {
             int day = Integer.parseInt(StartGui.getInstance().getActionManager().getInfoCSVAction().getFrame().getTfDay().getText());
 
             LocalDate startDateLD = LocalDate.parse(StartGui.getInstance().getActionManager().getInfoCSVAction().getFrame().getTfSchStartDate().getText(), DateTimeFormatter.ofPattern(dateFormat));
-            LocalDate endDateLD = LocalDate.parse(StartGui.getInstance().getActionManager().getInfoCSVAction().getFrame().getTfSchStartDate().getText(), DateTimeFormatter.ofPattern(dateFormat));
+            LocalDate endDateLD = LocalDate.parse(StartGui.getInstance().getActionManager().getInfoCSVAction().getFrame().getTfSchEndDate().getText(), DateTimeFormatter.ofPattern(dateFormat));
             LocalTime startTimeLT = LocalTime.parse(StartGui.getInstance().getActionManager().getInfoCSVAction().getFrame().getTfSchStartTime().getText(), DateTimeFormatter.ofPattern("HH:mm"));
             LocalTime endTimeLT = LocalTime.parse(StartGui.getInstance().getActionManager().getInfoCSVAction().getFrame().getTfSchEndTime().getText(), DateTimeFormatter.ofPattern("HH:mm"));
 

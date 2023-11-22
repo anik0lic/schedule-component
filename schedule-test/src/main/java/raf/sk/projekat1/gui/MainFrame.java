@@ -10,6 +10,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -126,6 +128,12 @@ public class MainFrame extends JFrame {
         exportBtn.setBackground(Color.CYAN);
 
         exportBtn.setAction(StartGui.getInstance().getActionManager().getExportAction());
+        exitBtn.addActionListener (new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
 
         gbc1.gridy = 1;
         gbc1.gridx = 2;
@@ -135,11 +143,7 @@ public class MainFrame extends JFrame {
         menu.add(exitBtn,gbc1);
 
 
-
-
-//        add(panelForTable, BorderLayout.WEST);
         add(menu, BorderLayout.CENTER);
-//        add(exitBtn, BorderLayout.SOUTH);
     }
 
 

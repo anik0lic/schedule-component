@@ -54,6 +54,10 @@ public class InfoCSV extends JFrame {
         fileBtn.setAction(StartGui.getInstance().getActionManager().getImportSchedule());
         placeBtn.setAction(StartGui.getInstance().getActionManager().getImportPlaces());
 
+        nextBtn.setBackground(Color.CYAN);
+        fileBtn.setBackground(Color.CYAN);
+        placeBtn.setBackground(Color.CYAN);
+
         JPanel panelWest = new JPanel(new GridBagLayout());
         JPanel panelEast = new JPanel(new GridBagLayout());
 
