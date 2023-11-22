@@ -38,7 +38,7 @@ public class InfoJSON extends JFrame {
         int screenHeight = screenSize.height;
         int screenWidth = screenSize.width;
 
-        setSize((int) (screenWidth / 4), (int) (screenHeight / 4));
+        setSize((int) (screenWidth / 3), (int) (screenHeight / 3));
         setLocationRelativeTo(null);
 
         JPanel newPanel = new JPanel(new GridBagLayout());

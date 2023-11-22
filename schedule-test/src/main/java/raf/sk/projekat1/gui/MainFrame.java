@@ -35,7 +35,7 @@ public class MainFrame extends JFrame {
         int screenHeight = screenSize.height;
         int screenWidth = screenSize.width;
 
-        setSize((int) (1600), (int) (800));
+        setSize((int) (1500), (int) (700));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(owner);
 
@@ -43,9 +43,9 @@ public class MainFrame extends JFrame {
 
         model = new DefaultTableModel();
         table = new JTable(model);
-        table.setPreferredScrollableViewportSize(new Dimension(800, 400));
+        table.setPreferredScrollableViewportSize(new Dimension(600, 300));
 
-        table.setFont(new Font("Arial", Font.PLAIN, 14));
+        table.setFont(new Font("Arial", Font.PLAIN, 12));
 
 //
         table.setRowHeight(40);
