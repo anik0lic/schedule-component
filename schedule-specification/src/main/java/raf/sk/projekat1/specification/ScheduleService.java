@@ -74,7 +74,7 @@ public abstract class ScheduleService {
      * @param place This is the path to CSV file
      * @param time This is the path to CSV file
      * @param additional This is the path to CSV file
-     * @return boolean
+     * @return boolean it returns true if Appointment is added and false if it isn't
      */
     public boolean addAppointment(String when, String place, String time, Map<String, String> additional) {
         LocalDate date = LocalDate.parse(when, DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
@@ -107,41 +107,41 @@ public abstract class ScheduleService {
         return true;
     }
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
-     * @param time This is the path to CSV file
-     * @param place This is the path to CSV file
-     * @param repeat This is the path to CSV file
-     * @param additional This is the path to CSV file
-     * @return boolean
+     * This method is used to add repeated Appointments to Schedule
+     * @param startDate This is the starting day of repeated Appointments
+     * @param endDate This is the ending day of repeated Appointments
+     * @param time This is the time when Appointment lasts (HH:mm-HH:mm)
+     * @param place This is where Appointment takes place
+     * @param repeat This is the enum which tells when Appointment is repeated
+     * @param additional This is the additional data of Appointment
+     * @return boolean it returns true if Appointments are added and false if they aren't
      */
     public abstract boolean addAppointment(String startDate, String endDate, String time, String place, AppointmentRepeat repeat, Map<String, String> additional);
 
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param when This is the path to CSV file
-     * @param place This is the path to CSV file
-     * @param time This is the path to CSV file
-     * @return boolean
+     * This method is used to remove single Appointment from Schedule
+     * @param when This is the period of Appointment that will be removed e.g "01/10/2023"
+     * @param place This is where Appointment takes place
+     * @param time This is the time when Appointment lasts (HH:mm-HH:mm)
+     * @return boolean it returns true if Appointment is removed and false if it isn't
      */
     public abstract boolean removeAppointment(String when, String place, String time);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
-     * @param time This is the path to CSV file
-     * @param place This is the path to CSV file
-     * @param repeat This is the path to CSV file
-     * @return boolean
+     * This method is used to remove repeated Appointments from Schedule
+     * @param startDate This is the starting day of repeated Appointments
+     * @param endDate This is the ending day of repeated Appointments
+     * @param time This is the time when Appointment lasts (HH:mm-HH:mm)
+     * @param place This is where Appointment takes place
+     * @param repeat This is the enum which tells when Appointment is repeated
+     * @return boolean it returns true if Appointments are remove and false if they aren't
      */
     public abstract boolean removeAppointment(String startDate, String endDate, String time, String place, AppointmentRepeat repeat);
 
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param when This is the path to CSV file
-     * @param place This is the path to CSV file
-     * @param time This is the path to CSV file
+     * This method is used to find exact Appointment from Schedule
+     * @param when This is the period of Appointment that will be removed (in first implementation it only needs one date e.g "01/10/2023", but in second implementation it needs two e.g "01/10/2023-14/10/2023"
+     * @param place This is where Appointment takes place
+     * @param time This is the time when Appointment lasts (HH:mm-HH:mm)
      * @return Appointment
      */
     public abstract Appointment find(String when, String place, String time);
