@@ -66,10 +66,17 @@ public class Appointment {
             else if(this.startDate.isBefore(sDate) && this.endDate.isEqual(eDate))
                 return true;
             else if(this.startDate.isBefore(sDate) && this.endDate.isAfter(eDate)){
-                Duration diff = Duration.between(this.getStartDate().atStartOfDay(), sDate.atStartOfDay());
-                long diffDays = diff.toDays();
+//                Duration diff = Duration.between(this.getStartDate().atStartOfDay(), sDate.atStartOfDay());
+//                long diffDays = diff.toDays();
+//
+//                return diffDays % 7 == 0;
 
-                return diffDays % 7 == 0;
+
+                if(this.startDate.getDayOfWeek().equals(sDate.getDayOfWeek())) {
+                    return true;
+                }
+
+
             }
         }
 

@@ -6,7 +6,10 @@ import raf.sk.projekat1.model.Appointment;
 import raf.sk.projekat1.specification.ScheduleService;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -43,6 +46,10 @@ public class MainFrame extends JFrame {
 
         table.setFont(new Font("Arial", Font.PLAIN, 14));
 
+//
+        table.setRowHeight(40);
+        table.getColumnModel().setColumnMargin(20);
+
 
         scrollPane = new JScrollPane(table);
 
@@ -77,9 +84,10 @@ public class MainFrame extends JFrame {
         comboBox = new JComboBox(boxItems);
         comboBox.setPreferredSize(new Dimension(150, 50));
         comboBox.setFont(new Font("Arial", Font.PLAIN, 20));
+        comboBox.setBackground(Color.CYAN);
 
         textArea = new JTextArea();
-        textArea.setPreferredSize(new Dimension(450, 100));
+        textArea.setPreferredSize(new Dimension(550, 100));
 
         JButton runBtn = new JButton("Run");
         runBtn.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -149,10 +157,15 @@ public class MainFrame extends JFrame {
     }
 
     public void updateTable(){
+
+
+
+
         model.getDataVector().removeAllElements();
         for(String s : ss.printAppointments(ss.getSchedule().getAppointments())){
             model.addRow(new Object[]{s});
         }
+
     }
 
 }
