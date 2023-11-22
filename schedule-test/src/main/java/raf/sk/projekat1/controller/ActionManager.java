@@ -14,6 +14,7 @@ public class ActionManager {
     private ImportSchedule importSchedule;
     private ImportPlaces importPlaces;
     private RunAction runAction;
+    private ExportAction exportAction;
 
     public ActionManager(){
         infoCSVAction = new InfoCSVAction();
@@ -22,6 +23,7 @@ public class ActionManager {
         importSchedule = new ImportSchedule();
         importPlaces = new ImportPlaces();
         runAction = new RunAction();
+        exportAction = new ExportAction();
     }
 
 }

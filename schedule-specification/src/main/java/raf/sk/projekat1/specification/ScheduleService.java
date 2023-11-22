@@ -31,8 +31,20 @@ public abstract class ScheduleService {
         this.schedule = schedule;
     }
 
+    /**
+     * This method is used to load Schedule from JSON file
+     * @param filepath This is the path to JSON file
+     */
     public abstract void loadJSON(String filepath) throws IOException;
+    /**
+     * This method is used to load Schedule from CSV file
+     * @param filepath This is the path to CSV file
+     */
     public abstract void loadCSV(String filepath) throws IOException;
+    /**
+     * This method is used to load list of Places from CSV file
+     * @param filepath This is the path to CSV file
+     */
     public void loadPlacesCSV(String filepath) throws IOException {
         Reader in = new FileReader(filepath);
         CSVFormat format = CSVFormat.DEFAULT.withFirstRecordAsHeader();
@@ -56,6 +68,14 @@ public abstract class ScheduleService {
         }
     }
 
+    /**
+     * This method is used to add single Appointment to Schedule
+     * @param when This is the path to CSV file
+     * @param place This is the path to CSV file
+     * @param time This is the path to CSV file
+     * @param additional This is the path to CSV file
+     * @return boolean
+     */
     public boolean addAppointment(String when, String place, String time, Map<String, String> additional) {
         LocalDate date = LocalDate.parse(when, DateTimeFormatter.ofPattern(getSchedule().getInfo().getDateFormat()));
         if(date.isBefore(getSchedule().getStartDate()) || date.isAfter(getSchedule().getEndDate())

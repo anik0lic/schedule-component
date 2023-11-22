@@ -163,15 +163,30 @@ public class RunAction extends AbstractAction {
 
                 break;
             case "Search":
-
-
                 List<Appointment> appointments = new ArrayList<>();
-                if(parameters.length == 2){
 
+
+                if(parameters.length == 1){
+                    if(parameters[0].contains("=")){
+                        String[] map1 = parameters[parameters.length-1].split("-");
+                        Map<String, String> additional1 = new HashMap<>();
+                        for(String s : map1){
+                            String[] keyValue = s.split("=");
+                            additional1.put(keyValue[0], keyValue[1]);
+                        }
+
+                        appointments = ss.search(additional1);
+                    }
+                    else{
+                        Places place = new Places(parameters[0]);
+
+                        appointments = ss.search(place);
+                    }
+                }
+                else if(parameters.length == 2){
                     appointments = ss.search(parameters[0],parameters[1]);
-
-                }else if(parameters.length == 3){
-
+                }
+                else if(parameters.length == 3){
                     if(parameters[2].contains("=")){
 
                         String[] map1 = parameters[parameters.length-1].split("-");

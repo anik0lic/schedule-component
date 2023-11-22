@@ -68,7 +68,6 @@ public class Main {
 
             StartGui.getInstance();
 
-
 //            System.out.println(ss.addAppointment("04/09/2023", "RAF1", "11:00-14:00", a));
 //            System.out.println(ss.addAppointment("04/09/2023", "30/09/2023", "11:00-14:00", "RAF1", AppointmentRepeat.EVERY_WEEK, a));
 //

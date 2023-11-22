@@ -6,7 +6,6 @@ import raf.sk.projekat1.model.Appointment;
 import raf.sk.projekat1.specification.ScheduleService;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -126,6 +125,8 @@ public class MainFrame extends JFrame {
         exitBtn.setBackground(Color.CYAN);
         exportBtn.setBackground(Color.CYAN);
 
+        exportBtn.setAction(StartGui.getInstance().getActionManager().getExportAction());
+
         gbc1.gridy = 1;
         gbc1.gridx = 2;
         gbc1.anchor = GridBagConstraints.SOUTHEAST;
@@ -157,15 +158,10 @@ public class MainFrame extends JFrame {
     }
 
     public void updateTable(){
-
-
-
-
         model.getDataVector().removeAllElements();
         for(String s : ss.printAppointments(ss.getSchedule().getAppointments())){
             model.addRow(new Object[]{s});
         }
-
     }
 
 }
