@@ -165,8 +165,9 @@ public class RunAction extends AbstractAction {
             case "Search":
                 List<Appointment> appointments = new ArrayList<>();
 
-
-                if(parameters.length == 1){
+                if(StartGui.getInstance().getActionManager().getMainFrameAction().getFrame().getTextArea().getText().isEmpty()){
+                    appointments = ss.search();
+                }else if(parameters.length == 1){
                     if(parameters[0].contains("=")){
                         String[] map1 = parameters[parameters.length-1].split("-");
                         Map<String, String> additional1 = new HashMap<>();
@@ -207,7 +208,6 @@ public class RunAction extends AbstractAction {
                     }
 
                 }else if(parameters.length == 4){
-
                     if(parameters[3].contains("=")){
 
                         String[] map1 = parameters[parameters.length-1].split("-");
@@ -250,10 +250,10 @@ public class RunAction extends AbstractAction {
                     appointments = ss.search(parameters[0],parameters[1],parameters[2],place,additional1);
 
 
-                }else if(StartGui.getInstance().getActionManager().getMainFrameAction().getFrame().getTextArea().getText().isEmpty()){
-                    appointments = ss.search();
                 }
 
+
+                System.out.println(StartGui.getInstance().getActionManager().getMainFrameAction().getFrame().getTextArea().getText());
 
                 StartGui.getInstance().getActionManager().getMainFrameAction().getFrame().searchUpdate(ss.printAppointments(appointments));
 

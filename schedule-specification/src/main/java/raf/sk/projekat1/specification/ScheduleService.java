@@ -196,15 +196,15 @@ public abstract class ScheduleService {
     public abstract boolean updateAppointment(Appointment appointment, String when, String startTime, String endTime, Places place);
 
     /**
-     * This method is used to add single Appointment to Schedule
+     * This method is used to search for all the appointments in the schedule
      * @return List of Appointments
      */
     public List<Appointment> search(){
         return new ArrayList<>(getSchedule().getAppointments());
     }
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param place This is the path to CSV file
+     * This method is used to search for appointments in the schedule
+     * @param place This is the place name of the appointment
      * @return List of Appointments
      */
     public List<Appointment> search(Places place){
@@ -218,8 +218,8 @@ public abstract class ScheduleService {
         return results;
     }
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param additional This is the path to CSV file
+     * This method is used to search for appointments in the schedule
+     * @param additional This is the map of the additional information of the appointment(the key is the header and the value is the information)
      * @return List of Appointments
      */
     public List<Appointment> search(Map<String, String> additional){
@@ -239,201 +239,202 @@ public abstract class ScheduleService {
         return results;
     }
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
+     * This method is used to search for appointments in the schedule
+     * @param startDate This is the start date of the appointment
+     * @param endDate This is the end date of the appointment
      * @return List of Appointments
      */
     public abstract List<Appointment> search(String startDate, String endDate);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
-     * @param additional This is the path to CSV file
+     * This method is used to search for appointments in the schedule
+     * @param startDate This is the start date of the appointment
+     * @param endDate This is the end date of the appointment
+     * @param additional This is the map of the additional information of the appointment(the key is the header and the value is the information)
      * @return List of Appointments
      */
     public abstract List<Appointment> search(String startDate, String endDate, Map<String, String> additional);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
-     * @param place This is the path to CSV file
+     * This method is used to search for appointments in the schedule
+     * @param startDate This is the start date of the appointment
+     * @param endDate This is the end date of the appointment
+     * @param place This is the place name of the appointment
      * @return List of Appointments
      */
     public abstract List<Appointment> search(String startDate, String endDate, Places place);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
-     * @param place This is the path to CSV file
-     * @param additional This is the path to CSV file
+     * This method is used to search for appointments in the schedule
+     * @param startDate This is the start date of the appointment
+     * @param endDate This is the end date of the appointment
+     * @param place This is the place name of the appointment
+     * @param additional This is the map of the additional information of the appointment(the key is the header and the value is the information)
      * @return List of Appointments
      */
     public abstract List<Appointment> search(String startDate, String endDate, Places place, Map<String, String> additional);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
-     * @param place This is the path to CSV file
+     * This method is used to search for appointments in the schedule
+     * @param day This is the day of the appointment
+     * @param startDate This is the start date of the appointment
+     * @param endDate This is the end date of the appointment
+     * @param place This is the place name of the appointment
      * @return List of Appointments
      */
     public abstract List<Appointment> search(String day, String startDate, String endDate, Places place);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param day This is the path to CSV file
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
-     * @param additional This is the path to CSV file
+     * This method is used to search for appointments in the schedule
+     * @param day This is the day of the appointment
+     * @param startDate This is the start date of the appointment
+     * @param endDate This is the end date of the appointment
+     * @param additional This is the map of the additional information of the appointment(the key is the header and the value is the information)
      * @return List of Appointments
      */
     public abstract List<Appointment> search(String day, String startDate, String endDate, Map<String, String> additional);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param day This is the path to CSV file
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
-     * @param place This is the path to CSV file
-     * @param additional This is the path to CSV file
+     * This method is used to search for appointments in the schedule
+     * @param day This is the day of the appointment
+     * @param startDate This is the start date of the appointment
+     * @param endDate This is the end date of the appointment
+     * @param place This is the place name of the appointment
+     * @param additional This is the map of the additional information of the appointment(the key is the header and the value is the information)
      * @return List of Appointments
      */
     public abstract List<Appointment> search(String day, String startDate, String endDate, Places place, Map<String, String> additional);
 
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
+     * This method is used to check for free appointments
+     * @param startDate This is the start date from where you check
+     * @param endDate This is the end date to where you check
      * @return List of Strings
      */
     public abstract List<String> check(String startDate, String endDate);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
-     * @param additional This is the path to CSV file
+     * This method is used to check for free appointments
+     * @param startDate This is the start date from where you check
+     * @param endDate This is the end date to where you check
+     * @param additional This is the map of the addition information about the appointment(the key is the header and the value is the information)
      * @return List of Strings
      */
     public abstract List<String> check(String startDate, String endDate, Map<String, String> additional);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
-     * @param day This is the path to CSV file
+     * This method is used to check for free appointments
+     * @param startDate This is the start date from where you check
+     * @param endDate This is the end date to where you check
+     * @param day This is the day of the week of the appointment
      * @return List of Strings
      */
     public abstract List<String> check(String startDate, String endDate, String day);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
-     * @param day This is the path to CSV file
-     * @param additional This is the path to CSV file
+     * This method is used to check for free appointments
+     * @param startDate This is the start date from where you check
+     * @param endDate This is the end date to where you check
+     * @param day This is the day of the week of the appointment
+     * @param additional This is the map of the addition information about the appointment(the key is the header and the value is the information)
      * @return List of Strings
      */
     public abstract List<String> check(String startDate, String endDate, String day, Map<String, String> additional);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
-     * @param place This is the path to CSV file
+     * This method is used to check for free appointments
+     * @param startDate This is the start date from where you check
+     * @param endDate This is the end date to where you check
+     * @param place This is the place name of the appointment
      * @return List of Strings
      */
     public abstract List<String> check(String startDate, String endDate, Places place);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
-     * @param day This is the path to CSV file
-     * @param place This is the path to CSV file
+     * This method is used to check for free appointments
+     * @param startDate This is the start date from where you check
+     * @param endDate This is the end date to where you check
+     * @param day This is the day of the week of the appointment
+     * @param place This is the place name of the appointment
      * @return List of Strings
      */
     public abstract List<String> check(String startDate, String endDate, String day, Places place);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startTime This is the path to CSV file
-     * @param endTime This is the path to CSV file
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
+     * This method is used to check for free appointments
+     * @param startTime This is the start time of the appointment
+     * @param endTime This is the end time of the appointment
+     * @param startDate This is the start date from where you check
+     * @param endDate This is the end date to where you check
      * @return List of Strings
      */
     public abstract List<String> check(String startTime, String endTime, String startDate, String endDate);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startTime This is the path to CSV file
-     * @param endTime This is the path to CSV file
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
-     * @param additional This is the path to CSV file
+     * This method is used to check for free appointments
+     * @param startTime This is the start time of the appointment
+     * @param endTime This is the end time of the appointment
+     * @param startDate This is the start date from where you check
+     * @param endDate This is the end date to where you check
+     * @param additional This is the map of the addition information about the appointment(the key is the header and the value is the information)
      * @return List of Strings
      */
     public abstract List<String> check(String startTime, String endTime, String startDate, String endDate, Map<String, String> additional);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startTime This is the path to CSV file
-     * @param endTime This is the path to CSV file
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
-     * @param place This is the path to CSV file
+     * This method is used to check for free appointments
+     * @param startTime This is the start time of the appointment
+     * @param endTime This is the end time of the appointment
+     * @param startDate This is the start date from where you check
+     * @param endDate This is the end date to where you check
+     * @param place This is the place name of the appointment
      * @return List of Strings
      */
     public abstract List<String> check(String startTime, String endTime, String startDate, String endDate, Places place);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startTime This is the path to CSV file
-     * @param endTime This is the path to CSV file
-     * @param day This is the path to CSV file
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
+     * This method is used to check for free appointments
+     * @param startTime This is the start time of the appointment
+     * @param endTime This is the end time of the appointment
+     * @param day This is the day of the week of the appointment
+     * @param startDate This is the start date from where you check
+     * @param endDate This is the end date to where you check
      * @return List of Strings
      */
     public abstract List<String> check(String startTime, String endTime, String day, String startDate, String endDate);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startTime This is the path to CSV file
-     * @param endTime This is the path to CSV file
-     * @param day This is the path to CSV file
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
-     * @param additional This is the path to CSV file
+     * This method is used to check for free appointments
+     * @param startTime This is the start time of the appointment
+     * @param endTime This is the end time of the appointment
+     * @param day This is the day of the week of the appointment
+     * @param startDate This is the start date from where you check
+     * @param endDate This is the end date to where you check
+     * @param additional This is the map of the addition information about the appointment(the key is the header and the value is the information)
      * @return List of Strings
      */
     public abstract List<String> check(String startTime, String endTime, String day, String startDate, String endDate, Map<String, String> additional);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param startTime This is the path to CSV file
-     * @param endTime This is the path to CSV file
-     * @param day This is the path to CSV file
-     * @param startDate This is the path to CSV file
-     * @param endDate This is the path to CSV file
-     * @param place This is the path to CSV file
+     * This method is used to check for free appointments
+     * @param startTime This is the start time of the appointment
+     * @param endTime This is the end time of the appointment
+     * @param day This is the day of the week of the appointment
+     * @param startDate This is the start date from where you check
+     * @param endDate This is the end date to where you check
+     * @param place This is the place name of the appointment
      * @return List of Strings
      */
     public abstract List<String> check(String startTime, String endTime, String day, String startDate, String endDate, Places place);
 
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param appointments This is the path to CSV file
+     * This method is used to return the list of Appointments in a String format ready to be printed or added to the table
+     * @param appointments This is List of Appointments
      * @return List of Strings
      */
     public abstract List<String> printAppointments(List<Appointment> appointments);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param appointment This is the path to CSV file
-     * @param sTime This is the path to CSV file
-     * @param eTime This is the path to CSV file
-     * @param date This is the path to CSV file
-     * @param place This is the path to CSV file
+     * This method is used to check if an appointment is overlapping in the appointment list
+     * @param appointment This is the appointment that will be checked
+     * @param sTime This is the start time of the appointment
+     * @param eTime This is the end time of the appointment
+     * @param date This is the date of the appointment ( the format in the second implementation is "startDate-endDate" e.g. "01/10/2023-10/10/2023", but in the first implementation it's just the date e.g. "01/10/2023")
+     * @param place This is the place name of the appointment
      * @return boolean
      */
     public abstract boolean overlappingAppointments(Appointment appointment, LocalTime sTime, LocalTime eTime, LocalDate date, String place);
     /**
-     * This method is used to add single Appointment to Schedule
+     * This method is used to sort the appointment list
      */
     public abstract void sortAppointmentList();
 
     /**
-     * This method is used to add single Appointment to Schedule
+     * This method is used to export the table into a CSV file
      * @param filepath This is the path to CSV file
-     * @param appointments This is the path to CSV file
+     * @param appointments This is the list of Appointments that will be exported
      */
     public void exportCSV(String filepath, List<Appointment> appointments) throws IOException{
             FileWriter fileWriter = new FileWriter(filepath);
@@ -472,9 +473,9 @@ public abstract class ScheduleService {
             fileWriter.close();
     }
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param filepath This is the path to CSV file
-     * @param appointments This is the path to CSV file
+     * This method is used to export the table into a PDF type file
+     * @param filepath This is the path to PDF file
+     * @param appointments This is the list of Appointments we will export
      */
     public void exportPDF(String filepath, List<Appointment> appointments) throws IOException, DocumentException{
         Document document = new Document();
