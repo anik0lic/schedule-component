@@ -147,51 +147,51 @@ public abstract class ScheduleService {
     public abstract Appointment find(String when, String place, String time);
 
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param appointment This is the path to CSV file
-     * @param when This is the path to CSV file
-     * @return boolean
+     * This method is used to update date of Appointment from Schedule
+     * @param appointment This is the Appointment that will be updated
+     * @param when This is the period of Appointment that will be removed (in first implementation it only needs one date e.g "01/10/2023", but in second implementation it needs two e.g "01/10/2023-14/10/2023"
+     * @return boolean it returns true if Appointment is updates and false if it isn't
      */
     public abstract boolean updateAppointment(Appointment appointment, String when);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param appointment This is the path to CSV file
-     * @param place This is the path to CSV file
-     * @return boolean
+     * This method is used to update place of Appointment from Schedule
+     * @param appointment This is the Appointment that will be updated
+     * @param place This is the new place of Appointment
+     * @return boolean it returns true if Appointment is updates and false if it isn't
      */
     public abstract boolean updateAppointment(Appointment appointment, Places place);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param appointment This is the path to CSV file
-     * @param startTime This is the path to CSV file
-     * @param endTime This is the path to CSV file
-     * @return boolean
+     * This method is used to update time of Appointment from Schedule
+     * @param appointment This is the Appointment that will be updated
+     * @param startTime This is the new starting time in format HH:mm
+     * @param endTime This is the new ending time in format HH:mm
+     * @return boolean it returns true if Appointment is updates and false if it isn't
      */
     public abstract boolean updateAppointment(Appointment appointment, String startTime, String endTime);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param appointment This is the path to CSV file
-     * @param additional This is the path to CSV file
-     * @return boolean
+     * This method is used to update additional of Appointment from Schedule
+     * @param appointment This is the Appointment that will be updated
+     * @param additional This is the new additional of Appointment
+     * @return boolean it returns true if Appointment is updates and false if it isn't
      */
     public abstract boolean updateAppointment(Appointment appointment, Map<String, String> additional);
     /**
-     * This method is used to add single Appointment to Schedule
-     * @param appointment This is the path to CSV file
-     * @param when This is the path to CSV file
-     * @param startTime This is the path to CSV file
-     * @param endTime This is the path to CSV file
-     * @return boolean
+     * This method is used to update date and time of Appointment from Schedule
+     * @param appointment This is the Appointment that will be updated
+     * @param when This is the period of Appointment that will be removed (in first implementation it only needs one date e.g "01/10/2023", but in second implementation it needs two e.g "01/10/2023-14/10/2023"
+     * @param startTime This is the new starting time in format HH:mm
+     * @param endTime This is the new ending time in format HH:mm
+     * @return boolean it returns true if Appointment is updates and false if it isn't
      */
     public abstract boolean updateAppointment(Appointment appointment, String when, String startTime, String endTime);
     /**
      * This method is used to add single Appointment to Schedule
-     * @param appointment This is the path to CSV file
-     * @param when This is the path to CSV file
-     * @param startTime This is the path to CSV file
-     * @param endTime This is the path to CSV file
-     * @param place This is the path to CSV file
-     * @return boolean
+     * @param appointment This is the Appointment that will be updated
+     * @param when This is the period of Appointment that will be removed (in first implementation it only needs one date e.g "01/10/2023", but in second implementation it needs two e.g "01/10/2023-14/10/2023"
+     * @param startTime This is the new starting time in format HH:mm
+     * @param endTime This is the new ending time in format HH:mm
+     * @param place This is the new place of Appointment
+     * @return boolean it returns true if Appointment is updates and false if it isn't
      */
     public abstract boolean updateAppointment(Appointment appointment, String when, String startTime, String endTime, Places place);
 
